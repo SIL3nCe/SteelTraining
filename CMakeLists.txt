@@ -29,4 +29,10 @@ include(cmake/TargetBuildSAAS.cmake)
 
 ConfigureShineSAAS()
 
+set(BOX2D_INSTALL OFF CACHE BOOL "Install Box2D libs, includes, and CMake scripts" FORCE)
+set(BOX2D_BUILD_EXAMPLES OFF CACHE BOOL "Build Box2D examples" FORCE)
+set(BOX2D_BUILD_SHARED ON CACHE BOOL "Build Box2D shared libraries" FORCE)
+
+add_subdirectory(Box2D/Box2D Box2D)
+
 add_subdirectory(src)
