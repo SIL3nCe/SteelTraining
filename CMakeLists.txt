@@ -18,7 +18,11 @@ else (MSVC)
 endif (MSVC)
 
 # Find shine Engine libraries
-find_package(ShSDK REQUIRED StubUserSystem ShEntryPoint)
+if(SHINE_INTERNAL)
+	find_package(ShSDK REQUIRED StubUserSystem ShEntryPoint NO_MODULE)
+else(SHINE_INTERNAL)
+	find_package(ShSDK REQUIRED StubUserSystem ShEntryPoint)
+endif(SHINE_INTERNAL)
 
 set(SHSDK_EDITOR_LIBRARIES "" CACHE PATH "ShSDK Editor libraries") # ugly
 set(SHINE_EDITOR_EXT_DIR "$ENV{SHINE_BASE_DIR}/Bin/Extensions" CACHE PATH "Extension directory") # ugly too
