@@ -37,6 +37,7 @@ set(BOX2D_INSTALL OFF CACHE BOOL "Install Box2D libs, includes, and CMake script
 set(BOX2D_BUILD_EXAMPLES OFF CACHE BOOL "Build Box2D examples" FORCE)
 set(BOX2D_BUILD_SHARED ON CACHE BOOL "Build Box2D shared libraries" FORCE)
 
-add_subdirectory(Box2D/Box2D Box2D)
+# TODO : Needs CMakeLists.txt to be added
+#add_subdirectory(Box2D/Box2D Box2D)
 
 add_subdirectory(src)
