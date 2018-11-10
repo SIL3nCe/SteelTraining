@@ -2,10 +2,10 @@
     <extensions/>
     <project_settings>
         <general>
-            <setting name="generalname" value="TemporaryDungeon"/>
-            <setting name="generalgeneric" value=".\Generic\"/>
-            <setting name="generalsource" value=".\src\"/>
-            <setting name="generaltmp" value=".\Cooking\"/>
+            <setting name="generalname" value="SteelTraining"/>
+            <setting name="generalgeneric" value="bin/Generic\"/>
+            <setting name="generalsource" value="./src\"/>
+            <setting name="generaltmp" value="bin/Cooking\"/>
             <setting name="generalicon" value=""/>
             <setting name="generalsplashscreen" value=""/>
             <setting name="savedata_icon" value=""/>
