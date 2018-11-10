@@ -2,7 +2,7 @@
     <extensions/>
     <project_settings>
         <general>
-            <setting name="generalname" value="StealTraining"/>
+            <setting name="generalname" value="SteelTraining"/>
             <setting name="generalgeneric" value="bin/Generic\"/>
             <setting name="generalsource" value="./src\"/>
             <setting name="generaltmp" value="bin/Cooking\"/>
