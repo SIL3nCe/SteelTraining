@@ -24,18 +24,15 @@ else(SHINE_INTERNAL)
 	find_package(ShSDK REQUIRED StubUserSystem ShEntryPoint)
 endif(SHINE_INTERNAL)
 
-set(SHSDK_EDITOR_LIBRARIES "" CACHE PATH "ShSDK Editor libraries") # ugly
-set(SHINE_EDITOR_EXT_DIR "$ENV{SHINE_BASE_DIR}/Bin/Extensions" CACHE PATH "Extension directory") # ugly too
-
 # Include some cmake helpers
 include(cmake/Master.cmake)
 include(cmake/TargetBuildSAAS.cmake)
 
 ConfigureShineSAAS()
 
-set(BOX2D_INSTALL OFF CACHE BOOL "Install Box2D libs, includes, and CMake scripts" FORCE)
-set(BOX2D_BUILD_EXAMPLES OFF CACHE BOOL "Build Box2D examples" FORCE)
-set(BOX2D_BUILD_SHARED ON CACHE BOOL "Build Box2D shared libraries" FORCE)
+option(BOX2D_INSTALL "Install Box2D libs, includes, and CMake scripts" OFF)
+option(BOX2D_BUILD_EXAMPLES "Build Box2D examples" OFF)
+option(BOX2D_BUILD_SHARED "Build Box2D shared libraries" ON)
 
 # TODO : Needs CMakeLists.txt to be added
 #add_subdirectory(Box2D/Box2D Box2D)

@@ -1,3 +1,7 @@
+if(NOT SHINE_EDITOR_EXT_DIR)
+	message(FATAL_ERROR "Error, variable 'SHINE_EDITOR_EXT_DIR' is not set. Please set it as an argument of the cmake command.")
+endif(NOT SHINE_EDITOR_EXT_DIR)
+
 file(MAKE_DIRECTORY "${SHINE_EDITOR_EXT_DIR}")
 
 if(WIN32)
@@ -14,7 +18,7 @@ set_property(TARGET Extension APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLA
 set_property(TARGET Extension APPEND PROPERTY COMPILE_DEFINITIONS "SH_EDITOR=1" "_INTERNAL_DLL") # FIXME
 
 target_link_libraries(Extension PRIVATE "${SHSDK_EDITOR_LIBRARIES}")
-target_include_directories(Extension PRIVATE "${SHSDK_INCLUDE_DIRS}")
+target_include_directories(Extension PRIVATE "${SHSDK_INCLUDE_DIR}")
 
 if(WIN32)
 	set_property(TARGET Extension PROPERTY RUNTIME_OUTPUT_DIRECTORY "${SHINE_EDITOR_EXT_DIR}")

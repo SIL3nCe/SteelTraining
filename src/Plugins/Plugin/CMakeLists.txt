@@ -9,7 +9,7 @@ set_property(TARGET Plugin APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_
 set_property(TARGET Plugin APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 
 target_link_libraries(Plugin PUBLIC "${SHSDK_LIBRARIES}")
-target_include_directories(Plugin PUBLIC "${SHSDK_INCLUDE_DIRS}")
+target_include_directories(Plugin PUBLIC "${SHSDK_INCLUDE_DIR}")
 
 # Compile to use it in the Shine Editor
 add_library(Plugin_Editor OBJECT ${SOURCES_PLUGIN_IMPL})
@@ -21,5 +21,4 @@ set_property(TARGET Plugin_Editor APPEND PROPERTY COMPILE_DEFINITIONS "SH_EDITOR
 set_property(TARGET Plugin_Editor APPEND PROPERTY POSITION_INDEPENDENT_CODE True)
 
 target_link_libraries(Plugin_Editor PUBLIC "${SHSDK_EDITOR_LIBRARIES}")
-target_include_directories(Plugin_Editor PUBLIC "${SHSDK_INCLUDE_DIRS}")
-
+target_include_directories(Plugin_Editor PUBLIC "${SHSDK_INCLUDE_DIR}")

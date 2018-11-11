@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ShSDK/ShSDK.h>
-#include <ShEngineExt/ShEngineExt.h>
+#include "ShSDK/ShSDK.h"
+#include "ShEngineExt/ShEngineExt.h"
 
 class Plugin : public CShPlugin
 {

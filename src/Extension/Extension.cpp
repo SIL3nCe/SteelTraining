@@ -1,6 +1,6 @@
 #include "Extension.h"
 
-#include <ShSDK/ShSDK.h>
+#include "ShSDK/ShSDK.h"
 
 //
 // Include plugins
