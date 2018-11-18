@@ -18,11 +18,11 @@ else(WIN32)
 endif (WIN32)
 
 # Extension files
-set(SOURCES_Extension Extension.cpp Extension.h)
-source_group("Extension" FILES ${SOURCES_Extension})
+set(SOURCES_ExtensionST ExtensionST.cpp ExtensionST.h)
+source_group("ExtensionST" FILES ${SOURCES_ExtensionST})
 
 # Put everything together before adding platform-specific files
-set(SOURCES ${SOURCES_main} ${SOURCES_Extension})
+set(SOURCES ${SOURCES_main} ${SOURCES_ExtensionST})
 
 add_library(ExtensionST SHARED ${SOURCES})
 
@@ -50,4 +50,4 @@ endif(WIN32)
 
 set_property(TARGET ExtensionST PROPERTY PREFIX )
 
-file(COPY "Extension.configext" DESTINATION "${SHINE_EDITOR_EXT_DIR}")
+file(COPY "ExtensionST.configext" DESTINATION "${SHINE_EDITOR_EXT_DIR}")

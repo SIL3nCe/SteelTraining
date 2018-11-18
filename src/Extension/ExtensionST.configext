@@ -1,4 +1,4 @@
-<extension name="Extension" identifier="Extension">
+<extension name="SteelTraining" identifier="ExtensionST">
 
 	<dependencies>
 	</dependencies>

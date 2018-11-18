@@ -1,4 +1,4 @@
-#include "Extension.h"
+#include "ExtensionST.h"
 
 #include "ShSDK/ShSDK.h"
 
@@ -29,17 +29,17 @@ static CShDynamicLibrary pluginST_library(strPluginSTFilePath);
 extern "C"
 {
 
-EXTENSION_EXPORT void ExtensionInitialize(void)
+EXTENSION_ST_EXPORT void ExtensionInitialize(void)
 {
 	// ...
 }
 
-EXTENSION_EXPORT void ExtensionRelease(void)
+EXTENSION_ST_EXPORT void ExtensionRelease(void)
 {
 	// ...
 }
 
-EXTENSION_EXPORT void ExtensionOnPluginStarted(const CShIdentifier & levelIdentifier)
+EXTENSION_ST_EXPORT void ExtensionOnPluginStarted(const CShIdentifier & levelIdentifier)
 {
 	//
 	// Load Library
@@ -80,7 +80,7 @@ EXTENSION_EXPORT void ExtensionOnPluginStarted(const CShIdentifier & levelIdenti
 	}
 }
 
-EXTENSION_EXPORT void ExtensionOnPluginStopped(const CShIdentifier & levelIdentifier)
+EXTENSION_ST_EXPORT void ExtensionOnPluginStopped(const CShIdentifier & levelIdentifier)
 {
 	//
 	// Call factory (auto-unregister)
