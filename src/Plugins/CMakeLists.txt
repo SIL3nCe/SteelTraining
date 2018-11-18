@@ -1,1 +1,1 @@
-add_subdirectory(Plugin)
+add_subdirectory(PluginST)

@@ -1,50 +1,37 @@
 #include "Game.h"
 
-/**
- * Called before engine initialization
- */
-void ShEntryPoint::OnPreInitialize(void)
+Game * Game::m_pInstance = shNULL;
+
+Game::Game(void)
 {
 
 }
 
-/**
- * Called after engine initialization
- */
-void ShEntryPoint::OnPostInitialize(void)
+Game * Game::GetInstance(void)
 {
-	Plugin * pPlugin = new Plugin();
-	ShApplication::RegisterPlugin(pPlugin);
+	if (shNULL == m_pInstance)
+	{
+		m_pInstance = new Game();
+	}
+
+	return(m_pInstance);
 }
 
-/**
- * Called on each frame, before the engine update
- */
-void ShEntryPoint::OnPreUpdate(float dt)
+void Game::Initialize()
 {
-	// nothing here
+	if (!ShLevel::Load(CShIdentifier("level_test")))
+	{
+		SH_ASSERT_ALWAYS();
+	}
+
 }
 
-/**
- * Called on each frame, after the engine update
- */
-void ShEntryPoint::OnPostUpdate(float dt)
+void Game::Release()
 {
-	// nothing here
+
 }
 
-/**
- * Called before the engine release
- */
-void ShEntryPoint::OnPreRelease(void)
+void Game::Update(float dt)
 {
-	// nothing here
-}
 
-/**
- * Called after the engine release
- */
-void ShEntryPoint::OnPostRelease(void)
-{
-	// nothing here
 }

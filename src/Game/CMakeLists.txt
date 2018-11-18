@@ -1,13 +1,39 @@
-add_executable(Game WIN32 Game.cpp Game.h)
+cmake_minimum_required(VERSION 3.10)
+
+# main files
+set(SOURCES_main main.cpp)
+source_group("" FILES ${SOURCES_main})
+
+# Application files
+set(SOURCES_Application application.cpp application.h)
+source_group("" FILES ${SOURCES_Application})
+
+# Game files
+set(SOURCES_Game Game.cpp Game.h)
+source_group("Game" FILES ${SOURCES_Game})
+
+# Put everything together before adding platform-specific files
+set(SOURCES 
+${SOURCES_main}
+${SOURCES_Application}
+${SOURCES_Game}
+)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+	add_executable(Game WIN32 ${SOURCES})
+ELSE()
+	add_executable(Game ${SOURCES})
+ENDIF()
+
+if (MSVC)
+	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /FORCE:MULTIPLE")
+endif (MSVC)
 
 set_property(TARGET Game PROPERTY FOLDER "Runtime")
 set_property(TARGET Game APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
 set_property(TARGET Game APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 set_property(TARGET Game APPEND PROPERTY COMPILE_DEFINITIONS "SH_$<UPPER_CASE:$<CONFIG>>=1")
 
-target_link_libraries(Game PRIVATE Plugin) # link with plugins
-target_include_directories(Game PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../Plugins/")
-target_link_libraries(Game PRIVATE "${SHSDK_LIBRARIES}")
-target_include_directories(Game PRIVATE "${SHSDK_INCLUDE_DIRS}")
-
-CopyToShineSAAS(Game)
+target_link_libraries(Game PRIVATE ${SHSDK_LIBRARIES})
+target_link_libraries(Game PRIVATE PluginST)
+target_include_directories(Game PRIVATE "${SHSDK_INCLUDE_DIR}" "$<TARGET_PROPERTY:PluginST,INCLUDE_DIRECTORIES>")
