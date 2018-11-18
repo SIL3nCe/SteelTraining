@@ -1,6 +1,6 @@
 <level engine_save_ver="1.4.2">
     <settings>
-        <vertical_fog enabled="true" color_red="0.196078" color_green="0.233333" color_blue="0.266667" start="-100.000000" end="0.000000"/>
+        <vertical_fog enabled="false" color_red="0.192157" color_green="0.231373" color_blue="0.266667" start="-100.000000" end="0.000000"/>
         <directional color_red="0.150000" color_green="0.150000" color_blue="0.150000" color_alpha="1.000000" directional_x="-0.532667" directional_y="-0.631308" directional_z="0.775983"/>
         <wind enabled="0" dir_x="1.000000" dir_y="0.000000" dir_z="0.000000" speed="0.000000"/>
         <scene_settings ambient_red="0.000000" ambient_green="0.000000" ambient_blue="0.000000" glow_threshold="1.000000" glow_intensity="1.000000" ssao_intensity="0.700000"/>
@@ -27,7 +27,7 @@
     <object_list>
         <point_list/>
         <entity2_list>
-            <entity2 name="sprite_game_blackbackground_001" position_x="0.000000" position_y="0.000000" position_z="-1.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1000.000000" scale_y="1000.000000" scale_z="1.000000" layer="layer_default" show="true" color_r="1.000000" color_g="1.000000" color_b="1.000000" color_a="1.000000" pivot="center_center" pivot_custom_x="0.500000" pivot_custom_y="0.500000" sprite_library="game" sprite_name="blackbackground" blend_function="alpha"/>
+            <entity2 name="sprite_game_blackbackground" position_x="0.000000" position_y="0.000000" position_z="-1.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1000.000000" scale_y="1000.000000" scale_z="1.000000" layer="layer_default" show="true" color_r="1.000000" color_g="1.000000" color_b="1.000000" color_a="1.000000" pivot="center_center" pivot_custom_x="0.500000" pivot_custom_y="0.500000" sprite_library="game" sprite_name="blackbackground" blend_function="alpha"/>
             <entity2 name="sprite_player_walk_01_001" position_x="0.000000" position_y="0.000000" position_z="1.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000" layer="layer_default" show="true" color_r="1.000000" color_g="1.000000" color_b="1.000000" color_a="1.000000" pivot="center_center" pivot_custom_x="0.500000" pivot_custom_y="0.500000" sprite_library="player" sprite_name="walk_01" blend_function="alpha"/>
         </entity2_list>
         <ruler_list/>
@@ -50,9 +50,12 @@
         <collision_shape_list/>
     </object_list>
     <scene_graph>
-        <entity2 name="sprite_game_blackbackground_001"/>
+        <entity2 name="sprite_game_blackbackground"/>
         <entity2 name="sprite_player_walk_01_001"/>
     </scene_graph>
+    <plugins>
+        <plugin name="pluginsteeltraining"/>
+    </plugins>
     <editor_settings>
         <snap_x enabled="false" value="0.000000"/>
         <snap_y enabled="false" value="0.000000"/>
@@ -63,6 +66,6 @@
         <translate_z enabled="true"/>
         <grid enabled="false" position_x="0.000000" position_y="0.000000" position_z="0.000000" size_x="100.000000" size_y="100.000000" subdivision_x="10" subdivision_y="10"/>
         <show_markers enabled="false"/>
-        <camera position_x="-0.000000" position_y="0.000169" position_z="3869.961426" target_x="0.000000" target_y="0.000000" target_z="0.000000" znear="1.000000" zfar="40000.000000" zoom="3.869962" camera_angle_y="-1.570796" camera_angle_z="1.570796" type="1" arcball_x="-3869.961426" arcball_y="0.000000" arcball_z="0.000000" camera_up_x="0.000000" camera_up_y="0.000000" camera_up_z="1.000000"/>
+        <camera position_x="-0.000000" position_y="-0.001310" position_z="4172.243652" target_x="0.000000" target_y="0.000000" target_z="0.000000" znear="1.000000" zfar="40000.000000" zoom="4.172244" camera_angle_y="-1.570796" camera_angle_z="1.570796" type="1" arcball_x="-4172.243652" arcball_y="0.000000" arcball_z="0.000000" camera_up_x="0.000000" camera_up_y="0.000000" camera_up_z="1.000000"/>
     </editor_settings>
 </level>

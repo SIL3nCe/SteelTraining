@@ -31,16 +31,6 @@ extern "C"
 
 EXTENSION_ST_EXPORT void ExtensionInitialize(void)
 {
-	// ...
-}
-
-EXTENSION_ST_EXPORT void ExtensionRelease(void)
-{
-	// ...
-}
-
-EXTENSION_ST_EXPORT void ExtensionOnPluginStarted(const CShIdentifier & levelIdentifier)
-{
 	//
 	// Load Library
 	bool bInit = pluginST_library.Initialize();
@@ -49,23 +39,14 @@ EXTENSION_ST_EXPORT void ExtensionOnPluginStarted(const CShIdentifier & levelIde
 	// Get Functions
 	if (bInit)
 	{
-		pRegisterST = (register_fn)pluginST_library.GetFunctionAddress(CShString("RegisterPlugin"));
+		pRegisterST = (register_fn)pluginST_library.GetFunctionAddress(CShString("RegisterPluginST"));
 		SH_ASSERT(shNULL != pRegisterST);
 
-		pUnRegisterST = (register_fn)pluginST_library.GetFunctionAddress(CShString("UnRegisterPlugin"));
+		pUnRegisterST = (register_fn)pluginST_library.GetFunctionAddress(CShString("UnRegisterPluginST"));
 		SH_ASSERT(shNULL != pUnRegisterST);
 
-		pGetInstanceST = (get_instance_fn)pluginST_library.GetFunctionAddress(CShString("GetPlugin"));
+		pGetInstanceST = (get_instance_fn)pluginST_library.GetFunctionAddress(CShString("GetPluginST"));
 		SH_ASSERT(shNULL != pGetInstanceST);
-
-		pOnTouchDownST = (FuncOnTouchDownPtr)pluginST_library.GetFunctionAddress(CShString("TouchDownPluginST"));
-		SH_ASSERT(shNULL != pOnTouchDownST);
-
-		pOnTouchUpST = (FuncOnTouchUpPtr)pluginST_library.GetFunctionAddress(CShString("TouchUpPluginST"));
-		SH_ASSERT(shNULL != pOnTouchUpST);
-
-		pOnTouchMoveST = (FuncOnTouchMovePtr)pluginST_library.GetFunctionAddress(CShString("TouchMovePluginST"));
-		SH_ASSERT(shNULL != pOnTouchMoveST);
 	}
 
 	//
@@ -73,23 +54,15 @@ EXTENSION_ST_EXPORT void ExtensionOnPluginStarted(const CShIdentifier & levelIde
 	if (shNULL != pRegisterST)
 	{
 		pRegisterST();
-
-		ShInput::AddOnTouchDown(pOnTouchDownST);
-		ShInput::AddOnTouchUp(pOnTouchUpST);
-		ShInput::AddOnTouchMove(pOnTouchMoveST);
 	}
 }
 
-EXTENSION_ST_EXPORT void ExtensionOnPluginStopped(const CShIdentifier & levelIdentifier)
+EXTENSION_ST_EXPORT void ExtensionRelease(void)
 {
 	//
 	// Call factory (auto-unregister)
 	if (shNULL != pUnRegisterST)
 	{
-		ShInput::RemoveOnTouchDown(pOnTouchDownST);
-		ShInput::RemoveOnTouchUp(pOnTouchUpST);
-		ShInput::RemoveOnTouchMove(pOnTouchMoveST);
-
 		pUnRegisterST();
 	}
 
@@ -104,6 +77,39 @@ EXTENSION_ST_EXPORT void ExtensionOnPluginStopped(const CShIdentifier & levelIde
 	//
 	// Unload Library
 	pluginST_library.Release();
+}
+
+EXTENSION_ST_EXPORT void ExtensionOnPluginStarted(const CShIdentifier & levelIdentifier)
+{
+	if (shNULL != pRegisterST)
+	{
+		pOnTouchDownST = (FuncOnTouchDownPtr)pluginST_library.GetFunctionAddress(CShString("TouchDownPluginST"));
+		SH_ASSERT(shNULL != pOnTouchDownST);
+
+		pOnTouchUpST = (FuncOnTouchUpPtr)pluginST_library.GetFunctionAddress(CShString("TouchUpPluginST"));
+		SH_ASSERT(shNULL != pOnTouchUpST);
+
+		pOnTouchMoveST = (FuncOnTouchMovePtr)pluginST_library.GetFunctionAddress(CShString("TouchMovePluginST"));
+		SH_ASSERT(shNULL != pOnTouchMoveST)
+
+		ShInput::AddOnTouchDown(pOnTouchDownST);
+		ShInput::AddOnTouchUp(pOnTouchUpST);
+		ShInput::AddOnTouchMove(pOnTouchMoveST);
+	}
+}
+
+EXTENSION_ST_EXPORT void ExtensionOnPluginStopped(const CShIdentifier & levelIdentifier)
+{
+	if (shNULL != pRegisterST)
+	{
+		ShInput::RemoveOnTouchDown(pOnTouchDownST);
+		ShInput::RemoveOnTouchUp(pOnTouchUpST);
+		ShInput::RemoveOnTouchMove(pOnTouchMoveST);
+
+		pOnTouchDownST = shNULL;
+		pOnTouchUpST = shNULL;
+		pOnTouchMoveST = shNULL;
+	}
 }
 
 }

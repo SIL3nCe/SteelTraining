@@ -24,6 +24,9 @@ source_group("ExtensionST" FILES ${SOURCES_ExtensionST})
 # Put everything together before adding platform-specific files
 set(SOURCES ${SOURCES_main} ${SOURCES_ExtensionST})
 
+# Set _Debug extension needed for editor
+set(CMAKE_DEBUG_POSTFIX "_Debug")
+
 add_library(ExtensionST SHARED ${SOURCES})
 
 set_property(TARGET ExtensionST PROPERTY FOLDER "Editor")
