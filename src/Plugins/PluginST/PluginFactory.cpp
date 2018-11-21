@@ -37,7 +37,6 @@ PLUGIN_FACTORY_EXPORT PluginST * GetPluginST(void)
 	return(g_pInstanceST);
 }
 
-
 /**
 * @brief TouchDownPluginST
 * @param iTouch
