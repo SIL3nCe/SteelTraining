@@ -37,3 +37,5 @@ option(BOX2D_BUILD_SHARED "Build Box2D shared libraries" ON)
 add_subdirectory(Box2D/Box2D Box2D)
 
 add_subdirectory(src)
+
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT "Game")
