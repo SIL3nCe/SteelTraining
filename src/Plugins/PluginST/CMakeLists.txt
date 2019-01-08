@@ -48,7 +48,7 @@ ${SOURCES_PlayerCharacter}
 # Compile to use it on Runtime
 add_library(PluginST STATIC ${SOURCES})
 set_property(TARGET PluginST PROPERTY FOLDER "Runtime")
-set_property(TARGET PluginST APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS} -fno-exceptions -fno-rtti")
+set_property(TARGET PluginST APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}" -fno-exceptions -fno-rtti)
 set_property(TARGET PluginST APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 
 target_link_libraries(PluginST INTERFACE ${SHSDK_LIBRARIES})
