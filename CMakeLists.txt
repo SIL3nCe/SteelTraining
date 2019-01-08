@@ -19,9 +19,9 @@ endif (MSVC)
 
 # Find shine Engine libraries
 if(SHINE_INTERNAL)
-	find_package(ShSDK REQUIRED StubUserSystem ShEntryPoint NO_MODULE)
+	find_package(ShSDK REQUIRED ShCore StubUserSystem ShEntryPoint NO_MODULE)
 else(SHINE_INTERNAL)
-	find_package(ShSDK REQUIRED StubUserSystem ShEntryPoint)
+	find_package(ShSDK REQUIRED ShCore StubUserSystem ShEntryPoint)
 endif(SHINE_INTERNAL)
 
 # Include some cmake helpers
