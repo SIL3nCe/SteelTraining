@@ -1,11 +1,13 @@
 #include "PluginMapGenerator.h"
 
+#include "MapGenerator/MapGeneratorTest.h"
+
 const CShIdentifier plugin_identifier("PluginMapGenerator");
 
 /**
 * @brief Constructor
 */
-PluginMapGenerator::PluginMapGenerator(void)
+/*explicit*/ PluginMapGenerator::PluginMapGenerator(void)
 : CShPlugin(plugin_identifier)
 {
 	// ...
@@ -60,7 +62,7 @@ PluginMapGenerator::PluginMapGenerator(void)
 }
 
 /**
-* @brief OnPostUpdate
+* @brief OnPreUpdate
 */
 /*virtual*/ void PluginMapGenerator::OnPostUpdate(float dt)
 {
@@ -68,25 +70,63 @@ PluginMapGenerator::PluginMapGenerator(void)
 }
 
 /**
-* @brief OnTouchDown
+* @brief PluginMapGenerator::CreateMapGenerator
 */
-void PluginMapGenerator::OnTouchDown(int iTouch, float positionX, float positionY)
+MapGenerator * PluginMapGenerator::CreateMapGenerator(EMapGeneratorType eType)
 {
-	// ...
+	MapGenerator * pMapGenerator = shNULL;
+
+	switch (eType)
+	{
+		case e_map_generator_type_test :
+		{
+			pMapGenerator = new MapGeneratorTest();
+		}
+		break;
+
+		default :
+		{
+			SH_ASSERT_ALWAYS();
+		}
+		break;
+	}
+
+	return pMapGenerator;
 }
 
 /**
-* @brief OnTouchUp
+* @brief PluginMapGenerator::DestroyMapGenerator
 */
-void PluginMapGenerator::OnTouchUp(int iTouch, float positionX, float positionY)
+bool PluginMapGenerator::DestroyMapGenerator(MapGenerator * pMapGenerator)
 {
-	// ...
+	SH_SAFE_DELETE(pMapGenerator);
+	if (shNULL != pMapGenerator)
+	{
+		SH_ASSERT_ALWAYS();
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 /**
-* @brief OnTouchMove
+* @brief PluginMapGenerator::GenerateMap2D
 */
-void PluginMapGenerator::OnTouchMove(int iTouch, float positionX, float positionY)
+Map2D PluginMapGenerator::GenerateMap2D(MapGenerator * pMapGenerator, shU32 iRowNb /*= MAP_DEFAULT_ROW_NB*/, shU32 iColumnbNb /*= MAP_DEFAULT_COLUMN_NB*/, shU32 iTileSize /*= MAP_DEFAULT_TILE_SIZE*/)
 {
-	// ...
+	Map2D map;
+
+	if (shNULL != pMapGenerator)
+	{
+		map.Initialize(iRowNb, iColumnbNb, iTileSize);
+
+		if (!pMapGenerator->GenerateMap(&map))
+		{
+			map.Release();
+		}
+	}
+
+	return map;
 }

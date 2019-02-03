@@ -19,8 +19,20 @@ source_group("Plugin" FILES ${SOURCES_Plugin})
 set(SOURCES_Factory PluginMapGeneratorFactory.cpp PluginMapGeneratorFactory.h)
 source_group("Factory" FILES ${SOURCES_Factory})
 
+# Map files
+set(SOURCES_Map		Map/Map.cpp		Map/Map.h
+					Map/Map2D.cpp	Map/Map2D.h)
+source_group("Map" FILES ${SOURCES_Map})
+
+# MapGenerator files
+set(SOURCES_MapGenerator	MapGenerator/MapGenerator.cpp		MapGenerator/MapGenerator.h
+							MapGenerator/MapGeneratorTest.cpp	MapGenerator/MapGeneratorTest.h)
+source_group("MapGenerator" FILES ${SOURCES_MapGenerator})
+
 # Put everything together before adding platform-specific files
 set(SOURCES 
+${SOURCES_Map}
+${SOURCES_MapGenerator}
 ${SOURCES_Plugin}
 ${SOURCES_Factory}
 )
@@ -28,8 +40,11 @@ ${SOURCES_Factory}
 # Compile to use it on Runtime
 add_library(PluginMapGenerator STATIC ${SOURCES})
 set_property(TARGET PluginMapGenerator PROPERTY FOLDER "Runtime")
-set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}" -fno-exceptions -fno-rtti)
+set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
+if (NOT MSVC)
+	set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS -fno-exceptions -fno-rtti)
+endif (NOT MSVC)
 
 target_link_libraries(PluginMapGenerator INTERFACE ${SHSDK_LIBRARIES})
 
@@ -41,7 +56,10 @@ target_include_directories(PluginMapGenerator PRIVATE "$<TARGET_PROPERTY:Box2D,I
 add_library(PluginMapGenerator_Editor SHARED ${SOURCES_main} ${SOURCES})
 set_property(TARGET PluginMapGenerator_Editor PROPERTY FOLDER "Editor")
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
-set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS} -fPIC")
+set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
+if (NOT MSVC)
+	set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "-fPIC")
+endif (NOT MSVC)
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "SH_EDITOR=1" "_INTERNAL_DLL") # FIXME
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY POSITION_INDEPENDENT_CODE True)
 

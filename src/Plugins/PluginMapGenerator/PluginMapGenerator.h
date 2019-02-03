@@ -3,10 +3,13 @@
 #include "ShSDK/ShSDK.h"
 #include "ShEngineExt/ShEngineExt.h"
 
+#include "Map/Map2D.h"
+#include "MapGenerator/MapGenerator.h"
+
 class PluginMapGenerator : public CShPlugin
 {
 public:
-							PluginMapGenerator	(void);
+	explicit				PluginMapGenerator	(void);
 	virtual					~PluginMapGenerator	(void);
 
 	virtual	void			OnPlayStart			(const CShIdentifier & levelIdentifier) SH_ATTRIBUTE_OVERRIDE;
@@ -16,13 +19,18 @@ public:
 
 	virtual	void			OnPreUpdate			(float dt) SH_ATTRIBUTE_OVERRIDE;
 	virtual	void			OnPostUpdate		(float dt) SH_ATTRIBUTE_OVERRIDE;
-	
+
 	//
-	// Touch Events
-	void					OnTouchDown			(int iTouch, float positionX, float positionY);
-	void					OnTouchUp			(int iTouch, float positionX, float positionY);
-	void					OnTouchMove			(int iTouch, float positionX, float positionY);
+	// MapGenerators
+	MapGenerator *			CreateMapGenerator	(EMapGeneratorType eType);
+	bool					DestroyMapGenerator	(MapGenerator * pMapGenerator);
+
+	//
+	// Map Generation
+	Map2D					GenerateMap2D		(MapGenerator * pMapGenerator, shU32 iRowNb = MAP_DEFAULT_ROW_NB, shU32 iColumnbNb = MAP_DEFAULT_COLUMN_NB, shU32 iTileSize = MAP_DEFAULT_TILE_SIZE);
 
 private:
+
+
 
 };

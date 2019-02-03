@@ -84,8 +84,8 @@ void OnPreRelease(void)
 	Game * pGame = Game::GetInstance();
 	pGame->Release();
 
-	UnRegisterPluginST();
 	UnRegisterPluginMapGenerator();
+	UnRegisterPluginST();
 }
 
 /**
