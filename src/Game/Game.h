@@ -4,6 +4,7 @@
 #include <ShEntryPoint/ShEntryPoint.h>
 
 #include <PluginST.h>
+#include <PluginMapGeneratorFactory.h>
 
 class Game
 {
@@ -22,4 +23,9 @@ private:
 private:
 
 	static Game *	m_pInstance;
+
+	//
+	// Map related
+	MapGenerator *	m_pMapGenerator;
+	Map2D			m_map;
 };

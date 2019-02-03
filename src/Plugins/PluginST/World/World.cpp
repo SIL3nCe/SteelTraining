@@ -56,3 +56,11 @@ void World::Update(float dt)
 
 	m_playerCharacter.Update(dt);
 }
+
+/**
+ * @brief Update
+ */
+const PluginInputManager & World::GetInputManager(void)
+{
+	return m_inputManager;
+}

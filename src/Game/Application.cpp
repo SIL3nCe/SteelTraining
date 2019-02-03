@@ -63,8 +63,7 @@ void OnPostInitialize(void)
  */
 void OnPreUpdate(float dt)
 {
-	Game * pGame = Game::GetInstance();
-	pGame->Update(dt);
+	SH_UNUSED(dt);
 }
 
 /**
@@ -73,7 +72,8 @@ void OnPreUpdate(float dt)
  */
 void OnPostUpdate(float dt)
 {
-	SH_UNUSED(dt);
+	Game * pGame = Game::GetInstance();
+	pGame->Update(dt);
 }
 
 /**

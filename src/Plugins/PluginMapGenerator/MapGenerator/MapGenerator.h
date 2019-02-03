@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../Map/Map.h"
+#include "ShSDK/ShSDK.h"
+
+class Map;
 
 enum EMapGeneratorType
 {
@@ -14,7 +16,7 @@ public:
 	virtual							~MapGenerator	(void);
 
 	virtual EMapGeneratorType		GetType			(void) const = 0;
-	virtual bool					GenerateMap		(Map * pAbstractMap) = 0;
+	virtual bool					GenerateMap		(Map *& pAbstractMap, const CShIdentifier & idLevel) = 0;
 
 private:
 

@@ -64,7 +64,7 @@ shU32 Map2D::GetTileSize(void) const
 /**
 * @brief Map2D::GetTiles
 */
-Map2DTile ** const Map2D::GetTiles(void) const
+Map2D::Tile ** const Map2D::GetTiles(void) const
 {
 	return m_aaTiles;
 }
@@ -87,12 +87,11 @@ bool Map2D::Initialize(shU32 iRowNb, shU32 iColumnNb, shU32 iTileSize)
 	m_iColumn	= iColumnNb;
 	m_iTileSize	= iTileSize;
 
-	m_aaTiles = static_cast<Map2DTile**>(shMalloc(m_iRow * sizeof(Map2DTile*)));
+	m_aaTiles = static_cast<Tile**>(shMalloc(m_iRow * sizeof(Tile*)));
 	for (int iRowIndex = 0; iRowIndex < m_iRow; ++iRowIndex)
 	{
-		m_aaTiles[iRowIndex] = static_cast<Map2DTile*>(shMalloc(m_iColumn * sizeof(Map2DTile)));
+		m_aaTiles[iRowIndex] = static_cast<Tile*>(shMalloc(m_iColumn * sizeof(Tile)));
 	}
-	memset(m_aaTiles, NULL, m_iRow * m_iColumn * sizeof(Map2DTile));
 
 	return true;
 }
@@ -108,7 +107,7 @@ bool Map2D::Release(void)
 
 	for (int iRowIndex = 0; iRowIndex < m_iRow; ++iRowIndex)
 	{
-		SH_SAFE_FREE(m_aaTiles[iRowIndex]);
+		SH_SAFE_RELEASE_FREE(m_aaTiles[iRowIndex]);
 	}
 	SH_SAFE_FREE(m_aaTiles);
 

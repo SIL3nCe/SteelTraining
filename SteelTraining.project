@@ -1,7 +1,5 @@
-<project project_version="1.5">
-    <extensions>
-        <extension name="SteelTraining"/>
-    </extensions>
+<project project_version="1.6">
+    <extensions/>
     <project_settings>
         <general>
             <setting name="generalname" value="SteelTraining"/>

@@ -25,6 +25,8 @@ public:
 	void					OnTouchUp			(int iTouch, float positionX, float positionY);
 	void					OnTouchMove			(int iTouch, float positionX, float positionY);
 
+	World *					GetWorld			(void);
+
 private:
 
 	World		m_world;

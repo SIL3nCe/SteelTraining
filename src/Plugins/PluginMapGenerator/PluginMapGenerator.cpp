@@ -114,22 +114,25 @@ bool PluginMapGenerator::DestroyMapGenerator(MapGenerator * pMapGenerator)
 /**
 * @brief PluginMapGenerator::GenerateMap
 */
-bool PluginMapGenerator::GenerateMap(MapGenerator * pMapGenerator, Map & map)
+bool PluginMapGenerator::GenerateMap(MapGenerator * pMapGenerator, Map *& pMap, const CShIdentifier & idLevel)
 {
-	if (map)
+	if (shNULL != pMap)
 	{
-		map.Release();
+		if (*pMap)
+		{
+			pMap->Release();
+		}
 	}
 
 	if (shNULL != pMapGenerator)
 	{
-		if (pMapGenerator->GenerateMap(&map))
+		if (pMapGenerator->GenerateMap(pMap, idLevel))
 		{
 			return true;
 		}
 		else
 		{
-			map.Release();
+			pMap->Release();
 			return false;
 		}
 	}

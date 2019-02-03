@@ -10,7 +10,7 @@
 #	define PLUGIN_FACTORY_EXPORT
 #endif
 
-class PluginMapGenerator;
+#include "PluginMapGenerator.h"
 
 extern "C"
 {

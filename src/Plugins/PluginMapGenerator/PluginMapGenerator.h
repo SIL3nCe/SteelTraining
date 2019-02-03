@@ -27,7 +27,7 @@ public:
 
 	//
 	// Map Generation
-	bool					GenerateMap			(MapGenerator * pMapGenerator, Map & map);
+	bool					GenerateMap			(MapGenerator * pMapGenerator, Map *& pMap, const CShIdentifier & idLevel);
 
 private:
 

@@ -7,13 +7,15 @@ class World
 {
 public:
 
-	explicit	 World			(void);
-	virtual		~World			(void);
+	explicit					 World			(void);
+	virtual						~World			(void);
 
-	void		Initialize		(void);
-	void		Release			(void);
+	void						Initialize		(void);
+	void						Release			(void);
 
-	void		Update			(float dt);
+	void						Update			(float dt);
+
+	const PluginInputManager & 	GetInputManager	(void);
 
 private:
 

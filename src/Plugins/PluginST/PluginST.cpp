@@ -90,3 +90,11 @@ void PluginST::OnTouchMove(int iTouch, float positionX, float positionY)
 {
 	// ...
 }
+
+/**
+* @brief OnTouchMove
+*/
+World * PluginST::GetWorld(void)
+{
+	return &m_world;
+}
