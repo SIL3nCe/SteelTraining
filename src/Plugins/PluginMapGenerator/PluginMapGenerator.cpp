@@ -112,21 +112,27 @@ bool PluginMapGenerator::DestroyMapGenerator(MapGenerator * pMapGenerator)
 }
 
 /**
-* @brief PluginMapGenerator::GenerateMap2D
+* @brief PluginMapGenerator::GenerateMap
 */
-Map2D PluginMapGenerator::GenerateMap2D(MapGenerator * pMapGenerator, shU32 iRowNb /*= MAP_DEFAULT_ROW_NB*/, shU32 iColumnbNb /*= MAP_DEFAULT_COLUMN_NB*/, shU32 iTileSize /*= MAP_DEFAULT_TILE_SIZE*/)
+bool PluginMapGenerator::GenerateMap(MapGenerator * pMapGenerator, Map & map)
 {
-	Map2D map;
+	if (map)
+	{
+		map.Release();
+	}
 
 	if (shNULL != pMapGenerator)
 	{
-		map.Initialize(iRowNb, iColumnbNb, iTileSize);
-
-		if (!pMapGenerator->GenerateMap(&map))
+		if (pMapGenerator->GenerateMap(&map))
+		{
+			return true;
+		}
+		else
 		{
 			map.Release();
+			return false;
 		}
 	}
 
-	return map;
+	return false;
 }

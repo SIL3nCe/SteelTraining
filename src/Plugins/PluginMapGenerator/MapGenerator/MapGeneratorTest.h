@@ -15,7 +15,15 @@ public:
 
 	//
 	// Map Generation
-	virtual bool					GenerateMap			(Map * pMap) SH_ATTRIBUTE_OVERRIDE;
+	virtual bool					GenerateMap			(Map * pAbstractMap) SH_ATTRIBUTE_OVERRIDE;
 private:
+public:
+	//
+	// Map related
+	shU32			m_iRowNb;
+	shU32			m_iColumnNb;
+	shU32			m_iTileSize;
 
+	//
+	//	
 };

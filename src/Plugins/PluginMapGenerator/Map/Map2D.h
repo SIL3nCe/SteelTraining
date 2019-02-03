@@ -11,18 +11,17 @@ typedef shU32 Map2DTile;
 
 class Map2D : public Map
 {
+	friend class MapGeneratorTest;
+	friend class PluginMapGenerator;
 public:
+	//
+	// Constructor/Destructor
 	explicit				Map2D			(void);
 	virtual					~Map2D			(void);
 
 	//
-	// Initiale/Release
-	bool					Initialize		(shU32 iRowNb, shU32 iColumnNb, shU32 iTileSize);
-	bool					Release			(void);
-
-	//
 	// operators
-	explicit				operator bool	(void) const;
+	virtual explicit		operator bool	(void) const SH_ATTRIBUTE_OVERRIDE;
 
 	//
 	// Getters/Setters
@@ -31,6 +30,12 @@ public:
 	shU32					GetColumnNb		(void) const;
 	shU32					GetTileSize		(void) const;
 	Map2DTile ** const		GetTiles		(void) const;
+protected:
+private:
+	//
+	// Initiale/Release
+	bool					Initialize		(shU32 iRowNb, shU32 iColumnNb, shU32 iTileSize);
+	bool					Release			(void);
 private:
 
 	shU32			m_iRow;

@@ -27,7 +27,7 @@ public:
 
 	//
 	// Map Generation
-	Map2D					GenerateMap2D		(MapGenerator * pMapGenerator, shU32 iRowNb = MAP_DEFAULT_ROW_NB, shU32 iColumnbNb = MAP_DEFAULT_COLUMN_NB, shU32 iTileSize = MAP_DEFAULT_TILE_SIZE);
+	bool					GenerateMap			(MapGenerator * pMapGenerator, Map & map);
 
 private:
 

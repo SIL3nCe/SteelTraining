@@ -9,10 +9,18 @@ enum EMapType
 class Map
 {
 public:
-	explicit			Map		(void);
-	virtual				~Map	(void);
+	explicit			Map				(void);
+	virtual				~Map			(void);
 
-	virtual EMapType	GetType	(void) const = 0;
+	//
+	// Release
+	virtual bool		Release			(void) = 0;
+
+	//
+	// Operators
+	virtual explicit	operator bool	(void) const = 0;
+
+	virtual EMapType	GetType			(void) const = 0;
 
 private:
 

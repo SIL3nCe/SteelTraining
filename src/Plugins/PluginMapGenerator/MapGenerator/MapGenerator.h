@@ -14,7 +14,7 @@ public:
 	virtual							~MapGenerator	(void);
 
 	virtual EMapGeneratorType		GetType			(void) const = 0;
-	virtual bool					GenerateMap		(Map * pMap) = 0;
+	virtual bool					GenerateMap		(Map * pAbstractMap) = 0;
 
 private:
 

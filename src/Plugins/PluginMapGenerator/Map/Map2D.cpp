@@ -5,6 +5,10 @@
 */
 /*explicit*/ Map2D::Map2D(void)
 : Map()
+, m_iRow(0)
+, m_iColumn(0)
+, m_iTileSize(0)
+, m_aaTiles(shNULL)
 {
 	// ...
 }
@@ -15,6 +19,54 @@
 /*virtual*/ Map2D::~Map2D(void)
 {
 	// ...
+}
+
+/**
+* @brief Map2D::operator bool
+*/
+/*virtual explicit*/ Map2D::operator bool(void) const
+{
+	return shNULL != m_aaTiles;
+}
+
+/**
+* @brief Map2D::GetType
+*/
+/*virtual*/ EMapType Map2D::GetType(void) const
+{
+	return e_map_type_2d;
+}
+
+/**
+* @brief Map2D::GetRowNb
+*/
+shU32 Map2D::GetRowNb(void) const
+{
+	return m_iRow;
+}
+
+/**
+* @brief Map2D::GetColumnNb
+*/
+shU32 Map2D::GetColumnNb(void) const
+{
+	return m_iColumn;
+}
+
+/**
+* @brief Map2D::GetTileSize
+*/
+shU32 Map2D::GetTileSize(void) const
+{
+	return m_iTileSize;
+}
+
+/**
+* @brief Map2D::GetTiles
+*/
+Map2DTile ** const Map2D::GetTiles(void) const
+{
+	return m_aaTiles;
 }
 
 /**
@@ -62,52 +114,3 @@ bool Map2D::Release(void)
 
 	return true;
 }
-
-/**
-* @brief Map2D::operator bool
-*/
-/*explicit*/ Map2D::operator bool(void) const
-{
-	return m_iRow != 0;
-}
-
-/**
-* @brief Map2D::GetType
-*/
-/*virtual*/ EMapType Map2D::GetType(void) const
-{
-	return e_map_type_2d;
-}
-
-/**
-* @brief Map2D::GetRowNb
-*/
-shU32 Map2D::GetRowNb(void) const
-{
-	return m_iRow;
-}
-
-/**
-* @brief Map2D::GetColumnNb
-*/
-shU32 Map2D::GetColumnNb(void) const
-{
-	return m_iColumn;
-}
-
-/**
-* @brief Map2D::GetTileSize
-*/
-shU32 Map2D::GetTileSize(void) const
-{
-	return m_iTileSize;
-}
-
-/**
-* @brief Map2D::GetTiles
-*/
-Map2DTile ** const Map2D::GetTiles(void) const
-{
-	return m_aaTiles;
-}
-
