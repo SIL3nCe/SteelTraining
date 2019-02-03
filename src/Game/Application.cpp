@@ -2,6 +2,7 @@
 #include "Game.h"
 
 #include "PluginFactory.h"
+#include "PluginMapGeneratorFactory.h"
 
 #if SH_PC
 #	include <winsock2.h>
@@ -50,6 +51,7 @@ void OnPreInitialize(void)
 void OnPostInitialize(void)
 {
 	RegisterPluginST();
+	RegisterPluginMapGenerator();
 
 	Game * pGame = Game::GetInstance();
 	pGame->Initialize();
@@ -83,6 +85,7 @@ void OnPreRelease(void)
 	pGame->Release();
 
 	UnRegisterPluginST();
+	UnRegisterPluginMapGenerator();
 }
 
 /**

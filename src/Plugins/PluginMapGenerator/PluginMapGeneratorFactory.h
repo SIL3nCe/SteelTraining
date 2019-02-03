@@ -14,11 +14,7 @@ class PluginMapGenerator;
 
 extern "C"
 {
-	PLUGIN_FACTORY_EXPORT void					RegiMapGeneratorerPluginMapGenerator	(void);
-	PLUGIN_FACTORY_EXPORT void					UnRegistererPluginMapGenerator			(void);
-	PLUGIN_FACTORY_EXPORT PluginMapGenerator *	GetPluginMapGenerator					(void);
-
-	PLUGIN_FACTORY_EXPORT void					TouchDownPluginMapGenerator				(int iTouch, float positionX, float positionY);
-	PLUGIN_FACTORY_EXPORT void					TouchUpPluginMapGenerator				(int iTouch, float positionX, float positionY);
-	PLUGIN_FACTORY_EXPORT void					TouchMovePluginMapGenerator				(int iTouch, float positionX, float positionY);
+	PLUGIN_FACTORY_EXPORT void					RegisterPluginMapGenerator		(void);
+	PLUGIN_FACTORY_EXPORT void					UnRegisterPluginMapGenerator	(void);
+	PLUGIN_FACTORY_EXPORT PluginMapGenerator *	GetPluginMapGenerator			(void);
 }
