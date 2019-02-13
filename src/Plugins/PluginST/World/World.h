@@ -3,6 +3,8 @@
 #include "InputManager.h"
 #include "Character/PlayerCharacter.h"
 
+#include "ShSDK/ShSDK.h"
+
 class World
 {
 public:
@@ -10,7 +12,7 @@ public:
 	explicit					 World			(void);
 	virtual						~World			(void);
 
-	void						Initialize		(void);
+	void						Initialize		(const CShIdentifier & levelIdentifier);
 	void						Release			(void);
 
 	void						Update			(float dt);
@@ -18,6 +20,8 @@ public:
 	const PluginInputManager & 	GetInputManager	(void);
 
 private:
+	
+	CShIdentifier		m_levelIdentifier;
 
 	b2World *			m_pbWorld;
 

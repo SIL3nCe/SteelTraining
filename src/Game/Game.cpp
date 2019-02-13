@@ -21,7 +21,7 @@ Game * Game::GetInstance(void)
 	return(m_pInstance);
 }
 
-void Game::Initialize()
+void Game::Initialize(void)
 {
 	const CShIdentifier idLevel("level_test");
 	if (!ShLevel::Load(idLevel))
@@ -64,7 +64,7 @@ void Game::Initialize()
 	}
 }
 
-void Game::Release()
+void Game::Release(void)
 {
 	GetPluginMapGenerator()->DestroyMapGenerator(m_pMapGenerator);
 }

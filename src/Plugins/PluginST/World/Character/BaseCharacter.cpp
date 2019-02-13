@@ -6,7 +6,9 @@
  * @brief Constructor
  */
 BaseCharacter::BaseCharacter(void)
-: m_pbWorld(shNULL)
+: m_pWorld(shNULL)
+, m_pBody(shNULL)
+, m_pEntity(shNULL)
 {
 	// ...
 }
@@ -25,8 +27,16 @@ BaseCharacter::~BaseCharacter(void)
  */
 void BaseCharacter::Initialize(b2World * pWorld)
 {
-	m_pbWorld = pWorld;
-	SH_ASSERT(shNULL != m_pbWorld);
+	m_pWorld = pWorld;
+	SH_ASSERT(shNULL != m_pWorld);
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(0, 0);
+	bodyDef.angle = 0;
+
+	m_pBody = m_pWorld->CreateBody(&bodyDef);
+	SH_ASSERT(shNULL != m_pBody);
 }
 
 /**
@@ -34,7 +44,10 @@ void BaseCharacter::Initialize(b2World * pWorld)
  */
 void BaseCharacter::Release(void)
 {
-	m_pbWorld = shNULL;
+	m_pWorld->DestroyBody(m_pBody);
+
+	m_pBody = shNULL;
+	m_pWorld = shNULL;
 }
 
 /**
@@ -42,4 +55,14 @@ void BaseCharacter::Release(void)
  */
 void BaseCharacter::Update(float dt)
 {
+}
+
+/**
+ * @brief Inputs::UpdateAnimations
+ */
+void BaseCharacter::UpdateAnimations(float dt)
+{
+	b2Vec2 bodyPos = m_pBody->GetPosition();
+	//TODO make b2Toshine method for vector with coeff
+	ShEntity2::SetRelativePosition2(m_pEntity, CShVector2(bodyPos.x, bodyPos.y));
 }

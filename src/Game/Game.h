@@ -12,8 +12,8 @@ public:
 
 	static Game * GetInstance(void);
 
-	void Initialize();
-	void Release();
+	void Initialize(void);
+	void Release(void);
 
 	void Update(float dt);
 

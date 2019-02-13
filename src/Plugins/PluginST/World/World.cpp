@@ -1,7 +1,5 @@
 #include "World.h"
 
-#include "ShSDK/ShSDK.h"
-
 /**
  * @brief Constructor
  */
@@ -23,9 +21,11 @@ World::~World(void)
  * @brief Initialize
  * @param pUser
  */
-void World::Initialize(void)
+void World::Initialize(const CShIdentifier & levelIdentifier)
 {
-	b2Vec2 gravity(0, -9.8);
+	m_levelIdentifier = levelIdentifier;
+
+	b2Vec2 gravity(0.0f, 0.0f);
 	m_pbWorld = new b2World(gravity);
 
 	ShUser * pUser = ShUser::GetUser(0);
@@ -33,7 +33,7 @@ void World::Initialize(void)
 
 	m_inputManager.Initialize(pUser);
 
-	m_playerCharacter.Initialize(m_pbWorld, &m_inputManager);
+	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, &m_inputManager);
 }
 
 /**
@@ -55,6 +55,16 @@ void World::Update(float dt)
 	m_inputManager.Update();
 
 	m_playerCharacter.Update(dt);
+
+	float32 timeStep = 1 / 60.0f;   // TODO timeStep should match the number of times per second it will be called
+
+	//velocityIterations: how strongly to correct velocity
+	//positionIterations: how strongly to correct position
+	// ^ Making these values higher will give you a more correct simulation, at the cost of some performance
+
+	m_pbWorld->Step(timeStep, 8, 3);
+
+	m_playerCharacter.UpdateAnimations(dt);
 }
 
 /**
