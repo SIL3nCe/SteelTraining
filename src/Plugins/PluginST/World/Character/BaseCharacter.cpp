@@ -4,7 +4,7 @@
  * @brief Constructor
  */
 BaseCharacter::BaseCharacter(void)
-: m_pWorld(shNULL)
+: Object()
 , m_pBody(shNULL)
 , m_pEntity(shNULL)
 {
@@ -25,15 +25,14 @@ BaseCharacter::~BaseCharacter(void)
  */
 void BaseCharacter::Initialize(b2World * pWorld)
 {
-	m_pWorld = pWorld;
-	SH_ASSERT(shNULL != m_pWorld);
+	SH_ASSERT(shNULL != pWorld);
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0, 0);
 	bodyDef.angle = 0;
 
-	m_pBody = m_pWorld->CreateBody(&bodyDef);
+	m_pBody = pWorld->CreateBody(&bodyDef);
 	SH_ASSERT(shNULL != m_pBody);
 }
 
@@ -42,30 +41,30 @@ void BaseCharacter::Initialize(b2World * pWorld)
  */
 void BaseCharacter::Release(void)
 {
-	m_pWorld->DestroyBody(m_pBody);
-
+	m_pBody->GetWorld()->DestroyBody(m_pBody);
 	m_pBody = shNULL;
-	m_pWorld = shNULL;
 }
 
 /**
- * @brief Inputs::Update
+ * @brief Update
  */
 void BaseCharacter::Update(float dt)
 {
+	SH_UNUSED(dt);
 }
 
 /**
- * @brief Inputs::UpdateAnimations
+ * @brief UpdateAnimations
  */
 void BaseCharacter::UpdateAnimations(float dt)
 {
+	SH_UNUSED(dt);
 	b2Vec2 bodyPos = m_pBody->GetPosition();
 	ShEntity2::SetRelativePosition2(m_pEntity, CShVector2(bodyPos.x, bodyPos.y));
 }
 
 /**
- * @brief Inputs::GetObjectType
+ * @brief GetObjectType
  */
 Object::EType BaseCharacter::GetObjectType(void) const
 {

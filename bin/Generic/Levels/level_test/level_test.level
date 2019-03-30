@@ -13,6 +13,7 @@
         <animated_texture_list/>
         <sprite_texture_list>
             <sprite_texture name="game.blackbackground.tga"/>
+            <sprite_texture name="player.walk_01.tga"/>
         </sprite_texture_list>
         <material_library_list/>
         <submesh_list/>
@@ -20,18 +21,14 @@
         <prefab_list/>
     </preload>
     <layer_list>
-        <layer name="layer_default" show="true" position_x="0.000000" position_y="0.000000" position_z="0.000000" min_x="-17.679899" min_y="0.000000" max_x="4000.000000" max_y="4000.000000"/>
+        <layer name="layer_default" show="true" position_x="0.000000" position_y="0.000000" position_z="0.000000" min_x="0.000000" min_y="0.000000" max_x="4000.000000" max_y="4000.000000"/>
         <layer name="layer_gui" show="true" position_x="0.000000" position_y="0.000000" position_z="0.000000" min_x="0.000000" min_y="0.000000" max_x="0.000000" max_y="0.000000"/>
     </layer_list>
     <object_list>
-        <point_list>
-            <point name="collision_shape_auto_001.0" position_x="-85.023125" position_y="84.232582" position_z="0.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000"/>
-            <point name="collision_shape_auto_001.1" position_x="121.408020" position_y="83.366348" position_z="0.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000"/>
-            <point name="collision_shape_auto_001.2" position_x="120.847961" position_y="-89.130119" position_z="0.000092" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000"/>
-            <point name="collision_shape_auto_001.3" position_x="-86.591515" position_y="-89.945114" position_z="-0.000092" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000"/>
-        </point_list>
+        <point_list/>
         <entity2_list>
             <entity2 name="sprite_game_blackbackground" position_x="0.000000" position_y="0.000000" position_z="-1.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1000.000000" scale_y="1000.000000" scale_z="1.000000" layer="layer_default" show="true" color_r="1.000000" color_g="1.000000" color_b="1.000000" color_a="1.000000" pivot="center_center" pivot_custom_x="0.500000" pivot_custom_y="0.500000" sprite_library="game" sprite_name="blackbackground" blend_function="alpha"/>
+            <entity2 name="sprite_player_test" position_x="23.885290" position_y="16.667484" position_z="0.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000" layer="layer_default" show="true" color_r="1.000000" color_g="1.000000" color_b="1.000000" color_a="1.000000" pivot="center_center" pivot_custom_x="0.500000" pivot_custom_y="0.500000" sprite_library="player" sprite_name="walk_01" blend_function="alpha"/>
         </entity2_list>
         <ruler_list/>
         <text_zone_list/>
@@ -40,26 +37,7 @@
         <camera_list/>
         <particle_system_list/>
         <light_list/>
-        <dummy_aabb2_list>
-            <dummy_aabb2 name="dummy_aabb2_auto_001" position_x="0.000000" position_y="0.000000" position_z="0.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000" layer="layer_default" show="true" color_r="1.000000" color_g="1.000000" color_b="1.000000" color_a="1.000000" min_x="-17.679899" min_y="18.542299" max_x="17.679899" max_y="-18.542299">
-                <data_set_list>
-                    <data_set name="object_player" instance_name="object_player_0">
-                        <data type="object" sub_type="all" name="attachedobject" value="collision_shape_auto_001.0"/>
-                        <data type="bool" name="isstatic" value="false"/>
-                        <data type="bool" name="allowsleep" value="true"/>
-                        <data type="bool" name="awake" value="true"/>
-                        <data type="bool" name="fixedrotation" value="false"/>
-                        <data type="bool" name="bullet" value="true"/>
-                        <data type="bool" name="active" value="true"/>
-                        <data type="float" name="friction" value="0.200000"/>
-                        <data type="float" name="restitution" value="0.000000"/>
-                        <data type="float" name="density" value="1.000000"/>
-                        <data type="int" name="categorybits" value="1"/>
-                        <data type="int" name="maskbits" value="1"/>
-                    </data_set>
-                </data_set_list>
-            </dummy_aabb2>
-        </dummy_aabb2_list>
+        <dummy_aabb2_list/>
         <dummy_aabb3_list/>
         <dummy_circle_list/>
         <dummy_sphere_list/>
@@ -68,46 +46,11 @@
         <animation_list/>
         <prefab_list/>
         <collision_segment_list/>
-        <collision_shape_list>
-            <collision_shape name="collision_shape_auto_001" position_x="-18.542208" position_y="-9.576735" position_z="0.000000" rotation_x="0.000000" rotation_y="0.000000" rotation_z="0.000000" scale_x="1.000000" scale_y="1.000000" scale_z="1.000000" type="none" prohibited="0" closed="1">
-                <data_set_list>
-                    <data_set name="object_static" instance_name="object_static_0">
-                        <data type="object" sub_type="all" name="attachedobject" value="collision_shape_auto_001.0"/>
-                        <data type="bool" name="isstatic" value="true"/>
-                        <data type="bool" name="allowsleep" value="true"/>
-                        <data type="bool" name="awake" value="true"/>
-                        <data type="bool" name="fixedrotation" value="true"/>
-                        <data type="bool" name="bullet" value="false"/>
-                        <data type="bool" name="active" value="true"/>
-                        <data type="float" name="friction" value="0.200000"/>
-                        <data type="float" name="restitution" value="0.000000"/>
-                        <data type="float" name="density" value="1.000000"/>
-                        <data type="int" name="categorybits" value="1"/>
-                        <data type="int" name="maskbits" value="65535"/>
-                    </data_set>
-                </data_set_list>
-                <point name="collision_shape_auto_001.0"/>
-                <point name="collision_shape_auto_001.1"/>
-                <point name="collision_shape_auto_001.2"/>
-                <point name="collision_shape_auto_001.3"/>
-            </collision_shape>
-        </collision_shape_list>
+        <collision_shape_list/>
     </object_list>
     <scene_graph>
-        <dummy_aabb2 name="dummy_aabb2_auto_001"/>
         <entity2 name="sprite_game_blackbackground"/>
-        <collision_segment name=""/>
-        <collision_segment name=""/>
-        <collision_segment name=""/>
-        <collision_segment name=""/>
-        <collision_shape name="collision_shape_auto_001">
-            <point name="collision_shape_auto_001.0"/>
-            <point name="collision_shape_auto_001.1"/>
-            <point name="collision_shape_auto_001.2"/>
-            <point name="collision_shape_auto_001.3"/>
-        </collision_shape>
-        < name="mainwindowroot"/>
-        < name="mainwindowshine_tooltip"/>
+        <entity2 name="sprite_player_test"/>
     </scene_graph>
     <plugins>
         <plugin name="pluginsteeltraining"/>
@@ -122,6 +65,6 @@
         <translate_z enabled="true"/>
         <grid enabled="false" position_x="0.000000" position_y="0.000000" position_z="0.000000" size_x="100.000000" size_y="100.000000" subdivision_x="10" subdivision_y="10"/>
         <show_markers enabled="true"/>
-        <camera position_x="-0.000000" position_y="0.000023" position_z="529.434692" target_x="0.000000" target_y="0.000000" target_z="0.000000" znear="1.000000" zfar="40000.000000" zoom="0.529435" camera_angle_y="-1.570796" camera_angle_z="1.570796" type="1" arcball_x="-529.434692" arcball_y="0.000000" arcball_z="0.000000" camera_up_x="0.000000" camera_up_y="0.000000" camera_up_z="1.000000"/>
+        <camera position_x="-0.000000" position_y="-0.000685" position_z="2183.575928" target_x="0.000000" target_y="0.000000" target_z="0.000000" znear="1.000000" zfar="40000.000000" zoom="2.183576" camera_angle_y="-1.570796" camera_angle_z="1.570796" type="1" arcball_x="-2183.575928" arcball_y="0.000000" arcball_z="0.000000" camera_up_x="0.000000" camera_up_y="0.000000" camera_up_z="1.000000"/>
     </editor_settings>
 </level>
