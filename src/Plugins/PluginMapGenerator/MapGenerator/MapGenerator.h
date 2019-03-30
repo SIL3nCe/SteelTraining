@@ -16,7 +16,7 @@ public:
 	virtual							~MapGenerator	(void);
 
 	virtual EMapGeneratorType		GetType			(void) const;
-	virtual bool					GenerateMap		(Map *& pAbstractMap, const CShIdentifier & idLevel);
+	virtual bool					GenerateMap		(Map *& pAbstractMap, const CShIdentifier & idLevel) = 0;
 
 private:
 };

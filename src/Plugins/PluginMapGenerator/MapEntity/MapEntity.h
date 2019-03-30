@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ShSDK/ShSDK.h"
+
 enum EMapEntityType
 {
 	e_map_entity_type_static_object,
