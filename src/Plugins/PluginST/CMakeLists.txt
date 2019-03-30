@@ -44,14 +44,19 @@ source_group("World\\Character" FILES ${SOURCES_BaseCharacter})
 set(SOURCES_PlayerCharacter World/Character/PlayerCharacter.cpp World/Character/PlayerCharacter.h)
 source_group("World\\Character" FILES ${SOURCES_PlayerCharacter})
 
+# Character files
+set(SOURCES_EnemyCharacter World/Character/EnemyCharacter.cpp World/Character/EnemyCharacter.h)
+source_group("World\\Character" FILES ${SOURCES_EnemyCharacter})
+
 # Put everything together before adding platform-specific files
-set(SOURCES 
+set(SOURCES
 ${SOURCES_PluginST}
 ${SOURCES_Factory}
 ${SOURCES_World}
 ${SOURCES_Inputs}
 ${SOURCES_BaseCharacter}
 ${SOURCES_PlayerCharacter}
+${SOURCES_EnemyCharacter}
 ${SOURCES_Object}
 ${SOURCES_ObjectWall}
 )
