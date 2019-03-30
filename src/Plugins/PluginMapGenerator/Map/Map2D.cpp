@@ -9,6 +9,7 @@
 , m_iColumn(0)
 , m_iTileSize(0)
 , m_mTiles()
+, m_aMapEntity()
 {
 	// ...
 }
@@ -19,6 +20,56 @@
 /*virtual*/ Map2D::~Map2D(void)
 {
 	// ...
+}
+
+/**
+* @brief Map2D::Initialize
+*/
+bool Map2D::Initialize(shU32 iRowNb, shU32 iColumnNb, shU32 iTileSize)
+{
+	SH_ASSERT(0 != iRowNb);
+	SH_ASSERT(0 != iColumnNb);
+	SH_ASSERT(0 != iTileSize);
+
+	if (0 == iRowNb || 0 == iColumnNb || 0 == iTileSize)
+	{
+		return false;
+	}
+
+	m_iRow = iRowNb;
+	m_iColumn = iColumnNb;
+	m_iTileSize = iTileSize;
+
+	return true;
+}
+
+/**
+* @brief Map2D::Release
+*/
+bool Map2D::Release(void)
+{
+	m_iRow = 0;
+	m_iColumn = 0;
+	m_iTileSize = 0;
+
+	while (!m_mTiles.IsEmpty())
+	{
+		while (!m_mTiles[0].IsEmpty())
+		{
+			Tile * pTile = m_mTiles[0][0];
+			SH_SAFE_DELETE(pTile);
+			m_mTiles[0].Remove(0);
+		}
+		m_mTiles.Remove(0);
+	}
+
+	while (!m_aMapEntity.IsEmpty())
+	{
+		m_aMapEntity[0].Release();
+		m_aMapEntity.Remove(0);
+	}
+
+	return true;
 }
 
 /**
@@ -78,45 +129,47 @@ Tile * Map2D::GetTile(int nRow, int nColumn) const
 }
 
 /**
-* @brief Map2D::Initialize
+* @brief
 */
-bool Map2D::Initialize(shU32 iRowNb, shU32 iColumnNb, shU32 iTileSize)
+void Map2D::AddWall(int iRowPosition, int iColumnPosition)
 {
-	SH_ASSERT(0 != iRowNb);
-	SH_ASSERT(0 != iColumnNb);
-	SH_ASSERT(0 != iTileSize);
-	
-	if (0 == iRowNb || 0 == iColumnNb || 0 == iTileSize)
-	{
-		return false;
-	}
-
-	m_iRow		= iRowNb;
-	m_iColumn	= iColumnNb;
-	m_iTileSize	= iTileSize;
-
-	return true;
+	m_mTiles[iRowPosition][iColumnPosition]->m_eTileType = ETileType::e_tile_wall;
 }
 
 /**
-* @brief Map2D::Release
+* @brief 
 */
-bool Map2D::Release(void)
+void Map2D::AddMapEntity(const MapEntity & mapEntity, int iRowPosition, int iColumnPosition)
 {
-	m_iRow		= 0;
-	m_iColumn	= 0;
-	m_iTileSize	= 0;
-
-	while (!m_mTiles.IsEmpty())
+	if (mapEntity.m_mNeededTiles.IsEmpty()) return;
+	int iRowCount = mapEntity.m_mNeededTiles.GetCount();
+	for (int nRow = 0; nRow < iRowCount; ++nRow)
 	{
-		while (!m_mTiles[0].IsEmpty())
+		int iColumnCount = mapEntity.m_mNeededTiles[nRow].GetCount();
+		for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
 		{
-			Tile * pTile = m_mTiles[0][0];
-			SH_SAFE_DELETE(pTile);
-			m_mTiles[0].Remove(0);
-		}
-		m_mTiles.Remove(0);
-	}
+			EMapEntityTileType eMapEntityTileType = mapEntity.m_mNeededTiles[nRow][nColumn];
 
-	return true;
+			switch (eMapEntityTileType)
+			{
+			case EMapEntityTileType::e_map_entity_tile_type_block:
+			{
+				m_mTiles[nRow + iRowPosition][nColumn + iColumnPosition]->m_eTileType = ETileType::e_tile_block;
+			}
+			break;
+
+			case EMapEntityTileType::e_map_entity_tile_type_area:
+			{
+				m_mTiles[nRow + iRowPosition][nColumn + iColumnPosition]->m_eTileType = ETileType::e_tile_entity_area;
+			}
+			break;
+
+			case EMapEntityTileType::e_map_entity_tile_type_none:
+			{
+				// nothing
+			}
+			break;
+			}
+		}
+	}
 }
