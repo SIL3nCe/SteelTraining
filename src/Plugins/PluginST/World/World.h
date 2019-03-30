@@ -28,8 +28,6 @@ public:
 
 private:
 
-	void						DatasetParser	(ShObject * pObject, ShDataSet * pDataSet);
-
 	void						GenerateShape	(ShCollisionShape * pCollisionShape, const b2Vec2 & center, b2ChainShape & b2OutShape);
 	void						GenerateShape	(ShDummyAABB2 * pObject, const b2Vec2 & center, b2PolygonShape & b2OutShape);
 

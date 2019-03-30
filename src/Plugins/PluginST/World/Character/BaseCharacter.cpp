@@ -4,7 +4,8 @@
  * @brief Constructor
  */
 BaseCharacter::BaseCharacter(void)
-: m_pWorld(shNULL)
+: Object()
+, m_pWorld(shNULL)
 , m_pBody(shNULL)
 , m_pEntity(shNULL)
 {
@@ -49,14 +50,14 @@ void BaseCharacter::Release(void)
 }
 
 /**
- * @brief Inputs::Update
+ * @brief Update
  */
 void BaseCharacter::Update(float dt)
 {
 }
 
 /**
- * @brief Inputs::UpdateAnimations
+ * @brief UpdateAnimations
  */
 void BaseCharacter::UpdateAnimations(float dt)
 {
@@ -65,7 +66,7 @@ void BaseCharacter::UpdateAnimations(float dt)
 }
 
 /**
- * @brief Inputs::GetObjectType
+ * @brief GetObjectType
  */
 Object::EType BaseCharacter::GetObjectType(void) const
 {
