@@ -1,5 +1,6 @@
 #include "PlayerCharacter.h"
 #include "../InputManager.h"
+#include "../World.h"
 
 #include "ShSDK/ShSDK.h"
 
@@ -35,7 +36,7 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 	SH_ASSERT(shNULL != m_pEntity);
 
 	b2PolygonShape boxShape;
-	boxShape.SetAsBox(1, 1);
+	boxShape.SetAsBox(10, 10);
 
 	b2FixtureDef boxFixtureDef;
 	boxFixtureDef.shape = &boxShape;
@@ -61,25 +62,33 @@ void PlayerCharacter::Update(float dt)
 	bool bDown = m_pInputManager->IsGoingDown();
 	bool bUp = m_pInputManager->IsGoingUp();
 
+	b2Vec2 impulse(0.0f, 0.0f);
+
 	if (bLeft)
 	{
-		m_pBody->ApplyLinearImpulse(b2Vec2(-50.0f, 0.0f), m_pBody->GetWorldCenter(), true);
+		impulse.x = -50.0f;
 	}
 	else if (bRight)
 	{
-		m_pBody->ApplyLinearImpulse(b2Vec2(50.0f, 0.0f), m_pBody->GetWorldCenter(), true);
+		impulse.x = 50.0f;
 	}
-	else if (bDown)
+	
+	if (bDown)
 	{
-		m_pBody->ApplyLinearImpulse(b2Vec2(0.0f, -50.0f), m_pBody->GetWorldCenter(), true);
+		impulse.y = -50.0f;
 	}
 	else if (bUp)
 	{
-		m_pBody->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), m_pBody->GetWorldCenter(), true);
+		impulse.y = 50.0f;
+	}
+	
+	if (bLeft || bRight || bDown || bUp)
+	{
+		m_pBody->ApplyLinearImpulse(impulse, m_pBody->GetWorldCenter(), true);
 	}
 	else
 	{
-		m_pBody->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		m_pBody->SetLinearVelocity(impulse);
 	}
 }
 
@@ -89,9 +98,17 @@ void PlayerCharacter::Update(float dt)
 void PlayerCharacter::UpdateAnimations(float dt)
 {
 	// rotate for test
-	CShEulerAngles angle = ShEntity2::GetRelativeRotation(m_pEntity);
-	angle.m_z += 10.0f * dt;
-	ShEntity2::SetRelativeRotation(m_pEntity, angle);
+	//CShEulerAngles angle = ShEntity2::GetRelativeRotation(m_pEntity);
+	//angle.m_z += 10.0f * dt;
+	//ShEntity2::SetRelativeRotation(m_pEntity, angle);
 
 	BaseCharacter::UpdateAnimations(dt);
+}
+
+/**
+ * @brief Inputs::GetObjectType
+ */
+Object::EType PlayerCharacter::GetObjectType(void) const
+{
+	return EType::player;
 }

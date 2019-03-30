@@ -1,7 +1,5 @@
 #include "BaseCharacter.h"
 
-#include "ShSDK/ShSDK.h"
-
 /**
  * @brief Constructor
  */
@@ -63,6 +61,13 @@ void BaseCharacter::Update(float dt)
 void BaseCharacter::UpdateAnimations(float dt)
 {
 	b2Vec2 bodyPos = m_pBody->GetPosition();
-	//TODO make b2Toshine method for vector with coeff
 	ShEntity2::SetRelativePosition2(m_pEntity, CShVector2(bodyPos.x, bodyPos.y));
+}
+
+/**
+ * @brief Inputs::GetObjectType
+ */
+Object::EType BaseCharacter::GetObjectType(void) const
+{
+	return EType::character;
 }

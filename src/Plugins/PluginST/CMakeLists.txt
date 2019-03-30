@@ -27,6 +27,10 @@ source_group("World" FILES ${SOURCES_World})
 set(SOURCES_Inputs World/InputManager.cpp World/InputManager.h)
 source_group("World\\Inputs" FILES ${SOURCES_Inputs})
 
+# Object
+set(SOURCES_Object World/Object.cpp World/Object.h)
+source_group("World" FILES ${SOURCES_Object})
+
 # Character files
 set(SOURCES_BaseCharacter World/Character/BaseCharacter.cpp World/Character/BaseCharacter.h)
 source_group("World\\Character" FILES ${SOURCES_BaseCharacter})
@@ -43,6 +47,7 @@ ${SOURCES_World}
 ${SOURCES_Inputs}
 ${SOURCES_BaseCharacter}
 ${SOURCES_PlayerCharacter}
+${SOURCES_Object}
 )
 
 # Compile to use it on Runtime
@@ -54,7 +59,7 @@ if (NOT MSVC)
 endif (NOT MSVC)
 set_property(TARGET PluginST APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 
-target_link_libraries(PluginST INTERFACE ${SHSDK_LIBRARIES})
+target_link_libraries(PluginST PRIVATE ${SHSDK_LIBRARIES})
 target_link_libraries(PluginST INTERFACE Box2D)
 
 target_include_directories(PluginST PUBLIC "${SHSDK_INCLUDE_DIR}")

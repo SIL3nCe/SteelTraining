@@ -24,6 +24,10 @@ set(SOURCES_Map		Map/Map.cpp		Map/Map.h
 					Map/Map2D.cpp	Map/Map2D.h)
 source_group("Map" FILES ${SOURCES_Map})
 
+# Map Entity files
+set(SOURCES_Map_Entity	MapEntity/MapEntity.cpp			MapEntity/MapEntity.h)
+source_group("MapEntity" FILES ${SOURCES_Map_Entity})
+
 # MapGenerator files
 set(SOURCES_MapGenerator	MapGenerator/MapGenerator.cpp		MapGenerator/MapGenerator.h
 							MapGenerator/MapGeneratorTest.cpp	MapGenerator/MapGeneratorTest.h)
@@ -31,10 +35,11 @@ source_group("MapGenerator" FILES ${SOURCES_MapGenerator})
 
 # Put everything together before adding platform-specific files
 set(SOURCES 
-${SOURCES_Map}
-${SOURCES_MapGenerator}
 ${SOURCES_Plugin}
 ${SOURCES_Factory}
+${SOURCES_Map}
+${SOURCES_Map_Entity}
+${SOURCES_MapGenerator}
 )
 
 # Compile to use it on Runtime
@@ -46,7 +51,7 @@ if (NOT MSVC)
 	set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_OPTIONS -fno-exceptions -fno-rtti)
 endif (NOT MSVC)
 
-target_link_libraries(PluginMapGenerator INTERFACE ${SHSDK_LIBRARIES})
+target_link_libraries(PluginMapGenerator PRIVATE ${SHSDK_LIBRARIES})
 
 target_include_directories(PluginMapGenerator PUBLIC "${SHSDK_INCLUDE_DIR}")
 target_include_directories(PluginMapGenerator INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")

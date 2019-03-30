@@ -15,3 +15,12 @@
 {
 	// ...
 }
+
+/**
+* @brief
+*/
+EMapGeneratorType MapGenerator::GetType(void) const
+{
+	return EMapGeneratorType::e_map_generator_type_test;
+}
+

@@ -7,32 +7,28 @@
 #define MAP_DEFAULT_COLUMN_NB 50
 #define MAP_DEFAULT_TILE_SIZE 20
 
+enum ETileType
+{
+	e_tile_block,
+	e_tile_wall,
+	e_tile_void,
+	e_tile_ground,
+};
+
+struct Tile
+{
+	int			iRow;
+	int			iColumn;
+	ETileType	m_eTileType;
+};
+
 class Map2D : public Map
 {
 public:
 	friend class MapGeneratorTest;
 	friend class PluginMapGenerator;
+
 	
-	struct Tile
-	{
-		explicit	Tile		(void)	: iRepresentation(0), pEntity2(shNULL)	{}
-		
-		void		Initialize	(shU32 iRepresentation, const CShIdentifier & idLevel, ShSprite * pSprite, shU32 iRowIndex, shU32 iColumnIndex, shU32 iTileSize)
-		{
-			CShIdentifier idTile(CShString("tile_") + CShString::FromInt(iRowIndex) + CShString("x") + CShString::FromInt(iColumnIndex));
-			pEntity2 = ShEntity2::Create(idLevel, idTile, CShIdentifier("layer_default"), pSprite, CShVector3(iColumnIndex * iTileSize, iRowIndex * iTileSize, 0.0f), CShEulerAngles::ZERO, CShVector3(1.0f, 1.0f, 1.0f));
-		}
-
-		void		Release		(void)
-		{
-			iRepresentation = 0;
-			ShEntity2::Destroy(pEntity2);
-		}
-
-		shU32		iRepresentation;
-	private:
-		ShEntity2 *	pEntity2;
-	};
 
 	//
 	// Constructor/Destructor
@@ -45,11 +41,12 @@ public:
 
 	//
 	// Getters/Setters
-	virtual EMapType		GetType			(void) const SH_ATTRIBUTE_OVERRIDE;
-	shU32					GetRowNb		(void) const;
-	shU32					GetColumnNb		(void) const;
-	shU32					GetTileSize		(void) const;
-	Map2D::Tile ** const	GetTiles		(void) const;
+	virtual EMapType					GetType			(void) const SH_ATTRIBUTE_OVERRIDE;
+	shU32								GetRowCount		(void) const;
+	shU32								GetColumnCount		(void) const;
+	shU32								GetTileSize		(void) const;
+	const CShArray<CShArray<Tile*>> &	GetTiles		(void) const;
+	Tile*								GetTile			(int nRow, int nColumn) const;
 protected:
 private:
 	//
@@ -58,9 +55,9 @@ private:
 	bool					Release			(void);
 private:
 
-	shU32			m_iRow;
-	shU32			m_iColumn;
-	shU32			m_iTileSize;
+	shU32						m_iRow;
+	shU32						m_iColumn;
+	shU32						m_iTileSize;
 
-	Map2D::Tile **	m_aaTiles;
+	CShArray< CShArray<Tile*>>	m_mTiles;
 };
