@@ -32,6 +32,10 @@ source_group("World\\Inputs" FILES ${SOURCES_Inputs})
 set(SOURCES_Object World/Object.cpp World/Object.h)
 source_group("World" FILES ${SOURCES_Object})
 
+# Object Wall
+set(SOURCES_ObjectWall World/Objects/ObjectWall.cpp World/Objects/ObjectWall.h)
+source_group("World\\Objects" FILES ${SOURCES_ObjectWall})
+
 # Character files
 set(SOURCES_BaseCharacter World/Character/BaseCharacter.cpp World/Character/BaseCharacter.h)
 source_group("World\\Character" FILES ${SOURCES_BaseCharacter})
@@ -49,6 +53,7 @@ ${SOURCES_Inputs}
 ${SOURCES_BaseCharacter}
 ${SOURCES_PlayerCharacter}
 ${SOURCES_Object}
+${SOURCES_ObjectWall}
 )
 
 # Compile to use it on Runtime

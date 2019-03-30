@@ -1,5 +1,7 @@
 <project project_version="1.8">
-    <extensions/>
+    <extensions>
+        <extension name="SteelTraining"/>
+    </extensions>
     <project_settings>
         <general>
             <setting name="generalname" value="SteelTraining"/>
@@ -14,11 +16,23 @@
             <setting name="generalminor" value="0"/>
             <setting name="parentallevel" value="0"/>
             <setting name="app_type" value="0"/>
+            <setting name="hdr" value="0"/>
+            <setting name="english" value="0"/>
             <setting name="englishname" value=""/>
+            <setting name="french" value="0"/>
             <setting name="frenchname" value=""/>
+            <setting name="spanish" value="0"/>
             <setting name="spanishname" value=""/>
+            <setting name="german" value="0"/>
             <setting name="germanname" value=""/>
+            <setting name="italian" value="0"/>
             <setting name="italianname" value=""/>
+            <setting name="featurenetworking" value="0"/>
+            <setting name="featurerecording" value="0"/>
+            <setting name="featureinapppurchase" value="0"/>
+            <setting name="featurenotifications" value="0"/>
+            <setting name="featurevr" value="0"/>
+            <setting name="generallocalmultiplayer" value="0"/>
             <setting name="generaluuid" value="{43484af9-8ecb-437c-a796-19e5fa104867}"/>
             <desktop>
                 <setting name="desktopwidth" value="0"/>
@@ -28,7 +42,10 @@
                 <mac/>
             </desktop>
             <console>
+                <setting name="console1080p" value="0"/>
+                <setting name="console720p" value="0"/>
                 <ps4>
+                    <setting name="user_management" value="0"/>
                     <setting name="pronunciationsigfile" value=""/>
                     <setting name="pronunciationxmlfile" value=""/>
                     <setting name="youtubeclientid" value=""/>
@@ -37,15 +54,18 @@
                     <setting name="savedataquota" value="0"/>
                     <setting name="livearea" value=""/>
                 </psvita>
-                <ps3/>
                 <xboxone>
                     <setting name="packagingdirectory" value=""/>
                     <setting name="mappingfile" value=""/>
                 </xboxone>
-                <xbox360/>
             </console>
             <mobile>
+                <setting name="mobilelandscape" value="0"/>
+                <setting name="mobileportrait" value="0"/>
+                <setting name="mobilefeaturefullscreen" value="0"/>
                 <android>
+                    <setting name="androidtargetsdkversion" value="0"/>
+                    <setting name="androidminsdkversion" value="0"/>
                     <setting name="androidpublickey" value=""/>
                 </android>
                 <ios/>

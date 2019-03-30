@@ -53,7 +53,7 @@ void PlayerCharacter::Release(void)
 }
 
 /**
- * @brief Inputs::Update
+ * @brief Update
  */
 void PlayerCharacter::Update(float dt)
 {
@@ -93,7 +93,7 @@ void PlayerCharacter::Update(float dt)
 }
 
 /**
- * @brief Inputs::PostUpdate
+ * @brief PostUpdate
  */
 void PlayerCharacter::UpdateAnimations(float dt)
 {
@@ -106,7 +106,7 @@ void PlayerCharacter::UpdateAnimations(float dt)
 }
 
 /**
- * @brief Inputs::GetObjectType
+ * @brief GetObjectType
  */
 Object::EType PlayerCharacter::GetObjectType(void) const
 {
