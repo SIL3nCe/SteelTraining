@@ -51,7 +51,7 @@ if (NOT MSVC)
 	set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_OPTIONS -fno-exceptions -fno-rtti)
 endif (NOT MSVC)
 
-target_link_libraries(PluginMapGenerator INTERFACE ${SHSDK_LIBRARIES})
+target_link_libraries(PluginMapGenerator PRIVATE ${SHSDK_LIBRARIES})
 
 target_include_directories(PluginMapGenerator PUBLIC "${SHSDK_INCLUDE_DIR}")
 target_include_directories(PluginMapGenerator INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")

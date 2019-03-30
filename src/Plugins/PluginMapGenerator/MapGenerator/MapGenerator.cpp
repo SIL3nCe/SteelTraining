@@ -4,7 +4,6 @@
 * @brief Constructor
 */
 /*explicit*/ MapGenerator::MapGenerator(void)
-	: m_aMapEntity()
 {
 	// ...
 }

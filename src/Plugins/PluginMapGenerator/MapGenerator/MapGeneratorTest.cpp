@@ -7,6 +7,7 @@
 */
 /*explicit*/ MapGeneratorTest::MapGeneratorTest(void)
 : m_aMapEntity()
+, randValue()
 {
 	// ...
 }
@@ -53,17 +54,24 @@ void MapGeneratorTest::AddMapEntity(const MapEntity & mapEntity)
 */
 void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier & idLevel)
 {
-	//
-	// Update representation for TileMap
-
-	int iRowCount = pMap->GetColumnNb();
-	for (int iRow = 1; iRow < iRowCount; ++iRow)
+	int iRowCount = pMap->GetColumnCount();
+	for (int nRow = 1; nRow < iRowCount; ++nRow)
 	{
-		int iColumnCount = pMap->GetRowNb();
-		for (int iColumn = 0; iColumn < iColumnCount; ++iColumn)
+		int iColumnCount = pMap->GetRowCount();
+		for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
 		{
-			MapEntity mapEntity;
-			FindNextMapEntity(iRow, iColumn, mapEntity);
+			if (0 == nColumn || iColumnCount + 1 == iColumnCount || 0 == nRow || iRowCount + 1 == iRowCount)
+			{
+				pMap->AddWall(nRow, nColumn);
+			}
+			else
+			{
+				MapEntity mapEntity;
+				if (FindNextMapEntity(nRow, nColumn, mapEntity))
+				{
+
+				}
+			}
 		}
 	}
 }
@@ -71,24 +79,26 @@ void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier
 /**
 * @brief MapGeneratorTest::MapGenerationAlgorithm
 */
-void MapGeneratorTest::FindNextMapEntity(int iRow, int iColumn, MapEntity & newMapEntity)
+bool MapGeneratorTest::FindNextMapEntity(int iRow, int iColumn, MapEntity & newMapEntity)
 {
+
+	return false;
 }
 
 bool MapGeneratorTest::CanBePlacedHere(const MapEntity & mapEntity, Map2D *& pMap, int iColumn, int iRow)
 {
 	if (m_aMapEntity.IsEmpty()) return false;
 
-	int iMapEntityWidth = mapEntity.m_width;
-	int iMapEntityHeight = mapEntity.m_height;
+	int iMapEntityWidth = mapEntity.m_iWidth;
+	int iMapEntityHeight = mapEntity.m_iHeight;
 
 	// Check if the entity is outside the map
 	{
 		if (0 > iColumn + iMapEntityWidth) return false;
-		if (m_aMapEntity.GetCount() <= iColumn + iMapEntityWidth) return false;
+		if (pMap->GetRowCount() <= iColumn + iMapEntityWidth) return false;
 
 		if (0 > iRow + iMapEntityHeight) return false;
-		if (m_aMapEntity[0].GetCount() <= iRow + iMapEntityHeight) return false;
+		if (pMap->GetColumnCount() <= iRow + iMapEntityHeight) return false;
 	}
 
 	for (int nRow = 0; nRow < iMapEntityWidth; ++nRow)

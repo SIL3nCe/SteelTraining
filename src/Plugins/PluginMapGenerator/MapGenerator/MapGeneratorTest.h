@@ -2,6 +2,7 @@
 
 #include "MapGenerator.h"
 #include "../Map/Map2D.h"
+#include "../MapEntity/MapEntity.h"
 
 class MapGeneratorTest : public MapGenerator
 {
@@ -20,9 +21,11 @@ public:
 	virtual bool					GenerateMap					(Map *& pAbstractMap, const CShIdentifier & idLevel) SH_ATTRIBUTE_OVERRIDE;
 private:
 	void							MapGenerationAlgorithm		(Map2D *& pMap, const CShIdentifier & idLevel);
+	void							GenerateExternWall			(Map2D *& pMap);
 	bool							FindNextMapEntity			(int iRow, int iColumn, MapEntity & newMapEntity);
-
 	bool							CanBePlacedHere				(const MapEntity & mapEntity, Map2D *& pMap, int iColumn, int iRow);
 public:
 	CShArray<MapEntity>				m_aMapEntity;
+
+	CShRandomValue					randValue;
 };
