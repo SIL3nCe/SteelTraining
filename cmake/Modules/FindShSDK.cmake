@@ -9,7 +9,17 @@ set(CMAKE_PREFIX_PATH $ENV{SHINE_BASE_DIR}) # needed for android !!!
 find_path(SHSDK_INCLUDE_DIR "ShSDK/ShSDK.h" HINTS ENV SHINE_BASE_DIR PATH_SUFFIXES "include" NO_CMAKE_FIND_ROOT_PATH)
 
 macro(FIND_SHSDK_LIBRARY _var)
-	find_library(${_var} NAMES ${ARGN} HINTS ENV SHINE_BASE_DIR PATH_SUFFIXES "lib" NO_CMAKE_FIND_ROOT_PATH)
+	find_library(${ARGN}_DEBUG NAMES "${ARGN}_Debug" HINTS ENV SHINE_BASE_DIR PATH_SUFFIXES "lib" NO_CMAKE_FIND_ROOT_PATH)
+	find_library(${ARGN}_MASTER NAMES "${ARGN}" HINTS ENV SHINE_BASE_DIR PATH_SUFFIXES "lib" NO_CMAKE_FIND_ROOT_PATH)
+
+	set(${_var} "")
+	if(${ARGN}_DEBUG)
+		set(${_var} debug ${${ARGN}_DEBUG})
+	endif(${ARGN}_DEBUG)
+	if(${ARGN}_MASTER)
+		set(${_var} ${${_var}} optimized ${${ARGN}_MASTER})
+	endif(${ARGN}_MASTER)
+	message("${_var} = ${${_var}}")
 	mark_as_advanced(${_var})
 endmacro()
 
@@ -24,14 +34,15 @@ endif (MSVC)
 set(SHSDK_COMPILE_DEFINITIONS "SH_$<UPPER_CASE:$<CONFIG>>=1")
 
 if (MSVC)
-	list(APPEND SHSDK_COMPILE_DEFINITIONS "_ITERATOR_DEBUG_LEVEL=0")
+	#list(APPEND SHSDK_COMPILE_DEFINITIONS "_ITERATOR_DEBUG_LEVEL=0")
 endif (MSVC)
 
 # ------------------------------------------------------------------------------------------------
 
 set(SHSDK_LIBRARIES )
 
-#FIND_SHSDK_LIBRARY(SHCORE_LIBRARY ShCore)
+FIND_SHSDK_LIBRARY(SHCORE_LIBRARY ShCore)
+set(SHSDK_LIBRARIES ${SHSDK_LIBRARIES} "${SHCORE_LIBRARY}")
 
 list(FIND ShSDK_FIND_COMPONENTS "ShEntryPoint" ShEntryPoint_INDEX)
 if (${ShEntryPoint_INDEX} GREATER -1)
@@ -48,7 +59,7 @@ endif()
 FIND_SHSDK_LIBRARY(SHSDK_LIBRARY ShSDK)
 
 set(SHSDK_LIBRARIES "${SHSDK_LIBRARY}" "${SHSDK_LIBRARIES}" "${SHSDK_LIBRARY}") #${SHSDK_LIBRARY} is twice : ShSDK needs a User System and every User System depends upon ShSDK
-
+message("SHSDK_LIBRARIES = ${SHSDK_LIBRARIES}")
 set(SHSDK_INCLUDE_DIRS "${SHSDK_INCLUDE_DIR}")
 
 if (SHSDK_LIBRARY)
