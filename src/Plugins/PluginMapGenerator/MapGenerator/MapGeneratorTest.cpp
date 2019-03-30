@@ -7,6 +7,7 @@
 */
 /*explicit*/ MapGeneratorTest::MapGeneratorTest(void)
 : m_aMapEntity()
+, randValue()
 {
 	// ...
 }
@@ -53,17 +54,24 @@ void MapGeneratorTest::AddMapEntity(const MapEntity & mapEntity)
 */
 void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier & idLevel)
 {
-	//
-	// Update representation for TileMap
-
 	int iRowCount = pMap->GetColumnCount();
-	for (int iRow = 1; iRow < iRowCount; ++iRow)
+	for (int nRow = 1; nRow < iRowCount; ++nRow)
 	{
 		int iColumnCount = pMap->GetRowCount();
-		for (int iColumn = 0; iColumn < iColumnCount; ++iColumn)
+		for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
 		{
-			MapEntity mapEntity;
-			FindNextMapEntity(iRow, iColumn, mapEntity);
+			if (0 == nColumn || iColumnCount + 1 == iColumnCount || 0 == nRow || iRowCount + 1 == iRowCount)
+			{
+				pMap->AddWall(nRow, nColumn);
+			}
+			else
+			{
+				MapEntity mapEntity;
+				if (FindNextMapEntity(nRow, nColumn, mapEntity))
+				{
+
+				}
+			}
 		}
 	}
 }
@@ -73,6 +81,7 @@ void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier
 */
 bool MapGeneratorTest::FindNextMapEntity(int iRow, int iColumn, MapEntity & newMapEntity)
 {
+
 	return false;
 }
 
