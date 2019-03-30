@@ -19,7 +19,6 @@ macro(FIND_SHSDK_LIBRARY _var)
 	if(${ARGN}_MASTER)
 		set(${_var} ${${_var}} optimized ${${ARGN}_MASTER})
 	endif(${ARGN}_MASTER)
-	message("${_var} = ${${_var}}")
 	mark_as_advanced(${_var})
 endmacro()
 
@@ -59,7 +58,7 @@ endif()
 FIND_SHSDK_LIBRARY(SHSDK_LIBRARY ShSDK)
 
 set(SHSDK_LIBRARIES "${SHSDK_LIBRARY}" "${SHSDK_LIBRARIES}" "${SHSDK_LIBRARY}") #${SHSDK_LIBRARY} is twice : ShSDK needs a User System and every User System depends upon ShSDK
-set(SHSDK_INCLUDE_DIRS "${SHSDK_INCLUDE_DIR}") 
+set(SHSDK_INCLUDE_DIRS "${SHSDK_INCLUDE_DIR}")
 
 if (SHSDK_LIBRARY)
 

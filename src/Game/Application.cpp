@@ -1,16 +1,31 @@
 #include "Application.h"
 #include "Game.h"
 
+#include "ShEntryPoint/ShEntryPoint.h"
+
 #include "PluginFactory.h"
 #include "PluginMapGeneratorFactory.h"
 
-extern "C"
+/**
+* @brief SetupDisplayProperties
+*/
+void ShEntryPoint::SetupDisplayProperties(bool & bLandscape, bool & bEnable3D, bool & bEnableZ, bool & bUseSpecular, bool & bUsePointLights, bool & bUseShadow, int & width, int & height)
 {
+	bLandscape	= true;
+	width		= 1280;
+	height		= 720;
+
+	bEnable3D		= false;
+	bEnableZ		= false;
+	bUseSpecular	= false;
+	bUsePointLights	= false;
+	bUseShadow		= false;
+}
 
 /**
  * @brief OnPreInitialize
  */
-void OnPreInitialize(void)
+void ShEntryPoint::OnPreInitialize(void)
 {
 	ShInput::AddOnTouchDown(OnTouchDown);
 	ShInput::AddOnTouchUp(OnTouchUp);
@@ -23,7 +38,7 @@ void OnPreInitialize(void)
 /**
  * @brief OnPostInitialize
  */
-void OnPostInitialize(void)
+void ShEntryPoint::OnPostInitialize(void)
 {
 	RegisterPluginST();
 	RegisterPluginMapGenerator();
@@ -36,7 +51,7 @@ void OnPostInitialize(void)
  * @brief OnPreUpdate
  * @param dt
  */
-void OnPreUpdate(float dt)
+void ShEntryPoint::OnPreUpdate(float dt)
 {
 	SH_UNUSED(dt);
 }
@@ -45,7 +60,7 @@ void OnPreUpdate(float dt)
  * @brief OnPostUpdate
  * @param dt
  */
-void OnPostUpdate(float dt)
+void ShEntryPoint::OnPostUpdate(float dt)
 {
 	Game * pGame = Game::GetInstance();
 	pGame->Update(dt);
@@ -54,7 +69,7 @@ void OnPostUpdate(float dt)
 /**
  * @brief OnPreRelease
  */
-void OnPreRelease(void)
+void ShEntryPoint::OnPreRelease(void)
 {
 	Game * pGame = Game::GetInstance();
 	pGame->Release();
@@ -66,7 +81,7 @@ void OnPreRelease(void)
 /**
  * @brief OnPostRelease
  */
-void OnPostRelease(void)
+void ShEntryPoint::OnPostRelease(void)
 {
 	// ...
 }
@@ -74,7 +89,7 @@ void OnPostRelease(void)
 /**
  * @brief OnActivate
  */
-void OnActivate(void)
+void ShEntryPoint::OnActivate(void)
 {
 	// ...
 }
@@ -84,7 +99,7 @@ void OnActivate(void)
  * @param bAllowBackgroundUpdates
  * @param bAllowBackgroundInputs
  */
-void OnDeactivate(bool & bAllowBackgroundUpdates, bool & bAllowBackgroundInputs)
+void ShEntryPoint::OnDeactivate(bool & bAllowBackgroundUpdates, bool & bAllowBackgroundInputs)
 {
 	bAllowBackgroundUpdates = false;
 	bAllowBackgroundInputs = false;
@@ -154,6 +169,4 @@ void OnTouchMove(int iTouch, float positionX, float positionY)
 		//Game & game = Game::instance();
 		//game.touchMove(pos);
 	}
-}
-
 }

@@ -1,8 +1,3 @@
-cmake_minimum_required(VERSION 3.10)
-
-# main files
-set(SOURCES_main main.cpp)
-source_group("" FILES ${SOURCES_main})
 
 # Application files
 set(SOURCES_Application Application.cpp Application.h)
@@ -14,7 +9,6 @@ source_group("Game" FILES ${SOURCES_Game})
 
 # Put everything together before adding platform-specific files
 set(SOURCES
-${SOURCES_main}
 ${SOURCES_Application}
 ${SOURCES_Game}
 )
