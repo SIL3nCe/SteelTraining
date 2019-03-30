@@ -92,7 +92,7 @@ void PluginST::OnTouchMove(int iTouch, float positionX, float positionY)
 }
 
 /**
-* @brief OnTouchMove
+* @brief GetWorld
 */
 World * PluginST::GetWorld(void)
 {
