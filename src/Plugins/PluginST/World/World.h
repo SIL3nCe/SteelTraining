@@ -39,7 +39,8 @@ private:
 
 	//
 	// Map control
-	void						GenerateMap		(Map2D & map2D, int rowCount,  int ColumnCount);
+	void						GenerateMap		(Map2D & map2D, int rowCount, int ColumnCount);
+	ShSprite *					GetWallSprite	(int iRowPosition,  int iColumnPosition);
 
 private:
 	

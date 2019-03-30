@@ -159,45 +159,82 @@ void World::GenerateShape(ShDummyAABB2 * pObject, const b2Vec2 & center, b2Polyg
 void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 {
 	map2D.Release();
-	map2D.Initialize(20, 15, 0);
-//
-//	//
-//	// Map Generation
-//	{
-//		//
-//		// Get and configure MapGenerator
-//		m_pMapGenerator = GetPluginMapGenerator()->CreateMapGenerator(e_map_generator_type_test);
-//		{
-//			MapGeneratorTest * pMapGeneratorTest = reinterpret_cast<MapGeneratorTest*>(m_pMapGenerator);
-//			CShIdentifier idGame("game");
-//			ShSprite * pSpriteWall = ShSprite::Find(idGame, CShIdentifier("wall"));
-//			ShSprite * pSpriteGrass = ShSprite::Find(idGame, CShIdentifier("grass"));
-//			ShSprite * pSpriteWater = ShSprite::Find(idGame, CShIdentifier("water"));
-//
-//			SH_ASSERT(shNULL != pSpriteWall);
-//			SH_ASSERT(shNULL != pSpriteGrass);
-//			SH_ASSERT(shNULL != pSpriteWater);
-//
-//			//		pMapGeneratorTest->m_aTileMap.Add(0, pSpriteWall);
-//			//		pMapGeneratorTest->m_aTileMap.Add(1, pSpriteGrass);
-//			//		pMapGeneratorTest->m_aTileMap.Add(2, pSpriteWater);
-//		}
-//
-//		//
-//		// Generate Map
-//		Map * pMap = &m_map;
-//		GetPluginMapGenerator()->GenerateMap(m_pMapGenerator, pMap, idLevel);
-//
-//		int iRowCount = m_map.GetRowCount();
-//		int iColumnCount = m_map.GetColumnCount();
-//		for (int iRowIndex = 0; iRowIndex < iRowCount; ++iRowIndex)
-//		{
-//			for (int iColumnIndex = 0; iColumnIndex < iColumnCount; ++iColumnIndex)
-//			{
-//
-//			}
-//		}
-//	}
+	map2D.Initialize(20, 15);
+
+	//
+	// Map Generation
+	{
+		//
+		// Get and configure MapGenerator
+		m_pMapGenerator = m_pMapGeneratorPlugin->CreateMapGenerator(e_map_generator_type_test);
+		{
+			MapGeneratorTest * pMapGeneratorTest = reinterpret_cast<MapGeneratorTest*>(m_pMapGenerator);
+			CShIdentifier idGame("game");
+		}
+
+		//
+		// Generate Map
+		Map * pMap = &m_map;
+		m_pMapGeneratorPlugin->GenerateMap(m_pMapGenerator, pMap, m_levelIdentifier);
+
+		//
+		int iRowCount = m_map.GetRowCount();
+		int iColumnCount = m_map.GetColumnCount();
+		for (int nRow = 0; nRow < iRowCount; ++nRow)
+		{
+			for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
+			{
+				Tile * pTile = m_map.GetTile(nRow, nColumn);
+				switch (pTile->m_eTileType)
+				{
+				case ETileType::e_tile_wall:
+				{
+					ShSprite * pSprite = GetWallSprite(nRow, nColumn);
+					CShString strWallIdentifier("wall");
+					strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
+
+					CShVector3 position(nRow * 100, nColumn * 100, 0.0f);
+					CShEulerAngles angle;
+					CShVector3 scale(1.0f, 1.0f, 1.0f);
+					
+					ShEntity2 * pWallEntity2 = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, angle, scale, true);
+				}
+				break;
+					
+				}
+			}
+		}
+	}
+}
+
+/**
+* @brief 
+*/
+ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
+{
+	if (m_map.GetTiles().IsEmpty())
+	{
+		return shNULL;
+	}
+
+	bool bBorderTop = iRowPosition == 0;
+	bool bBorderRight = iColumnPosition == 0;
+	bool bBorderBottom = m_map.GetRowCount() - 1 == iRowPosition;
+	bool bBorderLeft = m_map.GetColumnCount() - 1 == iRowPosition;
+
+	CShString strIdentifier("mur");
+
+	if (bBorderTop) strIdentifier += "_haut";
+	else if (bBorderBottom) strIdentifier += "_bas";
+	if (bBorderRight) strIdentifier += "_droit";
+	else if (bBorderLeft) strIdentifier += "_gauche";
+
+	SH_ASSERT(ShSprite::Exists(CShIdentifier("mur"), CShIdentifier(strIdentifier)))
+		
+	ShSprite * pSprite = ShSprite::Find(CShIdentifier("mur"), CShIdentifier(strIdentifier));
+
+
+	return pSprite;
 }
 
 /**

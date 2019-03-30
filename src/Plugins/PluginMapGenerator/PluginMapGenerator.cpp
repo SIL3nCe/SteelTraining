@@ -116,14 +116,6 @@ bool PluginMapGenerator::DestroyMapGenerator(MapGenerator * pMapGenerator)
 */
 bool PluginMapGenerator::GenerateMap(MapGenerator * pMapGenerator, Map *& pMap, const CShIdentifier & idLevel)
 {
-	if (shNULL != pMap)
-	{
-		if (*pMap)
-		{
-			pMap->Release();
-		}
-	}
-
 	if (shNULL != pMapGenerator)
 	{
 		if (pMapGenerator->GenerateMap(pMap, idLevel))

@@ -54,10 +54,10 @@ void MapGeneratorTest::AddMapEntity(const MapEntity & mapEntity)
 */
 void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier & idLevel)
 {
-	int iRowCount = pMap->GetColumnCount();
-	for (int nRow = 1; nRow < iRowCount; ++nRow)
+	int iRowCount = pMap->GetRowCount();
+	for (int nRow = 0; nRow < iRowCount; ++nRow)
 	{
-		int iColumnCount = pMap->GetRowCount();
+		int iColumnCount = pMap->GetColumnCount();
 		for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
 		{
 			if (0 == nColumn || iColumnCount + 1 == iColumnCount || 0 == nRow || iRowCount + 1 == iRowCount)

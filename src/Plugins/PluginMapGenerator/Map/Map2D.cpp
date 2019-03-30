@@ -7,7 +7,6 @@
 : Map()
 , m_iRow(0)
 , m_iColumn(0)
-, m_iTileSize(0)
 , m_mTiles()
 , m_aMapEntity()
 {
@@ -25,20 +24,30 @@
 /**
 * @brief Map2D::Initialize
 */
-bool Map2D::Initialize(shU32 iRowNb, shU32 iColumnNb, shU32 iTileSize)
+bool Map2D::Initialize(shU32 iRowNb, shU32 iColumnNb)
 {
 	SH_ASSERT(0 != iRowNb);
 	SH_ASSERT(0 != iColumnNb);
-	SH_ASSERT(0 != iTileSize);
 
-	if (0 == iRowNb || 0 == iColumnNb || 0 == iTileSize)
+	if (0 == iRowNb || 0 == iColumnNb)
 	{
 		return false;
 	}
 
 	m_iRow = iRowNb;
 	m_iColumn = iColumnNb;
-	m_iTileSize = iTileSize;
+
+	for (int nRow = 0; nRow < m_iRow; ++nRow)
+	{
+		m_mTiles.Add(CShArray<Tile*>());
+		for (int nColumn = 0; nColumn < m_iColumn; ++nColumn)
+		{
+			Tile * pTile = new Tile();
+			pTile->iRow = nRow;
+			pTile->iColumn = nColumn;
+			m_mTiles[nRow].Add(new Tile());
+		}
+	}
 
 	return true;
 }
@@ -50,7 +59,6 @@ bool Map2D::Release(void)
 {
 	m_iRow = 0;
 	m_iColumn = 0;
-	m_iTileSize = 0;
 
 	while (!m_mTiles.IsEmpty())
 	{
@@ -104,13 +112,6 @@ shU32 Map2D::GetColumnCount(void) const
 	return m_iColumn;
 }
 
-/**
-* @brief Map2D::GetTileSize
-*/
-shU32 Map2D::GetTileSize(void) const
-{
-	return m_iTileSize;
-}
 
 /**
 * @brief Map2D::GetTiles
