@@ -56,10 +56,10 @@ void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier
 	//
 	// Update representation for TileMap
 
-	int iRowCount = pMap->GetColumnNb();
+	int iRowCount = pMap->GetColumnCount();
 	for (int iRow = 1; iRow < iRowCount; ++iRow)
 	{
-		int iColumnCount = pMap->GetRowNb();
+		int iColumnCount = pMap->GetRowCount();
 		for (int iColumn = 0; iColumn < iColumnCount; ++iColumn)
 		{
 			MapEntity mapEntity;
@@ -71,24 +71,25 @@ void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier
 /**
 * @brief MapGeneratorTest::MapGenerationAlgorithm
 */
-void MapGeneratorTest::FindNextMapEntity(int iRow, int iColumn, MapEntity & newMapEntity)
+bool MapGeneratorTest::FindNextMapEntity(int iRow, int iColumn, MapEntity & newMapEntity)
 {
+	return false;
 }
 
 bool MapGeneratorTest::CanBePlacedHere(const MapEntity & mapEntity, Map2D *& pMap, int iColumn, int iRow)
 {
 	if (m_aMapEntity.IsEmpty()) return false;
 
-	int iMapEntityWidth = mapEntity.m_width;
-	int iMapEntityHeight = mapEntity.m_height;
+	int iMapEntityWidth = mapEntity.m_iWidth;
+	int iMapEntityHeight = mapEntity.m_iHeight;
 
 	// Check if the entity is outside the map
 	{
 		if (0 > iColumn + iMapEntityWidth) return false;
-		if (m_aMapEntity.GetCount() <= iColumn + iMapEntityWidth) return false;
+		if (pMap->GetRowCount() <= iColumn + iMapEntityWidth) return false;
 
 		if (0 > iRow + iMapEntityHeight) return false;
-		if (m_aMapEntity[0].GetCount() <= iRow + iMapEntityHeight) return false;
+		if (pMap->GetColumnCount() <= iRow + iMapEntityHeight) return false;
 	}
 
 	for (int nRow = 0; nRow < iMapEntityWidth; ++nRow)
