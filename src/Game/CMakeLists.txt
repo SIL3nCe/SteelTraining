@@ -5,7 +5,7 @@ set(SOURCES_main main.cpp)
 source_group("" FILES ${SOURCES_main})
 
 # Application files
-set(SOURCES_Application application.cpp application.h)
+set(SOURCES_Application Application.cpp Application.h)
 source_group("" FILES ${SOURCES_Application})
 
 # Game files
@@ -13,7 +13,7 @@ set(SOURCES_Game Game.cpp Game.h)
 source_group("Game" FILES ${SOURCES_Game})
 
 # Put everything together before adding platform-specific files
-set(SOURCES 
+set(SOURCES
 ${SOURCES_main}
 ${SOURCES_Application}
 ${SOURCES_Game}
