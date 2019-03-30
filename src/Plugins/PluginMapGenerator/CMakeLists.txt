@@ -43,7 +43,7 @@ set_property(TARGET PluginMapGenerator PROPERTY FOLDER "Runtime")
 set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 if (NOT MSVC)
-	set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS -fno-exceptions -fno-rtti)
+	set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_OPTIONS -fno-exceptions -fno-rtti)
 endif (NOT MSVC)
 
 target_link_libraries(PluginMapGenerator INTERFACE ${SHSDK_LIBRARIES})
@@ -58,10 +58,9 @@ set_property(TARGET PluginMapGenerator_Editor PROPERTY FOLDER "Editor")
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 if (NOT MSVC)
-	set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "-fPIC")
+	set_target_properties(PluginMapGenerator_Editor PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif (NOT MSVC)
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "SH_EDITOR=1" "_INTERNAL_DLL") # FIXME
-set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY POSITION_INDEPENDENT_CODE True)
 
 target_link_libraries(PluginMapGenerator_Editor PRIVATE ${SHSDK_EDITOR_LIBRARIES})
 
