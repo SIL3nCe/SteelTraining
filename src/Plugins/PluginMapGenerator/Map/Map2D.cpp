@@ -40,7 +40,7 @@
 /**
 * @brief Map2D::GetRowNb
 */
-shU32 Map2D::GetRowCount(void) const
+shU32 Map2D::GetRowNb(void) const
 {
 	return m_iRow;
 }
@@ -48,7 +48,7 @@ shU32 Map2D::GetRowCount(void) const
 /**
 * @brief Map2D::GetColumnNb
 */
-shU32 Map2D::GetColumnCount(void) const
+shU32 Map2D::GetColumnNb(void) const
 {
 	return m_iColumn;
 }
@@ -95,6 +95,12 @@ bool Map2D::Initialize(shU32 iRowNb, shU32 iColumnNb, shU32 iTileSize)
 	m_iColumn	= iColumnNb;
 	m_iTileSize	= iTileSize;
 
+	m_aaTiles = static_cast<Tile**>(shMalloc(m_iRow * sizeof(Tile*)));
+	for (int iRowIndex = 0; iRowIndex < m_iRow; ++iRowIndex)
+	{
+		m_aaTiles[iRowIndex] = static_cast<Tile*>(shMalloc(m_iColumn * sizeof(Tile)));
+	}
+
 	return true;
 }
 
@@ -107,16 +113,11 @@ bool Map2D::Release(void)
 	m_iColumn	= 0;
 	m_iTileSize	= 0;
 
-	while (!m_mTiles.IsEmpty())
+	for (int iRowIndex = 0; iRowIndex < m_iRow; ++iRowIndex)
 	{
-		while (!m_mTiles[0].IsEmpty())
-		{
-			Tile * pTile = m_mTiles[0][0];
-			SH_SAFE_DELETE(pTile);
-			m_mTiles[0].Remove(0);
-		}
-		m_mTiles.Remove(0);
+		SH_SAFE_RELEASE_FREE(m_aaTiles[iRowIndex]);
 	}
+	SH_SAFE_FREE(m_aaTiles);
 
 	return true;
 }

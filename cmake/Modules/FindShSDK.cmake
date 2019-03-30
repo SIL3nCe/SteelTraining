@@ -59,7 +59,8 @@ endif()
 FIND_SHSDK_LIBRARY(SHSDK_LIBRARY ShSDK)
 
 set(SHSDK_LIBRARIES "${SHSDK_LIBRARY}" "${SHSDK_LIBRARIES}" "${SHSDK_LIBRARY}") #${SHSDK_LIBRARY} is twice : ShSDK needs a User System and every User System depends upon ShSDK
-set(SHSDK_INCLUDE_DIRS "${SHSDK_INCLUDE_DIR}") 
+message("SHSDK_LIBRARIES = ${SHSDK_LIBRARIES}")
+set(SHSDK_INCLUDE_DIRS "${SHSDK_INCLUDE_DIR}")
 
 if (SHSDK_LIBRARY)
 
@@ -88,9 +89,9 @@ if (SHSDK_LIBRARY)
 
 	elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-		find_package(DirectX9 REQUIRED)
-		find_package(XAudio REQUIRED)
-		find_package(XInput REQUIRED)
+		find_package(DirectX9 QUIET)
+		find_package(XAudio QUIET)
+		find_package(XInput QUIET)
 
 		list(APPEND SHSDK_INCLUDE_DIRS "${DirectX9_INCLUDE_DIR}")
 		list(APPEND SHSDK_LIBRARIES "${DirectX9_LIBRARIES}" "${XInput_LIBRARIES}" "${XAudio_LIBRARY}")
@@ -104,9 +105,6 @@ if (SHSDK_LIBRARY)
 	endif()
 
 endif (SHSDK_LIBRARY)
-
-message("SHSDK_LIBRARIES = ${SHSDK_LIBRARIES}")
-message("SHSDK_INCLUDE_DIRS = ${SHSDK_INCLUDE_DIRS}")
 
 include(FindPackageHandleStandardArgs)
 

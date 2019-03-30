@@ -59,7 +59,7 @@ if (NOT MSVC)
 endif (NOT MSVC)
 set_property(TARGET PluginST APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 
-target_link_libraries(PluginST PRIVATE ${SHSDK_LIBRARIES})
+target_link_libraries(PluginST INTERFACE ${SHSDK_LIBRARIES})
 target_link_libraries(PluginST INTERFACE Box2D)
 
 target_include_directories(PluginST PUBLIC "${SHSDK_INCLUDE_DIR}")

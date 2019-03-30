@@ -42,8 +42,8 @@ public:
 	//
 	// Getters/Setters
 	virtual EMapType					GetType			(void) const SH_ATTRIBUTE_OVERRIDE;
-	shU32								GetRowCount		(void) const;
-	shU32								GetColumnCount		(void) const;
+	shU32								GetRowNb		(void) const;
+	shU32								GetColumnNb		(void) const;
 	shU32								GetTileSize		(void) const;
 	const CShArray<CShArray<Tile*>> &	GetTiles		(void) const;
 	Tile*								GetTile			(int nRow, int nColumn) const;

@@ -43,9 +43,9 @@ void Game::Initialize(void)
 		SH_ASSERT(shNULL != pSpriteGrass);
 		SH_ASSERT(shNULL != pSpriteWater);
 
-//		pMapGeneratorTest->m_aTileMap.Add(0, pSpriteWall);
-//		pMapGeneratorTest->m_aTileMap.Add(1, pSpriteGrass);
-//		pMapGeneratorTest->m_aTileMap.Add(2, pSpriteWater);
+		pMapGeneratorTest->m_aTileMap.Add(0, pSpriteWall);
+		pMapGeneratorTest->m_aTileMap.Add(1, pSpriteGrass);
+		pMapGeneratorTest->m_aTileMap.Add(2, pSpriteWater);
 	}
 
 	//
@@ -53,8 +53,8 @@ void Game::Initialize(void)
 	Map * pMap = &m_map;
 	GetPluginMapGenerator()->GenerateMap(m_pMapGenerator, pMap, idLevel);
 
-	int iRowCount		= m_map.GetRowCount();
-	int iColumnCount	= m_map.GetColumnCount();
+	int iRowCount		= m_map.GetRowNb();
+	int iColumnCount	= m_map.GetColumnNb();
 	for (int iRowIndex = 0; iRowIndex < iRowCount; ++iRowIndex)
 	{
 		for (int iColumnIndex = 0; iColumnIndex < iColumnCount; ++iColumnIndex)

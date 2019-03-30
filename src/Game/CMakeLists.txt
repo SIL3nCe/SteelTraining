@@ -9,7 +9,7 @@ set(SOURCES_Application Application.cpp Application.h)
 source_group("" FILES ${SOURCES_Application})
 
 # Game files
-set(SOURCES_Game Game.cpp Game.h) 
+set(SOURCES_Game Game.cpp Game.h)
 source_group("Game" FILES ${SOURCES_Game})
 
 # Put everything together before adding platform-specific files

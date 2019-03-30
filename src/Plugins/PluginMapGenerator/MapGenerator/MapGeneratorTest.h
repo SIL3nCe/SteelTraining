@@ -2,7 +2,6 @@
 
 #include "MapGenerator.h"
 #include "../Map/Map2D.h"
-#include "../MapEntity/MapEntity.h"
 
 class MapGeneratorTest : public MapGenerator
 {
@@ -22,6 +21,7 @@ public:
 private:
 	void							MapGenerationAlgorithm		(Map2D *& pMap, const CShIdentifier & idLevel);
 	bool							FindNextMapEntity			(int iRow, int iColumn, MapEntity & newMapEntity);
+
 	bool							CanBePlacedHere				(const MapEntity & mapEntity, Map2D *& pMap, int iColumn, int iRow);
 public:
 	CShArray<MapEntity>				m_aMapEntity;

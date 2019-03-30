@@ -4,7 +4,7 @@
 * @brief Constructor
 */
 /*explicit*/ MapEntity::MapEntity(void)
-: m_eMapEntityType()
+: m_eMapEntityType
 , m_iWidth(0)
 , m_iHeight(0)
 , m_iOccurenceChance(0)
@@ -38,4 +38,36 @@ void MapEntity::Initialize(EMapEntityType eMapEntityType, int iWidth, int iHeigh
 void MapEntity::Release(void)
 {
 	
+}
+
+/**
+* @brief
+*/
+/*virtual*/ EMapEntityType MapEntity::GetEntityType(void) const
+{
+	return m_eEntityType;
+}
+
+/**
+* @brief
+*/
+/*virtual*/ int MapEntity::GetEntityType(void) const
+{
+	return m_iWidth;
+}
+
+/**
+* @brief
+*/
+/*virtual*/ int MapEntity::GetEntityType(void) const
+{
+	return m_iHeight;
+}
+
+/**
+* @brief
+*/
+/*virtual*/ const CShArray<CShArray<bool>> & MapEntity::GetNeededTiles(void) const
+{
+	return m_mNeededTiles;
 }

@@ -31,11 +31,11 @@ if(WIN32) # The only platform it makes sense to check for XAudio SDK
     "${DIRECTX_HOME}" "${ENV_DIRECTX_HOME}"
     "${DIRECTX_ROOT}" "${ENV_DIRECTX_ROOT}"
     "${DIRECTX_BASE}" "${ENV_DIRECTX_BASE}"
-    "C:/apps_x86/Microsoft DirectX SDK (June 2010)"
-    "C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)"
-    "C:/apps/Microsoft DirectX SDK (June 2010)"
-    "C:/Program Files/Microsoft DirectX SDK (June 2010)"
-	"$ENV{ProgramFiles}/Microsoft DirectX SDK (June 2010)"
+    "C:/apps_x86/Microsoft DirectX SDK*"
+    "C:/Program Files (x86)/Microsoft DirectX SDK*"
+    "C:/apps/Microsoft DirectX SDK*"
+    "C:/Program Files/Microsoft DirectX SDK*"
+	"$ENV{ProgramFiles}/Microsoft DirectX SDK*"
   )
 
   create_search_paths(XAudio)
@@ -54,8 +54,6 @@ if(WIN32) # The only platform it makes sense to check for XAudio SDK
   find_path(XAudio_INCLUDE_DIR NAMES xaudio2.h HINTS ${XAudio_INC_SEARCH_PATH})
   find_library(XAudio_LIBRARY NAMES X3DAudio HINTS ${XAudio_LIB_SEARCH_PATH} PATH_SUFFIXES ${XAudio_LIBPATH_SUFFIX})
 
-message("XAudio_INC_SEARCH_PATH = ${XAudio_INC_SEARCH_PATH}")
-message("XAudio_LIBRARY = ${XAudio_LIBRARY}")
   findpkg_finish(XAudio)
     
 endif(WIN32)
