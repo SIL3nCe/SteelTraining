@@ -21,8 +21,6 @@ public:
 	virtual EType	GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
 
 protected:
-	b2World * m_pWorld;
-
 	b2Body * m_pBody;
 
 	ShEntity2 * m_pEntity;
