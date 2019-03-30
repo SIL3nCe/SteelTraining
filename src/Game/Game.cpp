@@ -5,8 +5,6 @@
 Game * Game::m_pInstance = shNULL;
 
 Game::Game(void)
-: m_pMapGenerator(shNULL)
-, m_map()
 {
 	// ...
 }
@@ -28,45 +26,11 @@ void Game::Initialize(void)
 	{
 		SH_ASSERT_ALWAYS();
 	}
-
-	//
-	// Get and configure MapGenerator
-	m_pMapGenerator = GetPluginMapGenerator()->CreateMapGenerator(e_map_generator_type_test);
-	{
-		MapGeneratorTest * pMapGeneratorTest = reinterpret_cast<MapGeneratorTest*>(m_pMapGenerator);
-		CShIdentifier idGame("game");
-		ShSprite * pSpriteWall	= ShSprite::Find(idGame, CShIdentifier("wall"));
-		ShSprite * pSpriteGrass	= ShSprite::Find(idGame, CShIdentifier("grass"));
-		ShSprite * pSpriteWater	= ShSprite::Find(idGame, CShIdentifier("water"));
-
-		SH_ASSERT(shNULL != pSpriteWall);
-		SH_ASSERT(shNULL != pSpriteGrass);
-		SH_ASSERT(shNULL != pSpriteWater);
-
-//		pMapGeneratorTest->m_aTileMap.Add(0, pSpriteWall);
-//		pMapGeneratorTest->m_aTileMap.Add(1, pSpriteGrass);
-//		pMapGeneratorTest->m_aTileMap.Add(2, pSpriteWater);
-	}
-
-	//
-	// Generate Map
-	Map * pMap = &m_map;
-	GetPluginMapGenerator()->GenerateMap(m_pMapGenerator, pMap, idLevel);
-
-	int iRowCount		= m_map.GetRowCount();
-	int iColumnCount	= m_map.GetColumnCount();
-	for (int iRowIndex = 0; iRowIndex < iRowCount; ++iRowIndex)
-	{
-		for (int iColumnIndex = 0; iColumnIndex < iColumnCount; ++iColumnIndex)
-		{
-
-		}
-	}
 }
 
 void Game::Release(void)
 {
-	GetPluginMapGenerator()->DestroyMapGenerator(m_pMapGenerator);
+//	GetPluginMapGenerator()->DestroyMapGenerator(m_pMapGenerator);
 }
 
 void Game::Update(float dt)

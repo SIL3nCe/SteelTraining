@@ -41,8 +41,7 @@ void ShEntryPoint::OnPreInitialize(void)
 void ShEntryPoint::OnPostInitialize(void)
 {
 	RegisterPluginST();
-	RegisterPluginMapGenerator();
-
+	
 	Game * pGame = Game::GetInstance();
 	pGame->Initialize();
 }
@@ -74,7 +73,6 @@ void ShEntryPoint::OnPreRelease(void)
 	Game * pGame = Game::GetInstance();
 	pGame->Release();
 
-	UnRegisterPluginMapGenerator();
 	UnRegisterPluginST();
 }
 

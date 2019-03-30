@@ -5,6 +5,9 @@
  */
 World::World(void)
 : m_pbWorld(shNULL)
+, m_pMapGeneratorPlugin(shNULL)
+, m_pMapGenerator(shNULL)
+, m_map()
 {
 	// ...
 }
@@ -34,6 +37,12 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 	m_inputManager.Initialize(pUser);
 
 	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, &m_inputManager);
+		
+	// Map Generator
+	m_pMapGeneratorPlugin = new PluginMapGenerator();
+	ShApplication::RegisterPlugin(m_pMapGeneratorPlugin, false);
+	
+	GenerateMap(m_map, 20, 15);
 
 	//
 	// Load and parse all Collision Shape
@@ -294,6 +303,53 @@ void World::GenerateShape(ShDummyAABB2 * pObject, const b2Vec2 & center, b2Polyg
 	aB2Point[3] = ShineToB2(vPoint4) - center;
 
 	b2OutShape.Set(aB2Point, 4);
+}
+
+/**
+* @brief 
+*/
+void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
+{
+	map2D.Release();
+	map2D.Initialize(20, 15, 0);
+//
+//	//
+//	// Map Generation
+//	{
+//		//
+//		// Get and configure MapGenerator
+//		m_pMapGenerator = GetPluginMapGenerator()->CreateMapGenerator(e_map_generator_type_test);
+//		{
+//			MapGeneratorTest * pMapGeneratorTest = reinterpret_cast<MapGeneratorTest*>(m_pMapGenerator);
+//			CShIdentifier idGame("game");
+//			ShSprite * pSpriteWall = ShSprite::Find(idGame, CShIdentifier("wall"));
+//			ShSprite * pSpriteGrass = ShSprite::Find(idGame, CShIdentifier("grass"));
+//			ShSprite * pSpriteWater = ShSprite::Find(idGame, CShIdentifier("water"));
+//
+//			SH_ASSERT(shNULL != pSpriteWall);
+//			SH_ASSERT(shNULL != pSpriteGrass);
+//			SH_ASSERT(shNULL != pSpriteWater);
+//
+//			//		pMapGeneratorTest->m_aTileMap.Add(0, pSpriteWall);
+//			//		pMapGeneratorTest->m_aTileMap.Add(1, pSpriteGrass);
+//			//		pMapGeneratorTest->m_aTileMap.Add(2, pSpriteWater);
+//		}
+//
+//		//
+//		// Generate Map
+//		Map * pMap = &m_map;
+//		GetPluginMapGenerator()->GenerateMap(m_pMapGenerator, pMap, idLevel);
+//
+//		int iRowCount = m_map.GetRowCount();
+//		int iColumnCount = m_map.GetColumnCount();
+//		for (int iRowIndex = 0; iRowIndex < iRowCount; ++iRowIndex)
+//		{
+//			for (int iColumnIndex = 0; iColumnIndex < iColumnCount; ++iColumnIndex)
+//			{
+//
+//			}
+//		}
+//	}
 }
 
 /**

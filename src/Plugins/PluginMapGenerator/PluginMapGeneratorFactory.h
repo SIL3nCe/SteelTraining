@@ -14,7 +14,4 @@
 
 extern "C"
 {
-	PLUGIN_FACTORY_EXPORT void					RegisterPluginMapGenerator		(void);
-	PLUGIN_FACTORY_EXPORT void					UnRegisterPluginMapGenerator	(void);
-	PLUGIN_FACTORY_EXPORT PluginMapGenerator *	GetPluginMapGenerator			(void);
 }

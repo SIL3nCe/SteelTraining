@@ -5,6 +5,12 @@
 #include "InputManager.h"
 #include "Character/PlayerCharacter.h"
 #include "Object.h"
+#include "../../PluginMapGenerator/PluginMapGenerator.h"
+#include "../../PluginMapGenerator/MapGenerator/MapGenerator.h"
+#include "../../PluginMapGenerator/MapGenerator/MapGeneratorTest.h"
+#include "../../PluginMapGenerator/Map/Map.h"
+#include "../../PluginMapGenerator/Map/Map2D.h"
+#include "../../PluginMapGenerator/MapEntity/MapEntity.h"
 
 #define SH_TO_B2 100
 
@@ -33,6 +39,10 @@ private:
 	void						GenerateShape	(ShCollisionShape * pCollisionShape, const b2Vec2 & center, b2ChainShape & b2OutShape);
 	void						GenerateShape	(ShDummyAABB2 * pObject, const b2Vec2 & center, b2PolygonShape & b2OutShape);
 
+	//
+	// Map control
+	void						GenerateMap		(Map2D & map2D, int rowCount,  int ColumnCount);
+
 private:
 	
 	CShIdentifier		m_levelIdentifier;
@@ -44,5 +54,11 @@ private:
 	PluginInputManager	m_inputManager;
 
 	PlayerCharacter		m_playerCharacter;
+
+	//
+	// Map related
+	PluginMapGenerator *	m_pMapGeneratorPlugin;
+	MapGenerator *			m_pMapGenerator;
+	Map2D					m_map;
 };
 

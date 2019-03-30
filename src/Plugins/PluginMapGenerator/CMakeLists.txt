@@ -58,7 +58,7 @@ target_include_directories(PluginMapGenerator INTERFACE "${CMAKE_CURRENT_SOURCE_
 target_include_directories(PluginMapGenerator PRIVATE "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>")
 
 # Compile to use it in the Shine Editor
-add_library(PluginMapGenerator_Editor SHARED ${SOURCES_main} ${SOURCES})
+add_library(PluginMapGenerator_Editor STATIC ${SOURCES})
 set_property(TARGET PluginMapGenerator_Editor PROPERTY FOLDER "Editor")
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")

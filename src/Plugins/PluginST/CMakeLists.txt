@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(SHINE_EDITOR_EXT_DIR "" CACHE PATH "Extension directory")
+#LIST(SHSDK_EDITOR_LIBRARIES_DEBUG )
 set(SHSDK_EDITOR_LIBRARIES "" CACHE PATH "ShSDK (editor) path") # FIXME
 
 # main file
@@ -60,11 +61,12 @@ endif (NOT MSVC)
 set_property(TARGET PluginST APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 
 target_link_libraries(PluginST PRIVATE ${SHSDK_LIBRARIES})
+target_link_libraries(PluginST PRIVATE PluginMapGenerator)
 target_link_libraries(PluginST INTERFACE Box2D)
 
 target_include_directories(PluginST PUBLIC "${SHSDK_INCLUDE_DIR}")
 target_include_directories(PluginST INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
-target_include_directories(PluginST PRIVATE "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>")
+target_include_directories(PluginST PRIVATE "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>") 
 
 # Compile to use it in the Shine Editor
 add_library(PluginST_Editor SHARED ${SOURCES_main} ${SOURCES})
@@ -74,7 +76,10 @@ set_property(TARGET PluginST_Editor APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPI
 set_property(TARGET PluginST_Editor APPEND PROPERTY COMPILE_DEFINITIONS "SH_EDITOR=1" "_INTERNAL_DLL") # FIXME
 set_property(TARGET PluginST_Editor APPEND PROPERTY POSITION_INDEPENDENT_CODE True)
 
+add_dependencies(PluginST_Editor PluginMapGenerator_Editor)
+
 target_link_libraries(PluginST_Editor PRIVATE ${SHSDK_EDITOR_LIBRARIES})
+target_link_libraries(PluginST_Editor PRIVATE PluginMapGenerator_Editor)
 target_link_libraries(PluginST_Editor PRIVATE Box2D_shared)
 
 target_include_directories(PluginST_Editor PUBLIC "${SHSDK_INCLUDE_DIR}")
