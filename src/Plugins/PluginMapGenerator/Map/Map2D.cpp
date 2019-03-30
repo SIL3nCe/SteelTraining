@@ -8,7 +8,7 @@
 , m_iRow(0)
 , m_iColumn(0)
 , m_iTileSize(0)
-, m_aaTiles(shNULL)
+, m_mTiles()
 {
 	// ...
 }
@@ -26,7 +26,7 @@
 */
 /*virtual explicit*/ Map2D::operator bool(void) const
 {
-	return shNULL != m_aaTiles;
+	return m_mTiles.IsEmpty();
 }
 
 /**
@@ -64,9 +64,17 @@ shU32 Map2D::GetTileSize(void) const
 /**
 * @brief Map2D::GetTiles
 */
-Map2D::Tile ** const Map2D::GetTiles(void) const
+const CShArray<CShArray<Tile*>> & Map2D::GetTiles(void) const
 {
-	return m_aaTiles;
+	return m_mTiles;
+}
+
+/**
+* @brief Map2D::GetTiles
+*/
+Tile * Map2D::GetTile(int nRow, int nColumn) const
+{
+	return m_mTiles[nRow][nColumn];
 }
 
 /**
