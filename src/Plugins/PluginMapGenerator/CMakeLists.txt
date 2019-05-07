@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(SHINE_EDITOR_EXT_DIR "" CACHE PATH "Extension directory")
-set(SHSDK_EDITOR_LIBRARIES "" CACHE PATH "ShSDK (editor) path") # FIXME
-
 # main file
 if (WIN32)
 	set(SOURCES_main dllmain.cpp)

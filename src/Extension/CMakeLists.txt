@@ -4,11 +4,6 @@ if(NOT SHINE_EDITOR_EXT_DIR)
 	message(FATAL_ERROR "Error, variable 'SHINE_EDITOR_EXT_DIR' is not set. Please set it as an argument of the cmake command.")
 endif(NOT SHINE_EDITOR_EXT_DIR)
 
-set(SHINE_EDITOR_EXT_DIR "" CACHE PATH "Extension directory")
-set(SHSDK_EDITOR_LIBRARIES "" CACHE PATH "ShSDK (editor) path") # FIXME
-
-FILE(MAKE_DIRECTORY ${SHINE_EDITOR_EXT_DIR})
-
 # main file
 if (WIN32)
 	set(SOURCES_main dllmain.cpp)
