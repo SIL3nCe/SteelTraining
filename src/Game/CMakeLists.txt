@@ -31,4 +31,4 @@ set_property(TARGET Game APPEND PROPERTY COMPILE_DEFINITIONS "SH_$<UPPER_CASE:$<
 
 target_link_libraries(Game PRIVATE ${SHSDK_LIBRARIES})
 target_link_libraries(Game PRIVATE PluginST)
-target_include_directories(Game PRIVATE "${SHSDK_INCLUDE_DIR}" "$<TARGET_PROPERTY:PluginST,INCLUDE_DIRECTORIES>")
+target_include_directories(Game PRIVATE "${SHSDK_INCLUDE_DIRS}" "$<TARGET_PROPERTY:PluginST,INCLUDE_DIRECTORIES>")

@@ -53,7 +53,7 @@ endif (NOT MSVC)
 
 target_link_libraries(PluginMapGenerator PRIVATE ${SHSDK_LIBRARIES})
 
-target_include_directories(PluginMapGenerator PUBLIC "${SHSDK_INCLUDE_DIR}")
+target_include_directories(PluginMapGenerator PUBLIC "${SHSDK_INCLUDE_DIRS}")
 target_include_directories(PluginMapGenerator INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(PluginMapGenerator PRIVATE "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>")
 
@@ -69,5 +69,5 @@ set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITION
 
 target_link_libraries(PluginMapGenerator_Editor PRIVATE ${SHSDK_EDITOR_LIBRARIES})
 
-target_include_directories(PluginMapGenerator_Editor PUBLIC "${SHSDK_INCLUDE_DIR}")
+target_include_directories(PluginMapGenerator_Editor PUBLIC "${SHSDK_INCLUDE_DIRS}")
 target_include_directories(PluginMapGenerator_Editor INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
