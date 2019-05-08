@@ -23,7 +23,7 @@ private:
 	void							MapGenerationAlgorithm		(Map2D *& pMap, const CShIdentifier & idLevel);
 	void							GenerateExternWall			(Map2D *& pMap);
 	bool							FindNextMapEntity			(int iRow, int iColumn, MapEntity & newMapEntity);
-	bool							CanBePlacedHere				(const MapEntity & mapEntity, Map2D *& pMap, int iColumn, int iRow);
+	bool							CanBePlacedHere				(const MapEntity & mapEntity, Map2D *& pMap, int column, int row);
 public:
 	CShArray<MapEntity>				m_aMapEntity;
 

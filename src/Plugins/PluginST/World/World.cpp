@@ -199,23 +199,23 @@ void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 		{
 			for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
 			{
-				Tile * pTile = m_map.GetTile(nRow, nColumn);
-				switch (pTile->m_eTileType)
+				if (Tile * pTile = m_map.GetTile(nRow, nColumn))
 				{
-				case ETileType::e_tile_wall:
-				{
-					ShSprite * pSprite = GetWallSprite(nRow, nColumn);
-					CShString strWallIdentifier("wall");
-					strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
+					switch (pTile->m_eTileType)
+					{
+					case ETileType::e_tile_wall:
+					{
+						ShSprite * pSprite = GetWallSprite(nRow, nColumn);
+						CShString strWallIdentifier("wall");
+						strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
 
-					CShVector3 position(nRow * 100, nColumn * 100, 0.0f);
-					CShEulerAngles angle;
-					CShVector3 scale(1.0f, 1.0f, 1.0f);
-					
-					ShEntity2 * pWallEntity2 = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, angle, scale, true);
-				}
-				break;
-					
+						CShVector3 position(nColumn * 100.0f, nRow * -100.0f, 0.0f);
+
+						ShEntity2 * pWallEntity2 = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL, true);
+						SH_ASSERT(shNULL != pWallEntity2);
+					}
+					break;
+					}
 				}
 			}
 		}
@@ -233,9 +233,9 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 	}
 
 	bool bBorderTop = iRowPosition == 0;
-	bool bBorderRight = iColumnPosition == 0;
+	bool bBorderLeft = iColumnPosition == 0;
 	bool bBorderBottom = m_map.GetRowCount() - 1 == iRowPosition;
-	bool bBorderLeft = m_map.GetColumnCount() - 1 == iRowPosition;
+	bool bBorderRight = m_map.GetColumnCount() - 1 == iColumnPosition;
 
 	CShString strIdentifier("mur");
 
@@ -245,9 +245,8 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 	else if (bBorderLeft) strIdentifier += "_gauche";
 
 	SH_ASSERT(ShSprite::Exists(CShIdentifier("mur"), CShIdentifier(strIdentifier)))
-		
-	ShSprite * pSprite = ShSprite::Find(CShIdentifier("mur"), CShIdentifier(strIdentifier));
 
+	ShSprite * pSprite = ShSprite::Find(CShIdentifier("mur"), CShIdentifier(strIdentifier));
 
 	return pSprite;
 }
