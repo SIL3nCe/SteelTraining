@@ -29,9 +29,8 @@ public:
 
 	const PluginInputManager & 	GetInputManager	(void);
 	
-
 	static CShVector2			ShineToB2		(b2Vec2 vec);
-	static b2Vec2				ShineToB2		(CShVector2 vec);
+	static b2Vec2				B2ToShine		(CShVector2 vec);
 
 private:
 

@@ -43,31 +43,6 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 	ShApplication::RegisterPlugin(m_pMapGeneratorPlugin, false);
 	
 	GenerateMap(m_map, 20, 15);
-
-	//
-	// Load and parse all Collision Shape
-	CShArray<ShCollisionShape*> aCollisionShape;
-	ShCollisionShape::GetCollisionShapeArray(levelIdentifier, aCollisionShape);
-	int nShapeCount = aCollisionShape.GetCount();
-
-	for (int i = 0; i < nShapeCount; ++i)
-	{
-		ShCollisionShape * pShape = aCollisionShape[i];
-
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
-		bodyDef.position = ShineToB2(ShCollisionShape::GetWorldPosition2(pShape));
-		bodyDef.angle = 0;
-
-		b2Body * pBody = m_pbWorld->CreateBody(&bodyDef);
-
-		b2ChainShape chainShape;
-		GenerateShape(pShape, pBody->GetPosition(), chainShape);
-		
-		b2FixtureDef bodyFixture;
-		bodyFixture.shape = &chainShape;
-		pBody->CreateFixture(&bodyFixture);
-	}
 }
 
 /**
@@ -141,7 +116,7 @@ void World::GenerateShape(ShCollisionShape * pCollisionShape, const b2Vec2 & cen
 	{
 		const CShVector2 & pos = ShCollisionShape::GetPoint(pCollisionShape, i);
 
-		aVertex[i] = ShineToB2(pos);
+		aVertex[i] = B2ToShine(pos);
 	}
 
 	b2OutShape.CreateLoop(aVertex, pointCount);
@@ -159,10 +134,10 @@ void World::GenerateShape(ShDummyAABB2 * pObject, const b2Vec2 & center, b2Polyg
 	CShVector2 vPoint4(CShVector2(aabb2.m_max.m_x * scale.m_x, aabb2.m_min.m_y * scale.m_y) + vDummyAABB2Translation);
 
 	b2Vec2 aB2Point[4];
-	aB2Point[0] = ShineToB2(vPoint1) - center;
-	aB2Point[1] = ShineToB2(vPoint2) - center;
-	aB2Point[2] = ShineToB2(vPoint3) - center;
-	aB2Point[3] = ShineToB2(vPoint4) - center;
+	aB2Point[0] = B2ToShine(vPoint1) - center;
+	aB2Point[1] = B2ToShine(vPoint2) - center;
+	aB2Point[2] = B2ToShine(vPoint3) - center;
+	aB2Point[3] = B2ToShine(vPoint4) - center;
 
 	b2OutShape.Set(aB2Point, 4);
 }
@@ -264,7 +239,7 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 * @brief ShineToB2
 * @param vec
 */
-/*static*/ b2Vec2 World::ShineToB2(CShVector2 vec)
+/*static*/ b2Vec2 World::B2ToShine(CShVector2 vec)
 {
 	vec /= CShVector2(SH_TO_B2, SH_TO_B2);
 	return b2Vec2(vec.m_x, vec.m_y);
