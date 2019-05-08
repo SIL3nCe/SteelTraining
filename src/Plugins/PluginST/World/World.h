@@ -18,29 +18,31 @@ class World
 {
 public:
 
-	explicit					 World			(void);
-	virtual						~World			(void);
+	explicit					 World				(void);
+	virtual						~World				(void);
 
-	void						Initialize		(const CShIdentifier & levelIdentifier);
-	void						Release			(void);
+	void						Initialize			(const CShIdentifier & levelIdentifier);
+	void						Release				(void);
 
-	void						Update			(float dt);
-	void						UpdateCamera	(float dt);
+	void						Update				(float dt);
+	void						UpdateCamera		(float dt);
 
-	const PluginInputManager & 	GetInputManager	(void);
-	
-	static CShVector2			ShineToB2		(b2Vec2 vec);
-	static b2Vec2				B2ToShine		(CShVector2 vec);
+	const PluginInputManager & 	GetInputManager		(void);
+
+	static CShVector2			ShineToB2			(b2Vec2 vec);
+	static b2Vec2				B2ToShine			(CShVector2 vec);
+
+	const PlayerCharacter &		GetPlayerCharacter	(void) const;
 
 private:
 
-	void						GenerateShape	(ShCollisionShape * pCollisionShape, const b2Vec2 & center, b2ChainShape & b2OutShape);
-	void						GenerateShape	(ShDummyAABB2 * pObject, const b2Vec2 & center, b2PolygonShape & b2OutShape);
+	void						GenerateShape		(ShCollisionShape * pCollisionShape, const b2Vec2 & center, b2ChainShape & b2OutShape);
+	void						GenerateShape		(ShDummyAABB2 * pObject, const b2Vec2 & center, b2PolygonShape & b2OutShape);
 
 	//
 	// Map control
-	void						GenerateMap		(Map2D & map2D, int rowCount, int ColumnCount);
-	ShSprite *					GetWallSprite	(int iRowPosition,  int iColumnPosition);
+	void						GenerateMap			(Map2D & map2D, int rowCount, int ColumnCount);
+	ShSprite *					GetWallSprite		(int iRowPosition,  int iColumnPosition);
 
 private:
 	

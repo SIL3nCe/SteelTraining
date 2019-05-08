@@ -25,15 +25,15 @@ PlayerCharacter::~PlayerCharacter(void)
 /**
  * @brief Initialize
  */
-void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World * pWorld, PluginInputManager * pInputManager)
+void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World * pB2World, World * pSTWorld, PluginInputManager * pInputManager)
 {
-	BaseCharacter::Initialize(pWorld);
+	BaseCharacter::Initialize(pB2World, pSTWorld);
 
 	m_pInputManager = pInputManager;
-	SH_ASSERT(shNULL != m_pInputManager);
+	SH_ASSERT(shNULL != m_pInputManager)
 
 	m_pEntity = ShEntity2::Find(levelIdentifier, CShIdentifier("sprite_player_test"));
-	SH_ASSERT(shNULL != m_pEntity);
+	SH_ASSERT(shNULL != m_pEntity)
 
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(64.0f * SH_TO_B2, 64.0f * SH_TO_B2);

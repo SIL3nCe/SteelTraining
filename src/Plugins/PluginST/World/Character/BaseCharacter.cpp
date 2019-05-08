@@ -1,4 +1,5 @@
 #include "BaseCharacter.h"
+#include "../World.h"
 
 /**
  * @brief Constructor
@@ -23,17 +24,19 @@ BaseCharacter::~BaseCharacter(void)
  * @brief Initialize
  * @param pUser
  */
-void BaseCharacter::Initialize(b2World * pWorld)
+void BaseCharacter::Initialize(b2World * pB2World, World * pSTWorld)
 {
-	SH_ASSERT(shNULL != pWorld);
+	SH_ASSERT(shNULL != pB2World && shNULL != pSTWorld)
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0, 0);
 	bodyDef.angle = 0;
 
-	m_pBody = pWorld->CreateBody(&bodyDef);
-	SH_ASSERT(shNULL != m_pBody);
+	m_pBody = pB2World->CreateBody(&bodyDef);
+	SH_ASSERT(shNULL != m_pBody)
+
+	m_pWorld = pSTWorld;
 }
 
 /**
@@ -63,7 +66,7 @@ void BaseCharacter::UpdateAnimations(float dt)
 	ShEntity2::SetRelativePosition2(m_pEntity, CShVector2(bodyPos.x, bodyPos.y));
 }
 
- const CShVector3 & BaseCharacter::GetEntityLocation(void)
+ const CShVector3 & BaseCharacter::GetEntityLocation(void) const
  {
 	 return ShEntity2::GetPosition(m_pEntity);
  }
