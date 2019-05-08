@@ -31,6 +31,9 @@ World::~World(void)
  */
 void World::Initialize(const CShIdentifier & levelIdentifier)
 {
+
+	srand(static_cast<unsigned int>(time(shNULL)));
+
 	m_levelIdentifier = levelIdentifier;
 
 	b2Vec2 gravity(0.0f, 0.0f);

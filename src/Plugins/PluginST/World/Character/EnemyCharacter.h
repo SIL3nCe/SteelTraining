@@ -9,6 +9,7 @@ public:
 	enum EEnemyState
 	{
 		e_state_idle,
+		e_state_wandering,
 		e_state_attacking
 	};
 
@@ -29,6 +30,7 @@ private:
 public:
 protected:
 	EEnemyState		m_eCurrentState;	///< Current state of the ennemy
+	int				m_iTransitionTime;
 private:
 
 };

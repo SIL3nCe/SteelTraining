@@ -8,6 +8,7 @@ EnemyMeleeCharacter::EnemyMeleeCharacter(void)
 	: EnemyCharacter ()
 	, m_vLastPlayerPosition()
 {
+	m_iTransitionTime = 1000;
 }
 /**
  * @brief EnemyMeleeCharacter::~EnemyMeleeCharacter
@@ -53,15 +54,39 @@ void EnemyMeleeCharacter::Update(float dt)
 			}
 			else
 			{
-				m_pBody->SetLinearVelocity(b2Vec2(0.f, 0.f));
+				if (m_iTransitionTime <=0)
+				{
+					m_eCurrentState = e_state_wandering;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		case e_state_wandering:
+		{
+			if (player.GetEntityLocation().Distance(GetEntityLocation()) < 300.f)
+			{
+				m_eCurrentState = e_state_attacking;
+			}
+			else
+			{
+				m_pBody->ApplyLinearImpulseToCenter(b2Vec2((rand()/static_cast<float>(RAND_MAX)-0.5f)/50.f, (rand()/static_cast<float>(RAND_MAX)-0.5f)/50.f), true);
+				b2Vec2 vVelocity(m_pBody->GetLinearVelocity());
+				vVelocity.x = shMax(shMin(1.f, vVelocity.x), -1.f);
+				vVelocity.y = shMax(shMin(1.f, vVelocity.y), -1.f);
+				m_pBody->SetLinearVelocity(vVelocity);
 				break;
 			}
+			break;
 		}
 		case e_state_attacking:
 		{
 			if (player.GetEntityLocation().Distance(GetEntityLocation()) > 400.f)
 			{
 				m_eCurrentState = e_state_idle;
+				m_iTransitionTime = 1000;
 			}
 			else
 			{

@@ -7,6 +7,7 @@
 EnemyCharacter::EnemyCharacter(void)
 : BaseCharacter ()
 , m_eCurrentState(e_state_idle)
+, m_iTransitionTime(0)
 {
 }
 /**
@@ -50,6 +51,10 @@ void EnemyCharacter::Release(void)
 void EnemyCharacter::Update(float dt)
 {
 	BaseCharacter::Update(dt);
+	if (m_iTransitionTime > 0)
+	{
+		m_iTransitionTime -= static_cast<int>(dt*1000.f);
+	}
 }
 
 /**
