@@ -62,27 +62,28 @@ void PlayerCharacter::Update(float dt)
 	bool bDown = m_pInputManager->IsGoingDown();
 	bool bUp = m_pInputManager->IsGoingUp();
 
-	float fNewVel = 5.0f;
 	b2Vec2 vImpulse(0.0f, 0.0f);
 	
 	if (bLeft)
 	{
-		vImpulse.x = -fNewVel;
+		vImpulse.x = -1.0f;
 	}
 	else if (bRight)
 	{
-		vImpulse.x = fNewVel;
+		vImpulse.x = 1.0f;
 	}
 	
 	if (bUp)
 	{
-		vImpulse.y = fNewVel;
+		vImpulse.y = 1.0f;
 	}
 	else if (bDown)
 	{
-		vImpulse.y = -fNewVel;
+		vImpulse.y = -1.0f;
 	}
 
+	vImpulse.Normalize();
+	vImpulse *= 5.0f;
 	m_pBody->SetLinearVelocity(vImpulse);
 }
 

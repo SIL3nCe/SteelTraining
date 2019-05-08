@@ -203,18 +203,18 @@ void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 				{
 					switch (pTile->m_eTileType)
 					{
-					case ETileType::e_tile_wall:
-					{
-						ShSprite * pSprite = GetWallSprite(nRow, nColumn);
-						CShString strWallIdentifier("wall");
-						strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
+						case ETileType::e_tile_wall:
+						{
+							ShSprite * pSprite = GetWallSprite(nRow, nColumn);
+							CShString strWallIdentifier("wall");
+							strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
 
-						CShVector3 position(nColumn * 100.0f, nRow * -100.0f, 0.0f);
+							CShVector3 position(nColumn * 100.0f, nRow * -100.0f, 0.0f);
 
-						ShEntity2 * pWallEntity2 = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL, true);
-						SH_ASSERT(shNULL != pWallEntity2);
-					}
-					break;
+							ShEntity2 * pWallEntity2 = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL, true);
+							SH_ASSERT(shNULL != pWallEntity2);
+						}
+						break;
 					}
 				}
 			}
