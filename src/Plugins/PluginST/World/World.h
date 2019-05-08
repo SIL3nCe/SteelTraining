@@ -25,6 +25,7 @@ public:
 	void						Release			(void);
 
 	void						Update			(float dt);
+	void						UpdateCamera	(float dt);
 
 	const PluginInputManager & 	GetInputManager	(void);
 	
