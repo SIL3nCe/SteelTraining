@@ -63,6 +63,11 @@ void BaseCharacter::UpdateAnimations(float dt)
 	ShEntity2::SetRelativePosition2(m_pEntity, CShVector2(bodyPos.x, bodyPos.y));
 }
 
+ const CShVector3 & BaseCharacter::GetEntityLocation(void)
+ {
+	 return ShEntity2::GetPosition(m_pEntity);
+ }
+
 /**
  * @brief GetObjectType
  */

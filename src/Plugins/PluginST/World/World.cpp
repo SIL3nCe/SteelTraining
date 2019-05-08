@@ -95,10 +95,24 @@ void World::Update(float dt)
 	//velocityIterations: how strongly to correct velocity
 	//positionIterations: how strongly to correct position
 	// ^ Making these values higher will give you a more correct simulation, at the cost of some performance
-
 	m_pbWorld->Step(timeStep, 8, 3);
 
 	m_playerCharacter.UpdateAnimations(dt);
+
+	UpdateCamera(dt);
+}
+
+/**
+ * @brief UpdateCamera
+ */
+void World::UpdateCamera(float dt)
+{
+	if (ShCamera * pCamera = ShCamera::GetCamera2D())
+	{
+		const CShVector3 & vPlayerLocation = m_playerCharacter.GetEntityLocation();
+		ShCamera::SetPosition2(pCamera, vPlayerLocation.XY());
+		ShCamera::SetTarget(pCamera, CShVector3(vPlayerLocation.XY(), 0.0f));
+	}
 }
 
 /**

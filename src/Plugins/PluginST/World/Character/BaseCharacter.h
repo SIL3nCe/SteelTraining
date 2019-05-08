@@ -9,16 +9,18 @@ class ShEntity2;
 class BaseCharacter : public Object
 {
 public:
-	explicit		 BaseCharacter		(void);
-	virtual			~BaseCharacter		(void);
+	explicit			 BaseCharacter		(void);
+	virtual				~BaseCharacter		(void);
 
-	virtual	void	Initialize			(b2World * pWorld);
-	virtual	void	Release				(void);
+	virtual	void		Initialize			(b2World * pWorld);
+	virtual	void		Release				(void);
 
-	virtual void	Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
-	virtual void	UpdateAnimations	(float dt);
+	virtual void		Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
+	virtual void		UpdateAnimations	(float dt);
 
-	virtual EType	GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
+	virtual EType		GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
+
+	const CShVector3 &	GetEntityLocation	(void);
 
 protected:
 	b2Body * m_pBody;
