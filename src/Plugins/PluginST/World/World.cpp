@@ -215,18 +215,52 @@ void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 						case ETileType::e_tile_wall:
 						{
 							ShSprite * pSprite = GetWallSprite(nRow, nColumn);
+							SH_ASSERT(shNULL != pSprite)
+
+							float fWidth = ShSprite::GetWidth(pSprite);
+							float fHeight = ShSprite::GetHeight(pSprite);
+							
+							SH_ASSERT(fWidth == WALL_WIDTH)
+							SH_ASSERT(fHeight == WALL_HEIGHT)
+
 							CShString strWallIdentifier("wall");
 							strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
 
-							CShVector3 position(nColumn * 100.0f, nRow * -100.0f, 0.0f);
+							CShVector3 position(nColumn * fWidth, nRow * -fHeight, 1.0f);
 
-							ShEntity2 * pWallEntity2 = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL, true);
-							SH_ASSERT(shNULL != pWallEntity2);
+							ShEntity2 * pWallEntity = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
+							SH_ASSERT(shNULL != pWallEntity)
+
+							// Generate wall object
+							bool bUsed = false;
+							int nWallCount = m_aWallList.GetCount();
+							for (int i = 0; i < nWallCount; ++i)
+							{
+								if (m_aWallList[i].AddWall(pWallEntity))
+								{
+									bUsed = true;
+									break;
+								}
+							}
+
+							if (!bUsed)
+							{ // Create a new wall object
+								ObjectWall wall;
+								wall.Initialize(pWallEntity);
+								m_aWallList.Add(wall);
+							}
 						}
 						break;
 					}
 				}
 			}
+		}
+
+		//Generate object physic
+		int nWallCount = m_aWallList.GetCount();
+		for (int i = 0; i < nWallCount; ++i)
+		{
+			m_aWallList[i].GeneratePhysic(m_pbWorld);
 		}
 	}
 }
@@ -255,30 +289,7 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 
 	SH_ASSERT(ShSprite::Exists(CShIdentifier("mur"), CShIdentifier(strIdentifier)))
 
-	ShSprite * pSprite = ShSprite::Find(CShIdentifier("mur"), CShIdentifier(strIdentifier));
-
-	return pSprite;
-}
-
-/**
-* @brief B2ToShine
-* @param vec
-*/
-/*static*/ CShVector2 World::B2ToShine(b2Vec2 vec)
-{
-	float fFactor = 1 / SH_TO_B2;
-	vec *= fFactor;
-	return CShVector2(vec.x, vec.y);
-}
-
-/**
-* @brief ShineToB2
-* @param vec
-*/
-/*static*/ b2Vec2 World::ShineToB2(CShVector2 vec)
-{
-	vec *= SH_TO_B2;
-	return b2Vec2(vec.m_x, vec.m_y);
+	return ShSprite::Find(CShIdentifier("mur"), CShIdentifier(strIdentifier));
 }
 
 /**

@@ -3,9 +3,10 @@
 #include "ShSDK/ShSDK.h"
 
 #include "InputManager.h"
+#include "Object.h"
 #include "Character/PlayerCharacter.h"
 #include "Character/EnemyCharacter.h"
-#include "Object.h"
+#include "Objects/ObjectWall.h"
 #include "../../PluginMapGenerator/PluginMapGenerator.h"
 #include "../../PluginMapGenerator/MapGenerator/MapGenerator.h"
 #include "../../PluginMapGenerator/MapGenerator/MapGeneratorTest.h"
@@ -14,6 +15,19 @@
 #include "../../PluginMapGenerator/MapEntity/MapEntity.h"
 
 #define SH_TO_B2 0.01f
+
+static inline CShVector2 B2ToShine(b2Vec2 vec)
+{
+	float fFactor = 1 / SH_TO_B2;
+	vec *= fFactor;
+	return CShVector2(vec.x, vec.y);
+}
+
+static inline b2Vec2 ShineToB2(CShVector2 vec)
+{
+	vec *= SH_TO_B2;
+	return b2Vec2(vec.m_x, vec.m_y);
+}
 
 class World
 {
@@ -30,10 +44,14 @@ public:
 
 	const PluginInputManager & 	GetInputManager		(void);
 
+<<<<<<< Updated upstream
 	static CShVector2			B2ToShine			(b2Vec2 vec);
 	static b2Vec2				ShineToB2			(CShVector2 vec);
 
 	PlayerCharacter &			GetPlayerCharacter	(void);
+=======
+	const PlayerCharacter &		GetPlayerCharacter	(void) const;
+>>>>>>> Stashed changes
 
 	void						KillEnemy			(EnemyCharacter * pEnemy);
 
@@ -56,6 +74,7 @@ private:
 	b2World *					m_pbWorld;
 
 	CShArray<EnemyCharacter*>	m_apEnemyList;
+	CShArray<ObjectWall>		m_aWallList;
 
 	PluginInputManager			m_inputManager;
 
