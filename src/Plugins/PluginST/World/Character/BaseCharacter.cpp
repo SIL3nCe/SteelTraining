@@ -63,7 +63,7 @@ void BaseCharacter::UpdateAnimations(float dt)
 {
 	SH_UNUSED(dt);
 	b2Vec2 bodyPos = m_pBody->GetPosition();
-	ShEntity2::SetRelativePosition2(m_pEntity, CShVector2(bodyPos.x, bodyPos.y));
+	ShEntity2::SetRelativePosition2(m_pEntity, World::B2ToShine(bodyPos));
 }
 
  const CShVector3 & BaseCharacter::GetEntityLocation(void) const

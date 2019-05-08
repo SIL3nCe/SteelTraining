@@ -62,7 +62,7 @@ void PlayerCharacter::Update(float dt)
 	bool bDown = m_pInputManager->IsGoingDown();
 	bool bUp = m_pInputManager->IsGoingUp();
 
-	float fNewVel = 50.0f * SH_TO_B2;
+	float fNewVel = 5.0f;
 	b2Vec2 vImpulse(0.0f, 0.0f);
 	
 	if (bLeft)

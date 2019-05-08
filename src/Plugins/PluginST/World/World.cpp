@@ -116,7 +116,7 @@ void World::GenerateShape(ShCollisionShape * pCollisionShape, const b2Vec2 & cen
 	{
 		const CShVector2 & pos = ShCollisionShape::GetPoint(pCollisionShape, i);
 
-		aVertex[i] = B2ToShine(pos);
+		aVertex[i] = ShineToB2(pos);
 	}
 
 	b2OutShape.CreateLoop(aVertex, pointCount);
@@ -134,16 +134,16 @@ void World::GenerateShape(ShDummyAABB2 * pObject, const b2Vec2 & center, b2Polyg
 	CShVector2 vPoint4(CShVector2(aabb2.m_max.m_x * scale.m_x, aabb2.m_min.m_y * scale.m_y) + vDummyAABB2Translation);
 
 	b2Vec2 aB2Point[4];
-	aB2Point[0] = B2ToShine(vPoint1) - center;
-	aB2Point[1] = B2ToShine(vPoint2) - center;
-	aB2Point[2] = B2ToShine(vPoint3) - center;
-	aB2Point[3] = B2ToShine(vPoint4) - center;
+	aB2Point[0] = ShineToB2(vPoint1) - center;
+	aB2Point[1] = ShineToB2(vPoint2) - center;
+	aB2Point[2] = ShineToB2(vPoint3) - center;
+	aB2Point[3] = ShineToB2(vPoint4) - center;
 
 	b2OutShape.Set(aB2Point, 4);
 }
 
 /**
-* @brief 
+* @brief GenerateMap
 */
 void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 {
@@ -197,7 +197,7 @@ void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 }
 
 /**
-* @brief 
+* @brief GetWallSprite
 */
 ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 {
@@ -227,22 +227,23 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 }
 
 /**
-* @brief ShineToB2
-* @param vec
-*/
-/*static*/ CShVector2 World::ShineToB2(b2Vec2 vec)
-{
-	return CShVector2(vec.x, vec.y) * SH_TO_B2;
-}
-
-/**
 * @brief B2ToShine
 * @param vec
 */
-/*static*/ b2Vec2 World::B2ToShine(CShVector2 vec)
+/*static*/ CShVector2 World::B2ToShine(b2Vec2 vec)
 {
 	float fFactor = 1 / SH_TO_B2;
 	vec *= fFactor;
+	return CShVector2(vec.x, vec.y);
+}
+
+/**
+* @brief ShineToB2
+* @param vec
+*/
+/*static*/ b2Vec2 World::ShineToB2(CShVector2 vec)
+{
+	vec *= SH_TO_B2;
 	return b2Vec2(vec.m_x, vec.m_y);
 }
 
