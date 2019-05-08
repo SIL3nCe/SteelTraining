@@ -32,10 +32,6 @@ endif (MSVC)
 
 set(SHSDK_COMPILE_DEFINITIONS "SH_$<UPPER_CASE:$<CONFIG>>=1")
 
-if (MSVC)
-	#list(APPEND SHSDK_COMPILE_DEFINITIONS "_ITERATOR_DEBUG_LEVEL=0")
-endif (MSVC)
-
 # ------------------------------------------------------------------------------------------------
 
 set(SHSDK_LIBRARIES )
@@ -56,8 +52,10 @@ if (${ShEntryPoint_INDEX} GREATER -1)
 endif()
 
 FIND_SHSDK_LIBRARY(SHSDK_LIBRARY ShSDK)
+if(SHSDK_LIBRARY)
+	set(SHSDK_LIBRARIES "${SHSDK_LIBRARY}" "${SHSDK_LIBRARIES}" "${SHSDK_LIBRARY}") #${SHSDK_LIBRARY} is twice : ShSDK needs a User System and every User System depends upon ShSDK
+endif(SHSDK_LIBRARY)
 
-set(SHSDK_LIBRARIES "${SHSDK_LIBRARY}" "${SHSDK_LIBRARIES}" "${SHSDK_LIBRARY}") #${SHSDK_LIBRARY} is twice : ShSDK needs a User System and every User System depends upon ShSDK
 set(SHSDK_INCLUDE_DIRS "${SHSDK_INCLUDE_DIR}")
 
 if (SHSDK_LIBRARY)
@@ -103,9 +101,6 @@ if (SHSDK_LIBRARY)
 	endif()
 
 endif (SHSDK_LIBRARY)
-
-message("SHSDK_LIBRARIES = ${SHSDK_LIBRARIES}")
-message("SHSDK_INCLUDE_DIRS = ${SHSDK_INCLUDE_DIRS}")
 
 include(FindPackageHandleStandardArgs)
 
