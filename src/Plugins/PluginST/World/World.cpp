@@ -232,15 +232,16 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 */
 /*static*/ CShVector2 World::ShineToB2(b2Vec2 vec)
 {
-	return CShVector2(vec.x, vec.y) * CShVector2(SH_TO_B2, SH_TO_B2);
+	return CShVector2(vec.x, vec.y) * SH_TO_B2;
 }
 
 /**
-* @brief ShineToB2
+* @brief B2ToShine
 * @param vec
 */
 /*static*/ b2Vec2 World::B2ToShine(CShVector2 vec)
 {
-	vec /= CShVector2(SH_TO_B2, SH_TO_B2);
+	float fFactor = 1 / SH_TO_B2;
+	vec *= fFactor;
 	return b2Vec2(vec.m_x, vec.m_y);
 }

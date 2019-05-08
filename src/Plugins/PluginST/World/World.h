@@ -12,7 +12,7 @@
 #include "../../PluginMapGenerator/Map/Map2D.h"
 #include "../../PluginMapGenerator/MapEntity/MapEntity.h"
 
-#define SH_TO_B2 100
+#define SH_TO_B2 0.01f
 
 class World
 {

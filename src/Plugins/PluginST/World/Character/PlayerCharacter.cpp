@@ -36,7 +36,7 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 	SH_ASSERT(shNULL != m_pEntity);
 
 	b2PolygonShape boxShape;
-	boxShape.SetAsBox(10, 10);
+	boxShape.SetAsBox(64.0f * SH_TO_B2, 64.0f * SH_TO_B2);
 
 	b2FixtureDef boxFixtureDef;
 	boxFixtureDef.shape = &boxShape;
@@ -62,7 +62,7 @@ void PlayerCharacter::Update(float dt)
 	bool bDown = m_pInputManager->IsGoingDown();
 	bool bUp = m_pInputManager->IsGoingUp();
 
-	float fNewVel = 500.0f;
+	float fNewVel = 50.0f * SH_TO_B2;
 	b2Vec2 vImpulse(0.0f, 0.0f);
 	
 	if (bLeft)
@@ -91,11 +91,6 @@ void PlayerCharacter::Update(float dt)
  */
 void PlayerCharacter::UpdateAnimations(float dt)
 {
-	// rotate for test
-	//CShEulerAngles angle = ShEntity2::GetRelativeRotation(m_pEntity);
-	//angle.m_z += 10.0f * dt;
-	//ShEntity2::SetRelativeRotation(m_pEntity, angle);
-
 	BaseCharacter::UpdateAnimations(dt);
 }
 
