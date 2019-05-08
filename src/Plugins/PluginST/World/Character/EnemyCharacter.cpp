@@ -23,8 +23,8 @@ EnemyCharacter::~EnemyCharacter(void)
 void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld, const CShVector2 & vPosition)
 {
 	BaseCharacter::Initialize(pB2World, pSTWorld);
-<<<<<<< Updated upstream
-	m_pBody->SetTransform(World::ShineToB2(vPosition), 0.f);
+
+	m_pBody->SetTransform(ShineToB2(vPosition), 0.f);
 
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(15.0f * SH_TO_B2, 15.0f * SH_TO_B2);
@@ -33,9 +33,6 @@ void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld, const CShV
 	boxFixtureDef.shape = &boxShape;
 	boxFixtureDef.density = 0.5;
 	m_pBody->CreateFixture(&boxFixtureDef);
-=======
-	m_pBody->SetTransform(ShineToB2(vPosition), 0.f);
->>>>>>> Stashed changes
 }
 
 /**

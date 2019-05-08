@@ -70,12 +70,9 @@ void BaseCharacter::UpdateAnimations(float dt)
 {
 	SH_UNUSED(dt);
 	b2Vec2 bodyPos = m_pBody->GetPosition();
-<<<<<<< Updated upstream
-	ShEntity2::SetRelativePosition2(m_pEntity, World::B2ToShine(bodyPos));
-	ShEntity2::SetColor(m_pEntity, m_iInvulnerabilityTime <=0 ? CShRGBAf_WHITE : CShRGBAf(1.f, 1.f,1.f, 1.f - shMax(m_iInvulnerabilityTime/1000.f, .2f)));
-=======
 	ShEntity2::SetRelativePosition2(m_pEntity, B2ToShine(bodyPos));
->>>>>>> Stashed changes
+	ShEntity2::SetColor(m_pEntity, m_iInvulnerabilityTime <=0 ? CShRGBAf_WHITE : CShRGBAf(1.f, 1.f,1.f, 1.f - shMax(m_iInvulnerabilityTime/1000.f, .2f)));
+
 }
 
 /**
@@ -102,7 +99,9 @@ bool BaseCharacter::TakeDamage(int iDamages)
 		{
 			Die();
 		}
+		return true;
 	}
+	return false;
 }
 
 /**

@@ -44,14 +44,7 @@ public:
 
 	const PluginInputManager & 	GetInputManager		(void);
 
-<<<<<<< Updated upstream
-	static CShVector2			B2ToShine			(b2Vec2 vec);
-	static b2Vec2				ShineToB2			(CShVector2 vec);
-
 	PlayerCharacter &			GetPlayerCharacter	(void);
-=======
-	const PlayerCharacter &		GetPlayerCharacter	(void) const;
->>>>>>> Stashed changes
 
 	void						KillEnemy			(EnemyCharacter * pEnemy);
 
