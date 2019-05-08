@@ -12,7 +12,7 @@ public:
 	virtual				~PlayerCharacter	(void);
 
 	void				Initialize			(const CShIdentifier & levelIdentifier, b2World * pB2World, World * pSTWorld, PluginInputManager * pInputManager);
-	void				Release				(void);
+	void				Release				(void) SH_ATTRIBUTE_OVERRIDE;
 
 	virtual void		Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
 	virtual void		UpdateAnimations	(float dt) SH_ATTRIBUTE_OVERRIDE;

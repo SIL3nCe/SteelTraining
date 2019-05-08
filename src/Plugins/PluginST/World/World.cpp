@@ -1,10 +1,15 @@
 #include "World.h"
+#include "Character/EnemyMeleeCharacter.h"
 
 /**
  * @brief Constructor
  */
 World::World(void)
-: m_pbWorld(shNULL)
+: m_levelIdentifier()
+, m_pbWorld(shNULL)
+, m_apEnemyList()
+, m_inputManager()
+, m_playerCharacter()
 , m_pMapGeneratorPlugin(shNULL)
 , m_pMapGenerator(shNULL)
 , m_map()
@@ -32,11 +37,15 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 	m_pbWorld = new b2World(gravity);
 
 	ShUser * pUser = ShUser::GetUser(0);
-	SH_ASSERT(shNULL != pUser);
+	SH_ASSERT(shNULL != pUser)
 
 	m_inputManager.Initialize(pUser);
 
 	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, this, &m_inputManager);
+
+	EnemyMeleeCharacter * pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy1"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, 300.f));
+	m_apEnemyList.Add(pEnemy);
 		
 	// Map Generator
 	m_pMapGeneratorPlugin = new PluginMapGenerator();
@@ -53,7 +62,13 @@ void World::Release(void)
 	m_playerCharacter.Release();
 	m_inputManager.Release();
 
-	SH_SAFE_DELETE(m_pbWorld);
+	int iEnemyCount = m_apEnemyList.GetCount();
+	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
+	{
+		SH_SAFE_RELEASE_DELETE(m_apEnemyList[iEnemyIndex])
+	}
+
+	SH_SAFE_DELETE(m_pbWorld)
 }
 
 /**
@@ -65,6 +80,12 @@ void World::Update(float dt)
 
 	m_playerCharacter.Update(dt);
 
+	int iEnemyCount = m_apEnemyList.GetCount();
+	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
+	{
+		m_apEnemyList[iEnemyIndex]->Update(dt);
+	}
+
 	float32 timeStep = 1 / 60.0f;   // TODO timeStep should match the number of times per second it will be called
 
 	//velocityIterations: how strongly to correct velocity
@@ -73,6 +94,11 @@ void World::Update(float dt)
 	m_pbWorld->Step(timeStep, 8, 3);
 
 	m_playerCharacter.UpdateAnimations(dt);
+
+	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
+	{
+		m_apEnemyList[iEnemyIndex]->UpdateAnimations(dt);
+	}
 
 	UpdateCamera(dt);
 }

@@ -20,9 +20,11 @@ EnemyMeleeCharacter::~EnemyMeleeCharacter(void)
  * @brief EnemyMeleeCharacter::Initialize
  * @param pWorld
  */
-void EnemyMeleeCharacter::Initialize(b2World * pB2World, World * pSTWorld)
+void EnemyMeleeCharacter::Initialize(const CShIdentifier & idCharacter, const CShIdentifier & levelIdentifier, b2World * pB2World, World * pSTWorld, const CShVector2 & vPosition)
 {
-	EnemyCharacter::Initialize(pB2World, pSTWorld);
+	EnemyCharacter::Initialize(pB2World, pSTWorld, vPosition);
+
+	m_pEntity = ShEntity2::Create(levelIdentifier, idCharacter, GID(layer_default), CShIdentifier("character"), CShIdentifier("chicken_idle_left_0"), CShVector3(vPosition, 0.f), CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
 }
 
 /**
@@ -44,12 +46,13 @@ void EnemyMeleeCharacter::Update(float dt)
 	{
 		case e_state_idle:
 		{
-			if (m_pWorld->GetPlayerCharacter().GetEntityLocation().Distance(GetEntityLocation()) < 100.f)
+			if (m_pWorld->GetPlayerCharacter().GetEntityLocation().Distance(GetEntityLocation()) < 200.f)
 			{
 				m_eCurrentState = e_state_attacking;
 			}
 			else
 			{
+				m_pBody->SetLinearVelocity(b2Vec2(0.f, 0.f));
 				break;
 			}
 		}
@@ -63,7 +66,7 @@ void EnemyMeleeCharacter::Update(float dt)
 			{
 				CShVector3 vDirection = m_pWorld->GetPlayerCharacter().GetEntityLocation() - GetEntityLocation();
 				vDirection.Normalize();
-				b2Vec2 vVelocity(vDirection.m_x * 50.f, vDirection.m_y * 50.f);
+				b2Vec2 vVelocity(vDirection.m_x * 2.f, vDirection.m_y * 2.f);
 				m_pBody->SetLinearVelocity(vVelocity);
 			}
 			break;

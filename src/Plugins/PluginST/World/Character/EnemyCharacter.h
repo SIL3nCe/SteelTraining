@@ -16,13 +16,14 @@ public:
 	explicit		 EnemyCharacter	(void);
 	virtual			~EnemyCharacter	(void) SH_ATTRIBUTE_OVERRIDE;
 
-	virtual void	Initialize			(b2World * pB2World, World * pSTWorld) SH_ATTRIBUTE_OVERRIDE;
+	virtual void	Initialize			(b2World * pB2World, World * pSTWorld, const CShVector2 & vPosition);
 	virtual void	Release				(void) SH_ATTRIBUTE_OVERRIDE;
 
 	virtual void	Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
 	virtual void	UpdateAnimations	(float dt) SH_ATTRIBUTE_OVERRIDE;
 protected:
 private:
+	virtual void	Initialize			(b2World *, World *) SH_ATTRIBUTE_OVERRIDE {} // prevent from use
 
 public:
 protected:

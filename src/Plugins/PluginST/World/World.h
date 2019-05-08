@@ -4,6 +4,7 @@
 
 #include "InputManager.h"
 #include "Character/PlayerCharacter.h"
+#include "Character/EnemyCharacter.h"
 #include "Object.h"
 #include "../../PluginMapGenerator/PluginMapGenerator.h"
 #include "../../PluginMapGenerator/MapGenerator/MapGenerator.h"
@@ -46,15 +47,15 @@ private:
 
 private:
 	
-	CShIdentifier		m_levelIdentifier;
+	CShIdentifier				m_levelIdentifier;
 
-	b2World *			m_pbWorld;
+	b2World *					m_pbWorld;
 
-	CShArray<Object*>	m_aObjectList;
+	CShArray<EnemyCharacter*>	m_apEnemyList;
 
-	PluginInputManager	m_inputManager;
+	PluginInputManager			m_inputManager;
 
-	PlayerCharacter		m_playerCharacter;
+	PlayerCharacter				m_playerCharacter;
 
 	//
 	// Map related

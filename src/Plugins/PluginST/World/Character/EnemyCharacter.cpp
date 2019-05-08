@@ -1,4 +1,5 @@
 #include "EnemyCharacter.h"
+#include "../World.h"
 
 /**
  * @brief EnemyCharacter::EnemyCharacter
@@ -19,9 +20,10 @@ EnemyCharacter::~EnemyCharacter(void)
  * @brief EnemyCharacter::Initialize
  * @param pWorld
  */
-void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld)
+void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld, const CShVector2 & vPosition)
 {
 	BaseCharacter::Initialize(pB2World, pSTWorld);
+	m_pBody->SetTransform(World::ShineToB2(vPosition), 0.f);
 }
 
 /**
