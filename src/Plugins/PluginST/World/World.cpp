@@ -36,7 +36,7 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 
 	m_inputManager.Initialize(pUser);
 
-	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, &m_inputManager);
+	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, this, &m_inputManager);
 		
 	// Map Generator
 	m_pMapGeneratorPlugin = new PluginMapGenerator();
@@ -243,4 +243,13 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 {
 	vec /= CShVector2(SH_TO_B2, SH_TO_B2);
 	return b2Vec2(vec.m_x, vec.m_y);
+}
+
+/**
+ * @brief World::GetPlayerCharacter
+ * @return
+ */
+const PlayerCharacter & World::GetPlayerCharacter(void) const
+{
+	return m_playerCharacter;
 }

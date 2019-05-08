@@ -5,6 +5,7 @@
  */
 EnemyCharacter::EnemyCharacter(void)
 : BaseCharacter ()
+, m_eCurrentState(e_state_idle)
 {
 }
 /**
@@ -18,9 +19,9 @@ EnemyCharacter::~EnemyCharacter(void)
  * @brief EnemyCharacter::Initialize
  * @param pWorld
  */
-void EnemyCharacter::Initialize(b2World *pWorld)
+void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld)
 {
-	BaseCharacter::Initialize(pWorld);
+	BaseCharacter::Initialize(pB2World, pSTWorld);
 }
 
 /**
