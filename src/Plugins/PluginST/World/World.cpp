@@ -44,7 +44,16 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, this, &m_inputManager);
 
 	EnemyMeleeCharacter * pEnemy = new EnemyMeleeCharacter();
-	pEnemy->Initialize(CShIdentifier("enemy1"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, 300.f));
+	pEnemy->Initialize(CShIdentifier("enemy1"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, -300.f));
+	m_apEnemyList.Add(pEnemy);
+	pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy2"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, -1300.f));
+	m_apEnemyList.Add(pEnemy);
+	pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy3"), m_levelIdentifier, m_pbWorld, this, CShVector2(1300.f, -300.f));
+	m_apEnemyList.Add(pEnemy);
+	pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy4"), m_levelIdentifier, m_pbWorld, this, CShVector2(1300.f, -1300.f));
 	m_apEnemyList.Add(pEnemy);
 		
 	// Map Generator
@@ -276,7 +285,17 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
  * @brief World::GetPlayerCharacter
  * @return
  */
-const PlayerCharacter & World::GetPlayerCharacter(void) const
+PlayerCharacter & World::GetPlayerCharacter(void)
 {
 	return m_playerCharacter;
+}
+
+/**
+ * @brief World::KillEnemy
+ * @param pEnemy
+ */
+void World::KillEnemy(EnemyCharacter *pEnemy)
+{
+	m_apEnemyList.RemoveFirstSwapLast(pEnemy);
+	SH_SAFE_RELEASE_DELETE(pEnemy)
 }

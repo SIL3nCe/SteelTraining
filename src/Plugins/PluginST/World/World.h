@@ -33,8 +33,11 @@ public:
 	static CShVector2			B2ToShine			(b2Vec2 vec);
 	static b2Vec2				ShineToB2			(CShVector2 vec);
 
-	const PlayerCharacter &		GetPlayerCharacter	(void) const;
+	PlayerCharacter &			GetPlayerCharacter	(void);
 
+	void						KillEnemy			(EnemyCharacter * pEnemy);
+
+protected:
 private:
 
 	void						GenerateShape		(ShCollisionShape * pCollisionShape, const b2Vec2 & center, b2ChainShape & b2OutShape);
@@ -45,8 +48,9 @@ private:
 	void						GenerateMap			(Map2D & map2D, int rowCount, int ColumnCount);
 	ShSprite *					GetWallSprite		(int iRowPosition,  int iColumnPosition);
 
+public:
+protected:
 private:
-	
 	CShIdentifier				m_levelIdentifier;
 
 	b2World *					m_pbWorld;

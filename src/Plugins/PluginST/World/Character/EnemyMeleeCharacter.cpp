@@ -42,11 +42,12 @@ void EnemyMeleeCharacter::Release(void)
 void EnemyMeleeCharacter::Update(float dt)
 {
 	EnemyCharacter::Update(dt);
+	PlayerCharacter & player = m_pWorld->GetPlayerCharacter();
 	switch (m_eCurrentState)
 	{
 		case e_state_idle:
 		{
-			if (m_pWorld->GetPlayerCharacter().GetEntityLocation().Distance(GetEntityLocation()) < 200.f)
+			if (player.GetEntityLocation().Distance(GetEntityLocation()) < 300.f)
 			{
 				m_eCurrentState = e_state_attacking;
 			}
@@ -58,16 +59,24 @@ void EnemyMeleeCharacter::Update(float dt)
 		}
 		case e_state_attacking:
 		{
-			if (m_pWorld->GetPlayerCharacter().GetEntityLocation().Distance(GetEntityLocation()) > 300.f)
+			if (player.GetEntityLocation().Distance(GetEntityLocation()) > 400.f)
 			{
 				m_eCurrentState = e_state_idle;
 			}
 			else
 			{
-				CShVector3 vDirection = m_pWorld->GetPlayerCharacter().GetEntityLocation() - GetEntityLocation();
-				vDirection.Normalize();
-				b2Vec2 vVelocity(vDirection.m_x * 2.f, vDirection.m_y * 2.f);
-				m_pBody->SetLinearVelocity(vVelocity);
+				if (player.GetEntityLocation().Distance(GetEntityLocation()) > 40.f)
+				{
+					CShVector3 vDirection = player.GetEntityLocation() - GetEntityLocation();
+					vDirection.Normalize();
+					b2Vec2 vVelocity(vDirection.m_x * 2.f, vDirection.m_y * 2.f);
+					m_pBody->SetLinearVelocity(vVelocity);
+				}
+				else
+				{
+					m_pBody->SetLinearVelocity(b2Vec2(0.f, 0.f));
+					player.TakeDamage(30);
+				}
 			}
 			break;
 		}

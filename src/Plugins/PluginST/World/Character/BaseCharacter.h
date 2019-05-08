@@ -24,10 +24,21 @@ public:
 
 	const CShVector3 &	GetEntityLocation	(void) const;
 
+	bool				TakeDamage			(int iDamages);
 protected:
-	b2Body * m_pBody;
+	virtual void		Die					(void) = 0;
+private:
 
-	ShEntity2 * m_pEntity;
+public:
+protected:
+	b2Body *			m_pBody;
 
-	World * m_pWorld;
+	ShEntity2 *			m_pEntity;
+
+	World *				m_pWorld;
+
+	int					m_iLifePoints;
+	int					m_iMaxLifePoints;
+	int					m_iInvulnerabilityTime;
+private:
 };

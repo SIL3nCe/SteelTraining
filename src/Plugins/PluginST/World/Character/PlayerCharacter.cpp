@@ -36,7 +36,7 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 	SH_ASSERT(shNULL != m_pEntity)
 
 	b2PolygonShape boxShape;
-	boxShape.SetAsBox(64.0f * SH_TO_B2, 64.0f * SH_TO_B2);
+	boxShape.SetAsBox(20.0f * SH_TO_B2, 20.0f * SH_TO_B2);
 
 	b2FixtureDef boxFixtureDef;
 	boxFixtureDef.shape = &boxShape;
@@ -57,6 +57,7 @@ void PlayerCharacter::Release(void)
  */
 void PlayerCharacter::Update(float dt)
 {
+	BaseCharacter::Update(dt);
 	bool bLeft = m_pInputManager->IsGoingLeft();
 	bool bRight = m_pInputManager->IsGoingRight();
 	bool bDown = m_pInputManager->IsGoingDown();
@@ -101,4 +102,13 @@ void PlayerCharacter::UpdateAnimations(float dt)
 Object::EType PlayerCharacter::GetObjectType(void) const
 {
 	return EType::player;
+}
+
+/**
+ * @brief PlayerCharacter::Die
+ */
+void PlayerCharacter::Die(void)
+{
+	m_pBody->SetTransform(b2Vec2(0.f, 0.f), 0.f);
+	m_iLifePoints = m_iMaxLifePoints;
 }

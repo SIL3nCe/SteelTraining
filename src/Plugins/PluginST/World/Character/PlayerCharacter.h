@@ -18,7 +18,13 @@ public:
 	virtual void		UpdateAnimations	(float dt) SH_ATTRIBUTE_OVERRIDE;
 
 	virtual EType		GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
+protected:
+	virtual void		Die					(void) SH_ATTRIBUTE_OVERRIDE;
+private:
+	void				Initialize			(b2World *, World *) SH_ATTRIBUTE_OVERRIDE {}
 
+public:
+protected:
 private:
 	PluginInputManager *	m_pInputManager;
 };
