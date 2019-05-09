@@ -6,7 +6,7 @@
 
 class World;
 
-class ShEntity2;
+struct ShEntity2;
 
 class BaseCharacter : public Object
 {
