@@ -1,9 +1,7 @@
 bin/Cooking
-bin/Generic/Resources/SpritesTemp/
+bin/Generic/Resources/SpritesTemp/*
 _logs
-build
 Assets/tmp_sprites
-buildExternal2017
-build2017
+build*
 *.user
 cmake/TargetAutoBuild.cmake
