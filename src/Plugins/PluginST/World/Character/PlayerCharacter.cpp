@@ -25,18 +25,18 @@ PlayerCharacter::~PlayerCharacter(void)
 /**
  * @brief Initialize
  */
-void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World * pWorld, PluginInputManager * pInputManager)
+void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World * pB2World, World * pSTWorld, PluginInputManager * pInputManager)
 {
-	BaseCharacter::Initialize(pWorld);
+	BaseCharacter::Initialize(pB2World, pSTWorld);
 
 	m_pInputManager = pInputManager;
-	SH_ASSERT(shNULL != m_pInputManager);
+	SH_ASSERT(shNULL != m_pInputManager)
 
 	m_pEntity = ShEntity2::Find(levelIdentifier, CShIdentifier("sprite_player_test"));
-	SH_ASSERT(shNULL != m_pEntity);
+	SH_ASSERT(shNULL != m_pEntity)
 
 	b2PolygonShape boxShape;
-	boxShape.SetAsBox(10, 10);
+	boxShape.SetAsBox(20.0f * SH_TO_B2, 20.0f * SH_TO_B2);
 
 	b2FixtureDef boxFixtureDef;
 	boxFixtureDef.shape = &boxShape;
@@ -57,39 +57,35 @@ void PlayerCharacter::Release(void)
  */
 void PlayerCharacter::Update(float dt)
 {
+	BaseCharacter::Update(dt);
 	bool bLeft = m_pInputManager->IsGoingLeft();
 	bool bRight = m_pInputManager->IsGoingRight();
 	bool bDown = m_pInputManager->IsGoingDown();
 	bool bUp = m_pInputManager->IsGoingUp();
 
-	b2Vec2 impulse(0.0f, 0.0f);
-
+	b2Vec2 vImpulse(0.0f, 0.0f);
+	
 	if (bLeft)
 	{
-		impulse.x = -50.0f;
+		vImpulse.x = -1.0f;
 	}
 	else if (bRight)
 	{
-		impulse.x = 50.0f;
+		vImpulse.x = 1.0f;
 	}
 	
-	if (bDown)
+	if (bUp)
 	{
-		impulse.y = -50.0f;
+		vImpulse.y = 1.0f;
 	}
-	else if (bUp)
+	else if (bDown)
 	{
-		impulse.y = 50.0f;
+		vImpulse.y = -1.0f;
 	}
-	
-	if (bLeft || bRight || bDown || bUp)
-	{
-		m_pBody->ApplyLinearImpulse(impulse, m_pBody->GetWorldCenter(), true);
-	}
-	else
-	{
-		m_pBody->SetLinearVelocity(impulse);
-	}
+
+	vImpulse.Normalize();
+	vImpulse *= 5.0f;
+	m_pBody->SetLinearVelocity(vImpulse);
 }
 
 /**
@@ -97,11 +93,6 @@ void PlayerCharacter::Update(float dt)
  */
 void PlayerCharacter::UpdateAnimations(float dt)
 {
-	// rotate for test
-	//CShEulerAngles angle = ShEntity2::GetRelativeRotation(m_pEntity);
-	//angle.m_z += 10.0f * dt;
-	//ShEntity2::SetRelativeRotation(m_pEntity, angle);
-
 	BaseCharacter::UpdateAnimations(dt);
 }
 
@@ -111,4 +102,13 @@ void PlayerCharacter::UpdateAnimations(float dt)
 Object::EType PlayerCharacter::GetObjectType(void) const
 {
 	return EType::player;
+}
+
+/**
+ * @brief PlayerCharacter::Die
+ */
+void PlayerCharacter::Die(void)
+{
+	m_pBody->SetTransform(b2Vec2(0.f, 0.f), 0.f);
+	m_iLifePoints = m_iMaxLifePoints;
 }

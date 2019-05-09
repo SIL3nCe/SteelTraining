@@ -54,20 +54,23 @@ void MapGeneratorTest::AddMapEntity(const MapEntity & mapEntity)
 */
 void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier & idLevel)
 {
-	int iRowCount = pMap->GetRowCount();
-	for (int nRow = 0; nRow < iRowCount; ++nRow)
+	int nRowCount = pMap->GetRowCount();
+	for (int iRow = 0; iRow < nRowCount; ++iRow)
 	{
-		int iColumnCount = pMap->GetColumnCount();
-		for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
+		int nColumnCount = pMap->GetColumnCount();
+		for (int iColumn = 0; iColumn < nColumnCount; ++iColumn)
 		{
-			if (0 == nColumn || iColumnCount + 1 == iColumnCount || 0 == nRow || iRowCount + 1 == iRowCount)
+			if (0 == iColumn
+				|| 0 == iRow
+				|| iColumn == nColumnCount - 1 
+				|| iRow == nRowCount - 1)
 			{
-				pMap->AddWall(nRow, nColumn);
+				pMap->AddWall(iRow, iColumn);
 			}
 			else
 			{
 				MapEntity mapEntity;
-				if (FindNextMapEntity(nRow, nColumn, mapEntity))
+				if (FindNextMapEntity(iRow, iColumn, mapEntity))
 				{
 
 				}
@@ -81,11 +84,10 @@ void MapGeneratorTest::MapGenerationAlgorithm(Map2D *& pMap, const CShIdentifier
 */
 bool MapGeneratorTest::FindNextMapEntity(int iRow, int iColumn, MapEntity & newMapEntity)
 {
-
 	return false;
 }
 
-bool MapGeneratorTest::CanBePlacedHere(const MapEntity & mapEntity, Map2D *& pMap, int iColumn, int iRow)
+bool MapGeneratorTest::CanBePlacedHere(const MapEntity & mapEntity, Map2D *& pMap, int column, int row)
 {
 	if (m_aMapEntity.IsEmpty()) return false;
 
@@ -94,22 +96,22 @@ bool MapGeneratorTest::CanBePlacedHere(const MapEntity & mapEntity, Map2D *& pMa
 
 	// Check if the entity is outside the map
 	{
-		if (0 > iColumn + iMapEntityWidth) return false;
-		if (pMap->GetRowCount() <= iColumn + iMapEntityWidth) return false;
+		if (0 > column + iMapEntityWidth) return false;
+		if (pMap->GetRowCount() <= column + iMapEntityWidth) return false;
 
-		if (0 > iRow + iMapEntityHeight) return false;
-		if (pMap->GetColumnCount() <= iRow + iMapEntityHeight) return false;
+		if (0 > row + iMapEntityHeight) return false;
+		if (pMap->GetColumnCount() <= row + iMapEntityHeight) return false;
 	}
 
-	for (int nRow = 0; nRow < iMapEntityWidth; ++nRow)
+	for (int iRow = 0; iRow < iMapEntityWidth; ++iRow)
 	{
-		for (int nColumn = 0; nColumn < iMapEntityWidth; ++nColumn)
+		for (int iCOlumn = 0; iCOlumn < iMapEntityWidth; ++iCOlumn)
 		{
-			EMapEntityTileType eMapEntityTileType = mapEntity.m_mNeededTiles[nRow][nColumn];
+			EMapEntityTileType eMapEntityTileType = mapEntity.m_mNeededTiles[iRow][iCOlumn];
 			
 			if (EMapEntityTileType::e_map_entity_tile_type_none == eMapEntityTileType) continue;
 
-			Tile * pTile = pMap->GetTile(nRow + iRow, nColumn + iColumn);
+			Tile * pTile = pMap->GetTile(iRow + row, iCOlumn + column);
 			if (e_tile_block == pTile->m_eTileType || e_tile_wall == pTile->m_eTileType) return false;
 		}
 	}

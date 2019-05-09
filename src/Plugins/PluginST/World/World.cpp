@@ -1,10 +1,15 @@
 #include "World.h"
+#include "Character/EnemyMeleeCharacter.h"
 
 /**
  * @brief Constructor
  */
 World::World(void)
-: m_pbWorld(shNULL)
+: m_levelIdentifier()
+, m_pbWorld(shNULL)
+, m_apEnemyList()
+, m_inputManager()
+, m_playerCharacter()
 , m_pMapGeneratorPlugin(shNULL)
 , m_pMapGenerator(shNULL)
 , m_map()
@@ -26,48 +31,39 @@ World::~World(void)
  */
 void World::Initialize(const CShIdentifier & levelIdentifier)
 {
+
+	srand(static_cast<unsigned int>(time(shNULL)));
+
 	m_levelIdentifier = levelIdentifier;
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	m_pbWorld = new b2World(gravity);
 
 	ShUser * pUser = ShUser::GetUser(0);
-	SH_ASSERT(shNULL != pUser);
+	SH_ASSERT(shNULL != pUser)
 
 	m_inputManager.Initialize(pUser);
 
-	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, &m_inputManager);
+	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, this, &m_inputManager);
+
+	EnemyMeleeCharacter * pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy1"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, -300.f));
+	m_apEnemyList.Add(pEnemy);
+	pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy2"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, -1300.f));
+	m_apEnemyList.Add(pEnemy);
+	pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy3"), m_levelIdentifier, m_pbWorld, this, CShVector2(1300.f, -300.f));
+	m_apEnemyList.Add(pEnemy);
+	pEnemy = new EnemyMeleeCharacter();
+	pEnemy->Initialize(CShIdentifier("enemy4"), m_levelIdentifier, m_pbWorld, this, CShVector2(1300.f, -1300.f));
+	m_apEnemyList.Add(pEnemy);
 		
 	// Map Generator
 	m_pMapGeneratorPlugin = new PluginMapGenerator();
 	ShApplication::RegisterPlugin(m_pMapGeneratorPlugin, false);
 	
 	GenerateMap(m_map, 20, 15);
-
-	//
-	// Load and parse all Collision Shape
-	CShArray<ShCollisionShape*> aCollisionShape;
-	ShCollisionShape::GetCollisionShapeArray(levelIdentifier, aCollisionShape);
-	int nShapeCount = aCollisionShape.GetCount();
-
-	for (int i = 0; i < nShapeCount; ++i)
-	{
-		ShCollisionShape * pShape = aCollisionShape[i];
-
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
-		bodyDef.position = ShineToB2(ShCollisionShape::GetWorldPosition2(pShape));
-		bodyDef.angle = 0;
-
-		b2Body * pBody = m_pbWorld->CreateBody(&bodyDef);
-
-		b2ChainShape chainShape;
-		GenerateShape(pShape, pBody->GetPosition(), chainShape);
-		
-		b2FixtureDef bodyFixture;
-		bodyFixture.shape = &chainShape;
-		pBody->CreateFixture(&bodyFixture);
-	}
 }
 
 /**
@@ -78,7 +74,13 @@ void World::Release(void)
 	m_playerCharacter.Release();
 	m_inputManager.Release();
 
-	SH_SAFE_DELETE(m_pbWorld);
+	int iEnemyCount = m_apEnemyList.GetCount();
+	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
+	{
+		SH_SAFE_RELEASE_DELETE(m_apEnemyList[iEnemyIndex])
+	}
+
+	SH_SAFE_DELETE(m_pbWorld)
 }
 
 /**
@@ -90,6 +92,12 @@ void World::Update(float dt)
 
 	m_playerCharacter.Update(dt);
 
+	int iEnemyCount = m_apEnemyList.GetCount();
+	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
+	{
+		m_apEnemyList[iEnemyIndex]->Update(dt);
+	}
+
 	float32 timeStep = 1 / 60.0f;   // TODO timeStep should match the number of times per second it will be called
 
 	//velocityIterations: how strongly to correct velocity
@@ -98,6 +106,11 @@ void World::Update(float dt)
 	m_pbWorld->Step(timeStep, 8, 3);
 
 	m_playerCharacter.UpdateAnimations(dt);
+
+	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
+	{
+		m_apEnemyList[iEnemyIndex]->UpdateAnimations(dt);
+	}
 
 	UpdateCamera(dt);
 }
@@ -168,7 +181,7 @@ void World::GenerateShape(ShDummyAABB2 * pObject, const b2Vec2 & center, b2Polyg
 }
 
 /**
-* @brief 
+* @brief GenerateMap
 */
 void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 {
@@ -198,31 +211,65 @@ void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 		{
 			for (int nColumn = 0; nColumn < iColumnCount; ++nColumn)
 			{
-				Tile * pTile = m_map.GetTile(nRow, nColumn);
-				switch (pTile->m_eTileType)
+				if (Tile * pTile = m_map.GetTile(nRow, nColumn))
 				{
-				case ETileType::e_tile_wall:
-				{
-					ShSprite * pSprite = GetWallSprite(nRow, nColumn);
-					CShString strWallIdentifier("wall");
-					strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
+					switch (pTile->m_eTileType)
+					{
+						case ETileType::e_tile_wall:
+						{
+							ShSprite * pSprite = GetWallSprite(nRow, nColumn);
+							SH_ASSERT(shNULL != pSprite)
 
-					CShVector3 position(nRow * 100, nColumn * 100, 0.0f);
-					CShEulerAngles angle;
-					CShVector3 scale(1.0f, 1.0f, 1.0f);
-					
-					ShEntity2 * pWallEntity2 = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, angle, scale, true);
-				}
-				break;
-					
+							float fWidth = ShSprite::GetWidth(pSprite);
+							float fHeight = ShSprite::GetHeight(pSprite);
+							
+							SH_ASSERT(fWidth == WALL_WIDTH)
+							SH_ASSERT(fHeight == WALL_HEIGHT)
+
+							CShString strWallIdentifier("wall");
+							strWallIdentifier += CShString::FromInt(nRow) + CShString::FromInt(nColumn);
+
+							CShVector3 position(nColumn * fWidth, nRow * -fHeight, 1.0f);
+
+							ShEntity2 * pWallEntity = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
+							SH_ASSERT(shNULL != pWallEntity)
+
+							// Generate wall object
+							bool bUsed = false;
+							int nWallCount = m_aWallList.GetCount();
+							for (int i = 0; i < nWallCount; ++i)
+							{
+								if (m_aWallList[i].AddWall(pWallEntity))
+								{
+									bUsed = true;
+									break;
+								}
+							}
+
+							if (!bUsed)
+							{ // Create a new wall object
+								ObjectWall wall;
+								wall.Initialize(pWallEntity);
+								m_aWallList.Add(wall);
+							}
+						}
+						break;
+					}
 				}
 			}
+		}
+
+		//Generate object physic
+		int nWallCount = m_aWallList.GetCount();
+		for (int i = 0; i < nWallCount; ++i)
+		{
+			m_aWallList[i].GeneratePhysic(m_pbWorld);
 		}
 	}
 }
 
 /**
-* @brief 
+* @brief GetWallSprite
 */
 ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 {
@@ -232,9 +279,9 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 	}
 
 	bool bBorderTop = iRowPosition == 0;
-	bool bBorderRight = iColumnPosition == 0;
+	bool bBorderLeft = iColumnPosition == 0;
 	bool bBorderBottom = m_map.GetRowCount() - 1 == iRowPosition;
-	bool bBorderLeft = m_map.GetColumnCount() - 1 == iRowPosition;
+	bool bBorderRight = m_map.GetColumnCount() - 1 == iColumnPosition;
 
 	CShString strIdentifier("mur");
 
@@ -244,28 +291,25 @@ ShSprite * World::GetWallSprite(int iRowPosition, int iColumnPosition)
 	else if (bBorderLeft) strIdentifier += "_gauche";
 
 	SH_ASSERT(ShSprite::Exists(CShIdentifier("mur"), CShIdentifier(strIdentifier)))
-		
-	ShSprite * pSprite = ShSprite::Find(CShIdentifier("mur"), CShIdentifier(strIdentifier));
 
-
-	return pSprite;
+	return ShSprite::Find(CShIdentifier("mur"), CShIdentifier(strIdentifier));
 }
 
 /**
-* @brief ShineToB2
-* @param vec
-*/
-/*static*/ CShVector2 World::ShineToB2(b2Vec2 vec)
+ * @brief World::GetPlayerCharacter
+ * @return
+ */
+PlayerCharacter & World::GetPlayerCharacter(void)
 {
-	return CShVector2(vec.x, vec.y) * CShVector2(SH_TO_B2, SH_TO_B2);
+	return m_playerCharacter;
 }
 
 /**
-* @brief ShineToB2
-* @param vec
-*/
-/*static*/ b2Vec2 World::ShineToB2(CShVector2 vec)
+ * @brief World::KillEnemy
+ * @param pEnemy
+ */
+void World::KillEnemy(EnemyCharacter *pEnemy)
 {
-	vec /= CShVector2(SH_TO_B2, SH_TO_B2);
-	return b2Vec2(vec.m_x, vec.m_y);
+	m_apEnemyList.RemoveFirstSwapLast(pEnemy);
+	SH_SAFE_RELEASE_DELETE(pEnemy)
 }
