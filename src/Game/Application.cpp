@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Game.h"
+#include "TitleMenu.h"
 
 #include "ShEntryPoint/ShEntryPoint.h"
 
@@ -41,9 +42,14 @@ void ShEntryPoint::OnPreInitialize(void)
 void ShEntryPoint::OnPostInitialize(void)
 {
 	RegisterPluginST();
-	
-	Game * pGame = Game::GetInstance();
-	pGame->Initialize();
+
+#if ENABLE_SKIP_TITLE_MENU
+	Game::GetInstance()->Initialize();
+#else // ENABLE_SKIP_TITLE_MENU
+	TitleMenu * pTitleMenu = TitleMenu::GetInstance();
+	pTitleMenu->Initialize();
+	pTitleMenu->Activate();
+#endif // ENABLE_SKIP_TITLE_MENU
 }
 
 /**
@@ -62,7 +68,14 @@ void ShEntryPoint::OnPreUpdate(float dt)
 void ShEntryPoint::OnPostUpdate(float dt)
 {
 	Game * pGame = Game::GetInstance();
-	pGame->Update(dt);
+	if (pGame->IsInitialized())
+	{
+		pGame->Update(dt);
+	}
+	else
+	{
+		TitleMenu::GetInstance()->Update(dt);
+	}
 }
 
 /**
@@ -70,8 +83,11 @@ void ShEntryPoint::OnPostUpdate(float dt)
  */
 void ShEntryPoint::OnPreRelease(void)
 {
-	Game * pGame = Game::GetInstance();
-	pGame->Release();
+#if ENABLE_SKIP_TITLE_MENU
+	Game::GetInstance()->Release();
+#else // ENABLE_SKIP_TITLE_MENU
+	TitleMenu::GetInstance()->Release();
+#endif // ENABLE_SKIP_TITLE_MENU
 
 	UnRegisterPluginST();
 }

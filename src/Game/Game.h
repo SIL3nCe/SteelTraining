@@ -9,18 +9,35 @@
 class Game
 {
 public:
+	//
+	// Singleton-related
+	static Game *	GetInstance			(void);
 
-	static Game * GetInstance(void);
+	//
+	// Initialize/Release
+	void			Initialize			(void);
+	void			Release				(void);
 
-	void Initialize(void);
-	void Release(void);
+	//
+	// Update
+	void			Update				(float dt);
 
-	void Update(float dt);
+	//
+	// Getters/Setters
+	bool			IsInitialized		(void) const;
 
 private:
-	explicit Game(void);
+	//
+	// Constructor/Destructor
+	explicit		Game				(void);
+	virtual			~Game				(void);
 
 private:
-
+	//
+	// Singleton-related
 	static Game *	m_pInstance;
+
+	//
+	// Misc
+	bool			m_bInitialized;
 };

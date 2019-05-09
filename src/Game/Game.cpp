@@ -1,13 +1,8 @@
 #include "Game.h"
 
-Game * Game::m_pInstance = shNULL;
+/*static*/ Game * Game::m_pInstance = shNULL;
 
-Game::Game(void)
-{
-	// ...
-}
-
-Game * Game::GetInstance(void)
+/*static*/ Game * Game::GetInstance(void)
 {
 	if (shNULL == m_pInstance)
 	{
@@ -20,7 +15,8 @@ Game * Game::GetInstance(void)
 void Game::Initialize(void)
 {
 	const CShIdentifier idLevel("level_test");
-	if (!ShLevel::Load(idLevel))
+	m_bInitialized = ShLevel::Load(idLevel);
+	if (!m_bInitialized)
 	{
 		SH_ASSERT_ALWAYS();
 	}
@@ -28,9 +24,30 @@ void Game::Initialize(void)
 
 void Game::Release(void)
 {
+	m_bInitialized = false;
+
+	//
 	// Release level
+	ShLevel::Release();
 }
 
 void Game::Update(float dt)
 {
+	// ...
+}
+
+bool Game::IsInitialized(void) const
+{
+	return m_bInitialized;
+}
+
+/*explicit*/ Game::Game(void)
+: m_bInitialized(false)
+{
+	// ...
+}
+
+/*virtual*/ Game::~Game(void)
+{
+	// ...
 }
