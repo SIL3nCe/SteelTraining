@@ -1,6 +1,10 @@
 #include "World.h"
 #include "Character/EnemyMeleeCharacter.h"
 
+#if SH_PC
+#	include <time.h>
+#endif // SH_PC
+
 /**
  * @brief Constructor
  */
