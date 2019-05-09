@@ -1,0 +1,18 @@
+<render_graph graph_name="render_graph_dx11" version="1.0">
+    <render_target_list>
+    </render_target_list>
+    <framebuffer_list>
+    </framebuffer_list>
+    <render_pass_list>
+        <render_pass framebuffer="default_framebuffer" renderer="2D" attachment_operation="clear_color_depth"/>
+        <render_pass framebuffer="default_framebuffer" renderer="Primitive_2D"/>
+        <render_pass framebuffer="default_framebuffer" renderer="GUI"/>
+    </render_pass_list>
+    <renderer_list>
+        <renderer type="2D" id="2D"/>
+        <renderer type="Primitive" id="Primitive_2D">
+            <input id="render_filter" value="2D"/>
+        </renderer>
+        <renderer type="GUI" id="GUI"/>
+    </renderer_list>
+</render_graph>
