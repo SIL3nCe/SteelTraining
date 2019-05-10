@@ -103,7 +103,7 @@
 //--------------------------------------------------------------------------------------------------
 /*virtual*/ void GameStateTitleMenu::InternalUpdate(float dt)
 {
-	// ...
+	SH_UNUSED(dt);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -111,9 +111,11 @@
 //--------------------------------------------------------------------------------------------------
 /*static*/ bool GameStateTitleMenu::OnButtonClickedPlay(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
+	SH_UNUSED(vPosition);
+
 	//
 	// Push GameStateGame
-	//GameStateManager::GetInstance()->Push(GameStateManager::e_game_state_game);
+	GameStateManager::GetInstance()->Push(GameStateManager::e_game_state_game);
 
 	return true;
 }
@@ -123,6 +125,8 @@
 //--------------------------------------------------------------------------------------------------
 /*static*/ bool GameStateTitleMenu::OnButtonClickedSettings(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
+	SH_UNUSED(vPosition);
+
 	//
 	// Push GameStateTitleMenuSettings
 	GameStateManager::GetInstance()->Push(GameStateManager::e_game_state_title_menu_settings);
@@ -135,6 +139,8 @@
 //--------------------------------------------------------------------------------------------------
 /*static*/ bool GameStateTitleMenu::OnButtonClickedExit(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
+	SH_UNUSED(vPosition);
+
 	ShApplication::RequestQuit();
 
 	return true;

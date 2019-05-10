@@ -98,7 +98,7 @@
 //--------------------------------------------------------------------------------------------------
 /*virtual*/ void GameStateTitleMenuSettings::InternalUpdate(float dt)
 {
-	// ...
+	SH_UNUSED(dt);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -106,6 +106,8 @@
 //--------------------------------------------------------------------------------------------------
 /*static*/ bool GameStateTitleMenuSettings::OnButtonClickedResetToDefaults(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
+	SH_UNUSED(vPosition);
+
 	// TODO
 
 	return true;
@@ -116,6 +118,8 @@
 //--------------------------------------------------------------------------------------------------
 /*static*/ bool GameStateTitleMenuSettings::OnButtonClickedBack(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
+	SH_UNUSED(vPosition);
+
 	//
 	// Pop current GameState
 	GameStateManager::GetInstance()->Pop();
