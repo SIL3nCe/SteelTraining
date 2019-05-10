@@ -43,12 +43,11 @@ void ShEntryPoint::OnPostInitialize(void)
 {
 	RegisterPluginST();
 
-#if ENABLE_SKIP_TITLE_MENU
-	Game::GetInstance()->Initialize();
-#else // ENABLE_SKIP_TITLE_MENU
 	GameStateManager * pGameStateManager = GameStateManager::GetInstance();
 	pGameStateManager->Initialize();
 	pGameStateManager->Push(GameStateManager::e_game_state_title_menu);
+#if ENABLE_SKIP_TITLE_MENU
+	pGameStateManager->Push(GameStateManager::e_game_state_game);
 #endif // ENABLE_SKIP_TITLE_MENU
 }
 
@@ -67,11 +66,7 @@ void ShEntryPoint::OnPreUpdate(float dt)
  */
 void ShEntryPoint::OnPostUpdate(float dt)
 {
-#if ENABLE_SKIP_TITLE_MENU
-	Game::GetInstance()->Update(dt);
-#else // ENABLE_SKIP_TITLE_MENU
 	GameStateManager::GetInstance()->Update(dt);
-#endif // ENABLE_SKIP_TITLE_MENU
 }
 
 /**
@@ -79,11 +74,7 @@ void ShEntryPoint::OnPostUpdate(float dt)
  */
 void ShEntryPoint::OnPreRelease(void)
 {
-#if ENABLE_SKIP_TITLE_MENU
-	Game::GetInstance()->Release();
-#else // ENABLE_SKIP_TITLE_MENU
 	GameStateManager::GetInstance()->Release();
-#endif // ENABLE_SKIP_TITLE_MENU
 
 	UnRegisterPluginST();
 }

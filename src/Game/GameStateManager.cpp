@@ -31,7 +31,7 @@ void GameStateManager::Initialize(void)
 	// Assigns GameState to GameStateArray
 	m_aGameState[e_game_state_title_menu]			= &m_gameStateTitleMenu;
 	m_aGameState[e_game_state_title_menu_settings]	= &m_gameStateTitleMenuSettings;
-	//m_aGameState[e_game_state_game]					= &m_gameStateGame;
+	m_aGameState[e_game_state_game]					= &m_gameStateGame;
 
 	//
 	// Initialize all GameStates
@@ -109,7 +109,7 @@ void GameStateManager::Pop(void)
 // m_aGameState
 , m_gameStateTitleMenu()
 , m_gameStateTitleMenuSettings()
-//, m_gameStateGame()
+, m_gameStateGame()
 {
 	// ...
 }
