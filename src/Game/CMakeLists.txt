@@ -15,6 +15,10 @@ source_group("GameState" FILES ${SOURCES_GameState})
 set(SOURCES_GameStateTitleMenu GameStateTitleMenu.cpp GameStateTitleMenu.h) 
 source_group("GameState\\TitleMenu" FILES ${SOURCES_GameStateTitleMenu})
 
+# GameState\\TitleMenuSettings files
+set(SOURCES_GameStateTitleMenuSettings GameStateTitleMenuSettings.cpp GameStateTitleMenuSettings.h) 
+source_group("GameState\\TitleMenuSettings" FILES ${SOURCES_GameStateTitleMenuSettings})
+
 # Game files
 set(SOURCES_Game Game.cpp Game.h) 
 source_group("Game" FILES ${SOURCES_Game})
@@ -24,6 +28,7 @@ set(SOURCES
 ${SOURCES_Application}
 ${SOURCES_GameState}
 ${SOURCES_GameStateTitleMenu}
+${SOURCES_GameStateTitleMenuSettings}
 ${SOURCES_Game}
 )
 

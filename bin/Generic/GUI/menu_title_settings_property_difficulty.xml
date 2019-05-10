@@ -1,0 +1,24 @@
+<gui version="1.3">
+    <sss>
+        <style pseudo_state="default" target="button" margin_right="5.000000" margin_right_unit="pixel" margin_left="5.000000" margin_left_unit="pixel" padding_top="0.000000" padding_top_unit="auto" padding_left="10.000000" padding_left_unit="pixel" padding_right="10.000000" padding_right_unit="pixel" font="petangue_demo_96.abc" font_size="50.000000" font_size_unit="pixel"/>
+        <style pseudo_state="hovered" target="button" background_color="#4B4B4BFF"/>
+        <style pseudo_state="default" id="container_property" offset_x="-1116.288086" offset_x_unit="auto" offset_y="-349.073700" offset_y_unit="auto" background_color="#FFFFFF00"/>
+        <style pseudo_state="default" id="header" offset_x="-1771.200195" offset_x_unit="auto" offset_y="-372.961578" offset_y_unit="auto" font="petangue_demo_96.abc" font_size="50.000000" font_size_unit="pixel" text_color="#000000FF"/>
+        <style pseudo_state="default" id="container_difficulty_buttons" offset_x="-1365.120117" offset_x_unit="auto" offset_y="-346.087738" offset_y_unit="auto" background_color="#FFFFFF00"/>
+        <style pseudo_state="default" id="button_difficulty_easy" offset_x="-1078.272095" offset_x_unit="auto" offset_y="-375.947571" offset_y_unit="auto"/>
+        <style pseudo_state="default" id="button_difficulty_medium" offset_x="-1078.272095" offset_x_unit="auto" offset_y="-375.947571" offset_y_unit="auto"/>
+        <style pseudo_state="default" id="button_difficulty_hard" offset_x="-1078.272095" offset_x_unit="auto" offset_y="-375.947571" offset_y_unit="auto"/>
+        <style pseudo_state="default" id="button_difficulty_hardcore" offset_x="-1078.272095" offset_x_unit="auto" offset_y="-375.947571" offset_y_unit="auto"/>
+    </sss>
+    <root>
+        <container id="container_property" pseudo_state="default" ignore_events="0" layout_type="layout_horizontal_box" layout_is_filled="1" layout_default_weight="1.000000" fill_width="0" fill_height="0" keep_background_ratio="1">
+            <text id="header" pseudo_state="default" ignore_events="0" text="Difficulty" text_type="rich"/>
+            <container id="container_difficulty_buttons" pseudo_state="default" ignore_events="0" layout_type="default_layout" fill_width="0" fill_height="0" keep_background_ratio="1">
+                <button id="button_difficulty_easy" pseudo_state="default" id_next_focus="button_difficulty_medium" id_prev_focus="button_difficulty_hardcore" is_first_focus="1" ignore_events="0" text="easy" text_type="rich"/>
+                <button id="button_difficulty_medium" pseudo_state="default" id_next_focus="button_difficulty_hard" id_prev_focus="button_difficulty_easy" ignore_events="0" text="medium" text_type="rich"/>
+                <button id="button_difficulty_hard" pseudo_state="default" id_next_focus="button_difficulty_hardcore" id_prev_focus="button_difficulty_medium" ignore_events="0" text="hard" text_type="rich"/>
+                <button id="button_difficulty_hardcore" pseudo_state="default" id_next_focus="button_difficulty_easy" id_prev_focus="button_difficulty_hard" ignore_events="0" text="hardcore" text_type="rich"/>
+            </container>
+        </container>
+    </root>
+</gui>

@@ -4,7 +4,7 @@
 
 #include "GameState.h"
 #include "GameStateTitleMenu.h"
-//#include "GameStateTitleMenuSettings.h"
+#include "GameStateTitleMenuSettings.h"
 //#include "GameStateGame.h"
 
 #define GAME_STATE_STACK_COUNT 32
@@ -15,11 +15,10 @@ public:
 	enum EGameState
 	{
 		e_game_state_title_menu				= 0,
-		//e_game_state_title_menu_settings	= 1,
+		e_game_state_title_menu_settings	= 1,
 		//e_game_state_game					= 2,
 
-		//e_game_state_max					= e_game_state_game + 1,
-		e_game_state_max					= e_game_state_title_menu + 1,
+		e_game_state_max					= e_game_state_title_menu_settings + 1,
 	};
 
 	//
@@ -58,6 +57,6 @@ private:
 	// GameStates
 	GameState *						m_aGameState[e_game_state_max];
 	GameStateTitleMenu				m_gameStateTitleMenu;
-	//GameStateTitleMenuSettings		m_gameStateTitleMenuSettings;
+	GameStateTitleMenuSettings		m_gameStateTitleMenuSettings;
 	//GameStateGame					m_gameStateGame;
 };

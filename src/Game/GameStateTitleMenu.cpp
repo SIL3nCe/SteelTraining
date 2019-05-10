@@ -125,9 +125,9 @@
 {
 	//
 	// Push GameStateTitleMenuSettings
-	//GameStateManager::GetInstance()->Push(GameStateManager::e_game_state_title_menu_settings);
+	GameStateManager::GetInstance()->Push(GameStateManager::e_game_state_title_menu_settings);
 
-	return true ;
+	return true;
 }
 
 //--------------------------------------------------------------------------------------------------

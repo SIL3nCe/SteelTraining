@@ -30,7 +30,7 @@ void GameStateManager::Initialize(void)
 	//
 	// Assigns GameState to GameStateArray
 	m_aGameState[e_game_state_title_menu]			= &m_gameStateTitleMenu;
-	//m_aGameState[e_game_state_title_menu_settings]	= &m_gameStateTitleMenuSettings;
+	m_aGameState[e_game_state_title_menu_settings]	= &m_gameStateTitleMenuSettings;
 	//m_aGameState[e_game_state_game]					= &m_gameStateGame;
 
 	//
@@ -87,9 +87,18 @@ void GameStateManager::Push(EGameState eGameState)
 //--------------------------------------------------------------------------------------------------
 void GameStateManager::Pop(void)
 {
+	//
+	// Pop current GameState
 	GameState * pGameState = shNULL;
 	m_aStackGameState.Pop(pGameState);
-	SH_UNUSED(pGameState);
+
+	//
+	// Deactivate old GameState
+	pGameState->Deactivate();
+
+	//
+	// Activate new GameState
+	m_aStackGameState.GetTop()->Activate();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -99,7 +108,7 @@ void GameStateManager::Pop(void)
 : m_aStackGameState()
 // m_aGameState
 , m_gameStateTitleMenu()
-//, m_gameStateTitleMenuSettings()
+, m_gameStateTitleMenuSettings()
 //, m_gameStateGame()
 {
 	// ...
