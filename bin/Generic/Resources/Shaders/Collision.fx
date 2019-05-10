@@ -1,57 +1,69 @@
 //--------------------------------------------------------------------------------------------------
-// Final pass for diffuse material
+// Pick buffer
 //--------------------------------------------------------------------------------------------------
-#include "lib\platform.fxh"
-#include "lib\skinning.fxh"
 
 //--------------------------------------------------------------------------------------------------
-// Automatic Parameters
+// Parameters
 //--------------------------------------------------------------------------------------------------
-float4x4 	mWorldViewProjection;
+float4x4 WorldViewProjection : WORLDVIEWPROJECTION < string UIWidget = "None"; >;
 
 //--------------------------------------------------------------------------------------------------
-// Material Parameters
+// Vertex shader input structure
 //--------------------------------------------------------------------------------------------------
-float3   	DiffuseMapModulator;
+struct VS_INPUT
+{
+	float4	position			: POSITION;				// Vertex position
+	float2	texcoord			: TEXCOORD0;			// Texture coordinates
+	float3	tangent				: TANGENT;				// Tangent (in local space)
+	float3	binormal			: BINORMAL;				// Binormal (in local space)
+	float3	normal				: NORMAL;				// Normal (in local space)
+	float3	color				: COLOR;				// Vertex color
+};
 
 //--------------------------------------------------------------------------------------------------
-// Automatic Colors Parameters
+// Vertex shader input structure
 //--------------------------------------------------------------------------------------------------
-float3		SelfIllumColor2 = {0.0f, 0.0f, 0.0f};
+struct VS_OUTPUT
+{
+	float4	position			: POSITION;				// Vertex position
+};
 
 //--------------------------------------------------------------------------------------------------
 // Vertex shader code
 //--------------------------------------------------------------------------------------------------
-void vs(VS_SKIN_INPUT vIn, out float4 position : POSITION)
+VS_OUTPUT vs(VS_INPUT vIn)
 {
-    ISOLATE position = mul(vIn.position0, mWorldViewProjection);
+	VS_OUTPUT vOut;
+	vOut.position = mul(vIn.position, WorldViewProjection);
+	return(vOut);
 }
 
 //--------------------------------------------------------------------------------------------------
 // Pixel shader code
 //--------------------------------------------------------------------------------------------------
-float4 ps(in float2 ScreenPos : VPOS) : COLOR
+float4 ps(VS_OUTPUT vIn) : COLOR
 {
-	float3 C = DiffuseMapModulator + SelfIllumColor2;
-	return FXAALuminance(C);
+	float4 DiffuseColor = {1.0f, 0.0f, 0.0f, 1.0f};
+	
+	return(DiffuseColor);
 }
 
 //--------------------------------------------------------------------------------------------------
 // Techniques definition
 //--------------------------------------------------------------------------------------------------
-technique Solid
+Technique DefaultTechnique
 {
-	pass
-	{
-		VertexShader     = compile vs_3_0 vs();
-		PixelShader      = compile ps_3_0 ps();
+		Pass DefaultPass
+    {
+				AlphaBlendEnable     = FALSE;
+        FillMode             = SOLID;
+        ZEnable              = TRUE;
+        ZWriteEnable         = TRUE;
+        ZFunc                = LESSEQUAL;
+        MultiSampleAntialias = FALSE;
+
+        VertexShader         = compile vs_3_0 vs();
+        PixelShader          = compile ps_3_0 ps();
 	}
 }
-technique SolidSkinning
-{
-	pass
-	{
-		VertexShader     = compile vs_3_0 vs();
-		PixelShader      = compile ps_3_0 ps();
-	}
-}
+

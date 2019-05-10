@@ -40,7 +40,11 @@ const lowp float 	FLOAT_ALPHA_REF 	= INT_ALPHA_REF / 255.0;
 #define LOOP
 
 #define saturate(X)	clamp(X,0.0,1.0)
-#define tex2D		texture2D
+#if SH_OPENGLES3
+#   define tex2D		texture
+#else // SH_OPENGLES3
+#   define tex2D		texture2D
+#endif // SH_OPENGLES3
 #define mul(A,B)	(A * B)
 #define tex2Dlod	texture2DLod
 

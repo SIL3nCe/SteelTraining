@@ -1,0 +1,49 @@
+<!--- // Blit.glfx -->
+<glfx>
+
+<include name="lib/platform.glfxh" />
+
+<texture name="InputTextureColor" />
+<sampler name="InputTextureColorSampler" type="sampler2D">
+	<texture>InputTextureColor</texture>
+	<min>LINEAR</min><mag>LINEAR</mag><mip>NONE</mip>
+	<wrapu>CLAMP</wrapu><wrapv>CLAMP</wrapv>
+</sampler>
+
+<input name="VS_INPUT">
+	<field name="POSITION" lname="vPosition" type="vec4" />
+	<field name="TEXCOORD" lname="vTexcoord" type="vec2" />
+</input>
+
+<output name="VS_OUTPUT">
+	<field name="POSITION" lname="vPosition" type="vec4" prec="highp" />
+	<field name="TEXCOORD" lname="vTexcoord" type="vec2" prec="mediump" />
+</output>
+
+<code><![CDATA[
+
+VS_OUTPUT BlitVS(VS_INPUT vIn)
+{
+	VS_OUTPUT vOut;
+	vOut.vTexcoord = vIn.vTexcoord;
+	vOut.vPosition = vIn.vPosition;
+
+	return(vOut);
+}
+
+//-----------------------------------------------------------------------------
+// 
+//-----------------------------------------------------------------------------
+float4 BlitPS( in VS_OUTPUT pIn)
+{
+	return tex2D(InputTextureColorSampler, pIn.vTexcoord);
+}
+
+]]></code>
+
+<tech name="Blit">
+	<vs name="BlitVS" input="VS_INPUT" output="VS_OUTPUT" />
+	<ps name="BlitPS" />
+</tech>
+
+</glfx>

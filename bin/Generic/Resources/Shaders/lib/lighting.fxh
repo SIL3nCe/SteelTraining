@@ -170,7 +170,7 @@ float ComputeShadow(in float4 shadow_texcoord, in Texture2D t, in SamplerState S
 		else
 		{
 			float z = GetZ(t, ShadowMapSampler, ShadowTexC);
-			LightAmount = (z + 0.001f < (shadow_texcoord.z / shadow_texcoord.w ))? 0.6f: 1.0f;  
+			LightAmount = (z + 0.005f < min((shadow_texcoord.z / shadow_texcoord.w), 1.0f)) ? 0.6f : 1.0f;  
 		}
 	}
 	return LightAmount;
@@ -181,7 +181,7 @@ float ComputeShadow(in float4 shadow_texcoord, in Texture2D t, in SamplerState S
 //--------------------------------------------------------------------------------------------------
 float ComputeShadow(in float4 shadow_texcoord, in sampler2D ShadowMapSampler)
 {
-	float2 ShadowTexC = 0.5 * shadow_texcoord.xy / shadow_texcoord.w + float2( 0.5, 0.5 );
+	float2 ShadowTexC = 0.5 * shadow_texcoord.xy / shadow_texcoord.w + float2( 0.5, 0.5 ); // [-1,1] -> [0,1]
 	ShadowTexC.y = 1.0f - ShadowTexC.y;
 #if SH_X360
 	float object_z = shadow_texcoord.z / shadow_texcoord.w;
@@ -225,13 +225,13 @@ float ComputeShadow(in float4 shadow_texcoord, in sampler2D ShadowMapSampler)
 		else
 		{
 			float z = GetZ(ShadowMapSampler, ShadowTexC);
-			LightAmount = (z + 0.001f < (shadow_texcoord.z / shadow_texcoord.w ))? 0.6f: 1.0f;  
+			LightAmount = (z + 0.005f < min((shadow_texcoord.z / shadow_texcoord.w), 1.0f)) ? 0.6f : 1.0f;  
 		}
 	}
 	return LightAmount;
 #endif
 }
-#endif
+#endif // SH_DX11
 
 //--------------------------------------------------------------------------------------------------
 // Compute Silhouette (ghost/outline)

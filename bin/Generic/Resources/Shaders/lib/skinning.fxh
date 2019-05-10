@@ -46,7 +46,11 @@ sampler2D BoneMapSampler : register(s0) = sampler_state
 //
 struct VS_SKIN_INPUT
 {
+#if SH_DX11
 	float4	position0			: POSITION0;
+#else // SH_DX11
+	float4	position0			: SV_POSITION0;
+#endif // SH_DX11
 	float2	texcoord			: TEXCOORD0;
 	float3	tangent0			: TANGENT0;	
 	float3	binormal0			: BINORMAL0;
@@ -63,12 +67,20 @@ struct VS_SKIN_INPUT
 	float3	binormal2			: COLOR0;
 	float3	normal2				: COLOR1;	
 #else
-	float3	position1			: POSITION1;
+#	if SH_DX11
+		float4	position1		: POSITION1;
+#	else // SH_DX11
+		float4	position1		: SV_POSITION1;
+#	endif // SH_DX11
 	float3	tangent1			: TANGENT1;	
 	float3	binormal1			: BINORMAL1;
 	float3	normal1				: NORMAL1;	
 	
-	float3	position2			: POSITION2;
+#	if SH_DX11
+		float4	position2		: POSITION2;
+#	else // SH_DX11
+		float4	position2		: SV_POSITION2;
+#	endif // SH_DX11
 	float3	tangent2			: TANGENT2;	
 	float3	binormal2			: BINORMAL2;
 	float3	normal2				: NORMAL2;	

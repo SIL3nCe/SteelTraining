@@ -1,5 +1,8 @@
-<!--- // Singletexture.glfx -->
+<!--- // Fonts.glfx -->
 <glfx>
+
+<include name="lib/platform.glfxh" />
+
 <texture name="TextureMap" />
 <texture name="TileSet" />
 
@@ -10,7 +13,7 @@
 </sampler>
 <sampler name="TileSetSampler" type="sampler2D">
 	<texture>TileSet</texture>
-	<min>LINEAR</min><mag>LINEAR</mag><mip>NONE</mip>
+	<min>LINEAR</min><mag>LINEAR</mag><mip>LINEAR</mip>
 	<wrapu>CLAMP</wrapu><wrapv>CLAMP</wrapv>
 </sampler>
 
@@ -36,7 +39,6 @@ uniform highp mat4 WorldViewProjection;
 // DiffuseColor Color
 //
 uniform mediump vec4 DiffuseColor;
-uniform mediump vec4 SCREEN_SIZE;
 
 uniform mediump vec2	TextureMapSize;
 uniform mediump vec2	TileSetSize;
@@ -60,7 +62,7 @@ VS_OUTPUT vs(VS_INPUT vIn)
 //--------------------------------------------------------------------------------------------------
 lowp vec4 ps(VS_OUTPUT vIn)
 {
-	lowp vec4 textureColor = texture2D(TextureMapSampler, vIn.texcoord);
+	lowp vec4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
 	return vec4(1.0, 1.0, 1.0, textureColor.a) * vIn.color * DiffuseColor;
 }
 

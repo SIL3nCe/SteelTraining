@@ -30,8 +30,8 @@ texture TileSet;
 sampler2D TextureMapSampler = sampler_state
 {
 	Texture   = <TextureMap>;
-	MinFilter = POINT;
-	MagFilter = POINT;
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
 	MipFilter = NONE;
 	AddressU  = CLAMP;
 	AddressV  = CLAMP;
@@ -40,8 +40,8 @@ sampler2D TextureMapSampler = sampler_state
 sampler2D TileSetSampler = sampler_state
 {
 	Texture   = <TileSet>;
-	MinFilter = POINT;
-	MagFilter = POINT;
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
 	MipFilter = NONE;
 	AddressU  = CLAMP;
 	AddressV  = CLAMP;
@@ -67,7 +67,11 @@ uniform float2	TileSetSize;
 //--------------------------------------------------------------------------------------------------
 struct VS_INPUT
 {
-	float2	position	 : POSITION;		// Vertex position
+#if !SH_DX11
+	float2  position        : POSITION;		// Vertex position
+#else
+	float2  position        : SV_Position;		// Vertex position
+#endif // !SH_DX11
 	float2	texcoord	 : TEXCOORD0;		// Texture coordinates
 };
 
@@ -76,9 +80,13 @@ struct VS_INPUT
 //--------------------------------------------------------------------------------------------------
 struct VS_INPUT_COLOR
 {
-	float2	position	 : POSITION;		// Vertex position
+#if !SH_DX11
+	float2  position        : POSITION;		// Vertex position
+#else
+	float2  position        : SV_Position;		// Vertex position
+#endif // !SH_DX11
 	float2	texcoord	 : TEXCOORD0;		// Texture coordinates
-	float4  color        : COLOR;       	// Vertex Color
+	float4  color           : COLOR;        // Vertex Color
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -86,9 +94,13 @@ struct VS_INPUT_COLOR
 //--------------------------------------------------------------------------------------------------
 struct VS_INPUT_POSITION4
 {
-	float4	position	 : POSITION;		// Vertex position
+#if !SH_DX11
+	float4  position        : POSITION;		// Vertex position
+#else
+	float4  position        : SV_Position;		// Vertex position
+#endif // !SH_DX11
 	float2	texcoord	 : TEXCOORD0;		// Texture coordinates
-	float4  color        : COLOR;       	// Vertex Color
+	float4  color           : COLOR;        // Vertex Color
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -96,7 +108,11 @@ struct VS_INPUT_POSITION4
 //--------------------------------------------------------------------------------------------------
 struct VS_OUTPUT
 {
+#if !SH_DX11
 	float4  position        : POSITION;		// Vertex position
+#else
+	float4  position        : SV_Position;		// Vertex position
+#endif // !SH_DX11
 	float2  texcoord        : TEXCOORD0;	// Texture coordinates
 };
 
@@ -105,7 +121,11 @@ struct VS_OUTPUT
 //--------------------------------------------------------------------------------------------------
 struct VS_OUTPUT_COLOR
 {
+#if !SH_DX11
 	float4  position        : POSITION;		// Vertex position
+#else
+	float4  position        : SV_Position;		// Vertex position
+#endif // !SH_DX11
 	float2  texcoord        : TEXCOORD0;	// Texture coordinates
 	float4  color           : COLOR;        // Vertex Color
 };
@@ -192,7 +212,11 @@ VS_OUTPUT_COLOR vs_position4(VS_INPUT_POSITION4 vIn)
 //--------------------------------------------------------------------------------------------------
 // Pixel shader code
 //--------------------------------------------------------------------------------------------------
+#if !SH_DX11
 float4 ps(VS_OUTPUT vIn) : COLOR
+#else
+float4 ps(VS_OUTPUT vIn) : SV_Target
+#endif // !SH_DX11
 {
 #if SH_DX11
 	float4 textureColor = TextureMap.Sample(point_clamp_sampler, vIn.texcoord);
@@ -222,13 +246,21 @@ float4 GetTiledPixel(float2 uv)
 #endif
 }
 
+#if !SH_DX11
 float4 ps_tile(VS_OUTPUT vIn) : COLOR
+#else
+float4 ps_tile(VS_OUTPUT vIn) : SV_Target
+#endif // !SH_DX11
 {
 	float4	textureColor = GetTiledPixel(vIn.texcoord);
 	return textureColor * DiffuseColor;
 }
 
+#if !SH_DX11
 float4 psSC(VS_OUTPUT_COLOR vIn) : COLOR
+#else
+float4 psSC(VS_OUTPUT_COLOR vIn) : SV_Target
+#endif // !SH_DX11
 {
 #if SH_DX11
 	float4 textureColor = TextureMap.Sample(point_clamp_sampler, vIn.texcoord);
@@ -239,13 +271,21 @@ float4 psSC(VS_OUTPUT_COLOR vIn) : COLOR
 	return textureColor * vIn.color;
 }
 
+#if !SH_DX11
 float4 psSC_tile(VS_OUTPUT_COLOR vIn) : COLOR
+#else
+float4 psSC_tile(VS_OUTPUT_COLOR vIn) : SV_Target
+#endif // !SH_DX11
 {
 	float4	textureColor = GetTiledPixel(vIn.texcoord);
 	return textureColor * vIn.color;
 }
 
+#if !SH_DX11
 float4 ps3(VS_OUTPUT_COLOR vIn) : COLOR
+#else
+float4 ps3(VS_OUTPUT_COLOR vIn) : SV_Target
+#endif // !SH_DX11
 {
 #if !SH_DX11
 	float4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
@@ -261,7 +301,11 @@ float4 ps3_tile(VS_OUTPUT_COLOR vIn) : COLOR
 	return textureColor * vIn.color * DiffuseColor;
 }
 
+#if !SH_DX11
 float4 psPickBuffer(VS_OUTPUT_COLOR vIn) : COLOR
+#else
+float4 psPickBuffer(VS_OUTPUT_COLOR vIn) : SV_Target
+#endif // !SH_DX11
 {
 #if !SH_DX11
 	float4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
@@ -273,14 +317,22 @@ float4 psPickBuffer(VS_OUTPUT_COLOR vIn) : COLOR
 	return DiffuseColor;
 }
 
+#if !SH_DX11
 float4 psPickBuffer_tile(VS_OUTPUT_COLOR vIn) : COLOR
+#else
+float4 psPickBuffer_tile(VS_OUTPUT_COLOR vIn) : SV_Target
+#endif // !SH_DX11
 {
 	float4 textureColor = GetTiledPixel(vIn.texcoord);
 	clip(textureColor.a < 0.5f ? -1 : 1);
 	return DiffuseColor;
 }
 
+#if !SH_DX11
 float4 psFrozen(VS_OUTPUT_COLOR vIn) : COLOR
+#else
+float4 psFrozen(VS_OUTPUT_COLOR vIn) : SV_Target
+#endif // !SH_DX11
 {
 #if !SH_DX11
 	float4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);

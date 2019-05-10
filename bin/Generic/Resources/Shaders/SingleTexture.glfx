@@ -1,5 +1,8 @@
 <!--- // Singletexture.glfx -->
 <glfx>
+
+<include name="lib/platform.glfxh" />
+
 <texture name="TextureMap" />
 <texture name="TileSet" />
 
@@ -49,7 +52,6 @@ uniform highp mat4 WorldViewProjection;
 // DiffuseColor Color
 //
 uniform mediump vec4 DiffuseColor;
-uniform mediump vec4 SCREEN_SIZE;
 
 uniform mediump vec2	TextureMapSize;
 uniform mediump vec2	TileSetSize;
@@ -110,7 +112,7 @@ VS_OUTPUT_COLOR vs_position4(VS_INPUT_POSITION4 vIn)
 //--------------------------------------------------------------------------------------------------
 lowp vec4 ps(VS_OUTPUT vIn)
 {
-	lowp vec4 textureColor = texture2D(TextureMapSampler, vIn.texcoord);
+	lowp vec4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
 	return textureColor * DiffuseColor;
 }
 
@@ -122,14 +124,14 @@ void clip(lowp float x)
 
 lowp vec4 GetTiledPixel(mediump vec2 uv)
 {
-	mediump vec4	tile = texture2D(TextureMapSampler, uv).bgra;			// load the tilemap value
+	mediump vec4	tile = tex2D(TextureMapSampler, uv).bgra;			// load the tilemap value
 	mediump vec2	tileIndex = (tile.xz * 255.0) + (tile.yw * 255.0 * 256.0);	// convert to integer tile X,Y
 	tileIndex = floor(tileIndex + 0.5);							// *exact* integer, please!
 	mediump vec2	tileSubUv = uv * TextureMapSize;				// convert UV to pixel index within tilemap; each pixel is a single tile
 	tileIndex += fract(tileSubUv);							// the fractional part is added to the tile index to address the correct pixel in the tile
 	tileIndex *= 8.0;								// now pixel index in the tileset
 	tileIndex /= TileSetSize;							// now UV in the tileset
-	return texture2D(TileSetSampler, tileIndex);
+	return tex2D(TileSetSampler, tileIndex);
 }
 
 lowp vec4 ps_tile(VS_OUTPUT vIn)
@@ -140,7 +142,7 @@ lowp vec4 ps_tile(VS_OUTPUT vIn)
 
 lowp vec4 psSC(VS_OUTPUT_COLOR vIn)
 {
-	lowp vec4 textureColor = texture2D(TextureMapSampler, vIn.texcoord);
+	lowp vec4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
 	return textureColor * vIn.color;
 }
 
@@ -152,7 +154,7 @@ lowp vec4 psSC_tile(VS_OUTPUT_COLOR vIn)
 
 lowp vec4 ps3(VS_OUTPUT_COLOR vIn)
 {
-	lowp vec4 textureColor = texture2D(TextureMapSampler, vIn.texcoord);
+	lowp vec4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
 	return textureColor * vIn.color * DiffuseColor;
 }
 
@@ -164,7 +166,7 @@ lowp vec4 ps3_tile(VS_OUTPUT_COLOR vIn)
 
 lowp vec4 psPickBuffer(VS_OUTPUT_COLOR vIn)
 {
-	lowp vec4 textureColor = texture2D(TextureMapSampler, vIn.texcoord);
+	lowp vec4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
 	clip(textureColor.a - 0.5);
 	return DiffuseColor;
 }
@@ -178,7 +180,7 @@ lowp vec4 psPickBuffer_tile(VS_OUTPUT_COLOR vIn)
 
 lowp vec4 psFrozen(VS_OUTPUT_COLOR vIn)
 {
-	lowp vec4 textureColor = texture2D(TextureMapSampler, vIn.texcoord);
+	lowp vec4 textureColor = tex2D(TextureMapSampler, vIn.texcoord);
 	lowp float grayscale = 0.30 * textureColor.r + 0.59 * textureColor.g + 0.11 * textureColor.b;
 	grayscale = 0.2 + grayscale * 0.2;
 	return vec4(grayscale, grayscale, grayscale, textureColor.a);

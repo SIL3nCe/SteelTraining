@@ -12,7 +12,6 @@ half ComputeLuminance(half3 color)
         return(dot(RGB_TO_LUMA,color));        
 }
 
-#if 0 // CANNOT BE USED, silent compilation error for FS for OpenGLES3.1
 //--------------------------------------------------------------------------------------------------
 // Unpack normal from DXT5_X_Y normal map
 //--------------------------------------------------------------------------------------------------
@@ -27,9 +26,8 @@ float3 UnpackNormalMap(sampler2D map, float2 uv)
 	return tex2D(map, uv).rgb * 2.0 - 1.0;
 #endif
 }
-#endif // 0
 
-#if 0 // CANNOT BE USED, silent compilation error for FS for OpenGLES3.1
+
 //--------------------------------------------------------------------------------------------------
 // helper to read the Z buffer
 //--------------------------------------------------------------------------------------------------
@@ -38,7 +36,6 @@ highp float GetZ(sampler2D tex, float2 position)
 	highp float	Z = tex2D(tex, position).r;
 	return Z;
 }
-#endif // 0
 
 //--------------------------------------------------------------------------------------------------
 // Compute pixel normal value from tangent space and normal map texel value
@@ -80,7 +77,7 @@ half2 BlinnFactor(const half3 normal_vector, const half3 light_vector, const hal
 	half n_dot_l = dot(normal_vector, light_vector);
 	half3 half_vector = normalize(view_vector + light_vector);
 	half n_dot_h = dot(normal_vector, half_vector);
-	half diffuse_factor = (n_dot_l < 0.0) ? 0.0 : n_dot_l;
+	half diffuse_factor = (n_dot_l < 0) ? 0 : n_dot_l;
 	half specular_factor = (n_dot_l < 0.0) || (n_dot_h < 0.0) ? 0.0 : pow(n_dot_h, shininess);
 	half2 blinn_factor = vec2( diffuse_factor, specular_factor );
 	return blinn_factor;
@@ -114,8 +111,8 @@ half3 Blinn(const half3 diffuse_map_color, const half3 light_diffuse_color, cons
 //--------------------------------------------------------------------------------------------------
 highp float AttenutaionPointLight(const float3 world_position, const float3 light_position, const float2 attenuation_factor)
 {
-	highp float distance = length(light_position - world_position);
-	return 1.0 - smoothstep(attenuation_factor.x, attenuation_factor.y, distance);
+        highp float distance = length(light_position - world_position);
+        return 1.0 - smoothstep(attenuation_factor.x, attenuation_factor.y, distance);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -127,7 +124,6 @@ half3 ApplyVFog(const half3 color, const half z, const half3 fog_color, const ha
 	return fog_color * (1.0 - f) + color * f;
 }
 
-#if 0 // CANNOT BE USED, silent compilation error for FS for OpenGLES3.1
 #if ENGINE_HAS_SHADOW
 //--------------------------------------------------------------------------------------------------
 // Compute shadow term
@@ -145,23 +141,24 @@ mediump float ComputeShadow(in float4 shadow_texcoord, in sampler2D ShadowMapSam
 		}
 		else
 		{
-			highp float z = tex2D(ShadowMapSampler, ShadowViewportC.xy).r;
+			highp float z = GetZ(ShadowMapSampler, ShadowViewportC.xy);
 			LightAmount = (z + 0.001 < ShadowViewportC.z)? 0.6: 1.0;  
 		}
 	}
 	return LightAmount;
 }
 #endif
-#endif // 0
 
 //--------------------------------------------------------------------------------------------------
 // Compute Silhouette (ghost/outline)
 //--------------------------------------------------------------------------------------------------
 
 float3 vWorldCameraPosition;
+bool   bLightingSilhouette          = false;
 float4 vLightingSilhouetteConstant  = vec4(1.0, 0.0, 0.0, 0.0);
 float4 vLightingSilhouetteColor     = vec4(1.0, 1.0, 1.0, 1.0);
 float2 vLightingSilhouetteThreshold = vec2(0.7, 0.9);
+
 float3 LightingComputeSilhouette(in float3 vColor, in float3 vWorldPosition, in float3 vViewNormal, in float4x4 mView)
 {
 	float3 K;

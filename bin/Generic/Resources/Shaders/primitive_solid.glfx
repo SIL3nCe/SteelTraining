@@ -1,5 +1,5 @@
 
-<!--- // Singletexture.glfx -->
+<!--- // primitive_solid.glfx -->
 <glfx>
 
 <input name="VS_INPUT">
@@ -8,16 +8,12 @@
 	<field name="TANGENT" lname="tangent" type="vec3" />
 	<field name="BINORMAL" lname="binormal" type="vec3" />
 	<field name="NORMAL" lname="normal" type="vec3" /> -->
-	<field name="COLOR" lname="color" type="vec4" />
+	<field name="COLOR" lname="color" type="vec3" />
 </input>
 
 <output name="VS_OUTPUT_VC">
 	<field name="POSITION" lname="position" type="vec4" prec="highp" />
 	<field name="COLOR" lname="color" type="vec4" prec="mediump" />
-</output>
-
-<output name="VS_OUTPUT">
-	<field name="POSITION" lname="position" type="vec4" prec="highp" />
 </output>
 
 <code><![CDATA[
@@ -38,13 +34,13 @@ VS_OUTPUT_VC vsVC(VS_INPUT vIn)
 {
 	VS_OUTPUT_VC vOut;
 	vOut.position = vIn.position * mWorldViewProjection;
-	vOut.color    = vIn.color;
+	vOut.color    = vec4(vIn.color, 1);
 	return(vOut);
 }
 
-VS_OUTPUT vs(VS_INPUT vIn)
+VS_OUTPUT_VC vs(VS_INPUT vIn)
 {
-	VS_OUTPUT vOut;
+	VS_OUTPUT_VC vOut;
 	vOut.position = vIn.position * mWorldViewProjection;
 	return(vOut);
 }
@@ -57,7 +53,7 @@ lowp vec4 psVC(VS_OUTPUT_VC vIn)
 	return(DiffuseColor * vIn.color);
 }
 
-lowp vec4 ps(VS_OUTPUT vIn)
+lowp vec4 ps(VS_OUTPUT_VC vIn)
 {
 	return(DiffuseColor);
 }
@@ -70,7 +66,7 @@ lowp vec4 ps(VS_OUTPUT vIn)
 </tech>
 
 <tech name="DefaultTechniqueNoVertexColor">
-	<vs name="vs" input="VS_INPUT" output="VS_OUTPUT" />
+	<vs name="vs" input="VS_INPUT" output="VS_OUTPUT_VC" />
 	<ps name="ps" />
 </tech>
 

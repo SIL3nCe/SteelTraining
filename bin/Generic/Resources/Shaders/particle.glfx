@@ -43,15 +43,15 @@
 <output name="VS_OUTPUT">
 	<field name="POSITION" lname="position" type="vec4" prec="highp" />
 	<field name="COLOR" lname="color" type="vec4" prec="mediump" />
-	<field name="TEXCOORD0" lname="texcoord" type="vec2" prec="highp" />
+	<field name="TEXCOORD0" lname="texcoord" type="vec2" prec="mediump" />
 </output>
 
 <output name="VS_NORMALMAP_OUTPUT">
 	<field name="POSITION" lname="position" type="vec4" prec="highp" />
 	<field name="COLOR" lname="color" type="vec4" prec="mediump" />
-	<field name="TEXCOORD0" lname="texcoord" type="vec2" prec="highp" />
-	<field name="TEXCOORD1" lname="Ldir" type="vec3" prec="highp" />
-	<field name="TEXCOORD2" lname="Vdir" type="vec3" prec="highp" />
+	<field name="TEXCOORD0" lname="texcoord" type="vec2" prec="mediump" />
+	<field name="TEXCOORD1" lname="Ldir" type="vec3" prec="mediump" />
+	<field name="TEXCOORD2" lname="Vdir" type="vec3" prec="mediump" />
 </output>
 
 <code><![CDATA[
@@ -82,7 +82,7 @@ VS_OUTPUT vs(VS_INPUT vIn)
 	vOut.texcoord = vIn.texcoord;
 	vOut.color = vIn.color;
 	
-        return vOut;
+	return vOut;
 }
 VS_NORMALMAP_OUTPUT vs_normalmap(VS_INPUT vIn)
 {
@@ -94,11 +94,11 @@ VS_NORMALMAP_OUTPUT vs_normalmap(VS_INPUT vIn)
 	vOut.texcoord = vIn.texcoord;
 	vOut.color = vIn.color;
 	
-        float3 WorldViewPos = mul(Pos, mWorldView).xyz;
-        vOut.Ldir = normalize(mul(LightVector.xyz, mat3(mWorldView)) - WorldViewPos);
-        vOut.Vdir = normalize(-WorldViewPos);
-	
-        return vOut;
+	float3 WorldViewPos = mul(Pos, mWorldView).xyz;
+	vOut.Ldir = normalize(mul(LightVector.xyz, mat3(mWorldView)) - WorldViewPos);
+	vOut.Vdir = normalize(-WorldViewPos);
+
+    return vOut;
 }
 
 
@@ -133,7 +133,7 @@ float4 ps_normalmap(VS_NORMALMAP_OUTPUT vIn)
 	texcolor *= tex2D(DiffuseMapSampler, vIn.texcoord);
 #endif
 
-	float3 normal = UnpackNormalMap(NormalMapSampler, vIn.texcoord);
+	float3 normal = tex2D(NormalMapSampler, vIn.texcoord).rgb * 2.0 - 1.0;
 	float3 H = normalize(vIn.Ldir + vIn.Vdir);
 	float4 lighting = lit(dot(vIn.Ldir, normal), dot(H, normal), Shininess);
 	texcolor.rgb *= (lighting.y + lighting.z) * LightColor.rgb;

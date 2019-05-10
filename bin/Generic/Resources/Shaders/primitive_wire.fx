@@ -2,8 +2,6 @@
 // Pick buffer
 //--------------------------------------------------------------------------------------------------
 
-#include "lib\platform.fxh"
-
 //--------------------------------------------------------------------------------------------------
 // Parameters
 //--------------------------------------------------------------------------------------------------
@@ -23,7 +21,7 @@ struct VS_INPUT
 	float3	binormal			: BINORMAL;				// Binormal (in local space)
 	float3	normal				: NORMAL;				// Normal (in local space)
 #endif
-	float4	color				: COLOR;				// Vertex color
+	float3	color				: COLOR;				// Vertex color
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -42,7 +40,7 @@ VS_OUTPUT vs(VS_INPUT vIn)
 {
 	VS_OUTPUT vOut;
 	vOut.position = mul(vIn.position, mWorldViewProjection);
-	vOut.color    = vIn.color;
+	vOut.color    = float4(vIn.color, 1);
 	return(vOut);
 }
 
@@ -66,8 +64,6 @@ technique DefaultTechnique
 {
     Pass DefaultPass
     {
-        MultiSampleAntialias = FALSE;
-
         VertexShader         = compile vs_3_0 vs();
         PixelShader          = compile ps_3_0 ps();
 	}

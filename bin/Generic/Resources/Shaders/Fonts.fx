@@ -32,7 +32,7 @@ sampler2D TextureMapSampler = sampler_state
 	Texture   = <TextureMap>;
 	MinFilter = LINEAR;
 	MagFilter = LINEAR;
-	MipFilter = NONE;
+	MipFilter = LINEAR;
 	AddressU  = CLAMP;
 	AddressV  = CLAMP;
 };
@@ -42,7 +42,7 @@ sampler2D TileSetSampler = sampler_state
 	Texture   = <TileSet>;
 	MinFilter = LINEAR;
 	MagFilter = LINEAR;
-	MipFilter = NONE;
+	MipFilter = LINEAR;
 	AddressU  = CLAMP;
 	AddressV  = CLAMP;
 };
