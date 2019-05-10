@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "Game.h"
-#include "TitleMenu.h"
+#include "GameStateManager.h"
 
 #include "ShEntryPoint/ShEntryPoint.h"
 
@@ -46,9 +46,9 @@ void ShEntryPoint::OnPostInitialize(void)
 #if ENABLE_SKIP_TITLE_MENU
 	Game::GetInstance()->Initialize();
 #else // ENABLE_SKIP_TITLE_MENU
-	TitleMenu * pTitleMenu = TitleMenu::GetInstance();
-	pTitleMenu->Initialize();
-	pTitleMenu->Activate();
+	GameStateManager * pGameStateManager = GameStateManager::GetInstance();
+	pGameStateManager->Initialize();
+	pGameStateManager->Push(GameStateManager::e_game_state_title_menu);
 #endif // ENABLE_SKIP_TITLE_MENU
 }
 
@@ -67,15 +67,11 @@ void ShEntryPoint::OnPreUpdate(float dt)
  */
 void ShEntryPoint::OnPostUpdate(float dt)
 {
-	Game * pGame = Game::GetInstance();
-	if (pGame->IsInitialized())
-	{
-		pGame->Update(dt);
-	}
-	else
-	{
-		TitleMenu::GetInstance()->Update(dt);
-	}
+#if ENABLE_SKIP_TITLE_MENU
+	Game::GetInstance()->Update(dt);
+#else // ENABLE_SKIP_TITLE_MENU
+	GameStateManager::GetInstance()->Update(dt);
+#endif // ENABLE_SKIP_TITLE_MENU
 }
 
 /**
@@ -86,7 +82,7 @@ void ShEntryPoint::OnPreRelease(void)
 #if ENABLE_SKIP_TITLE_MENU
 	Game::GetInstance()->Release();
 #else // ENABLE_SKIP_TITLE_MENU
-	TitleMenu::GetInstance()->Release();
+	GameStateManager::GetInstance()->Release();
 #endif // ENABLE_SKIP_TITLE_MENU
 
 	UnRegisterPluginST();

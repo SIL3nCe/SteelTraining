@@ -1,51 +1,61 @@
 //--------------------------------------------------------------------------------------------------
-/// TitleMenu.cpp
+/// GameStateTitleMenu.cpp
 //--------------------------------------------------------------------------------------------------
 
-#include "TitleMenu.h"
+#include "GameStateTitleMenu.h"
 
-#include "Game.h"
+#include "GameStateManager.h"
 
 //--------------------------------------------------------------------------------------------------
 /// Static definitions
 //--------------------------------------------------------------------------------------------------
-/*static*/ CShString		TitleMenu::s_strGUITitleMenu("menu_title");
-/*static*/ CShIdentifier	TitleMenu::s_idGUITitleMenu(s_strGUITitleMenu);
+/*static*/ CShString		GameStateTitleMenu::s_strGUIGameStateTitleMenu("menu_title");
+/*static*/ CShIdentifier	GameStateTitleMenu::s_idGUIGameStateTitleMenu(s_strGUIGameStateTitleMenu);
 
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-TitleMenu * TitleMenu::GetInstance(void)
+/*explicit*/ GameStateTitleMenu::GameStateTitleMenu(void)
+: m_pControlBranchBackground(shNULL)
+, m_pControlButtonPlay(shNULL)
+, m_pControlButtonSettings(shNULL)
+, m_pControlButtonExit(shNULL)
 {
-	static TitleMenu * pInstance = shNULL;
-	if (shNULL == pInstance)
-	{
-		pInstance = new TitleMenu();
-	}
-
-	return pInstance;
+	// ...
 }
 
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-void TitleMenu::Initialize(void)
+/*virtual*/ GameStateTitleMenu::~GameStateTitleMenu(void)
+{
+	// ...
+}
+
+//--------------------------------------------------------------------------------------------------
+/// @todo comment
+//--------------------------------------------------------------------------------------------------
+/*virtual*/ void GameStateTitleMenu::InternalInitialize(void)
 {
 	//
+	// Set GameState id
+	m_id = CShIdentifier("game_state_title_menu");
+
+	//
 	// GUI Loading
-	if (!ShGUI::LoadGUIAndSSS(s_idGUITitleMenu, ShGUI::GetRootControl(), s_strGUITitleMenu))
+	if (!ShGUI::LoadGUIAndSSS(s_idGUIGameStateTitleMenu, ShGUI::GetRootControl(), s_strGUIGameStateTitleMenu))
 	{
 		SH_ASSERT_ALWAYS();
 	}
 
 	//
 	// Retrieval
-	m_pControlBranchBackground = static_cast<ShGUIControlBranch*>(ShGUIControl::GetElementById(CShIdentifier("container_background").Append(s_strGUITitleMenu.Get()), ShGUI::GetRootControl()));
+	m_pControlBranchBackground = static_cast<ShGUIControlBranch*>(ShGUIControl::GetElementById(CShIdentifier("container_background").Append(s_strGUIGameStateTitleMenu.Get()), ShGUI::GetRootControl()));
 	SH_ASSERT(shNULL != m_pControlBranchBackground)
 		
-	m_pControlButtonPlay		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_play").Append(s_strGUITitleMenu.Get()), m_pControlBranchBackground));
-	m_pControlButtonSettings	= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_settings").Append(s_strGUITitleMenu.Get()), m_pControlBranchBackground));
-	m_pControlButtonExit		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_exit").Append(s_strGUITitleMenu.Get()), m_pControlBranchBackground));
+	m_pControlButtonPlay		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_play").Append(s_strGUIGameStateTitleMenu.Get()), m_pControlBranchBackground));
+	m_pControlButtonSettings	= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_settings").Append(s_strGUIGameStateTitleMenu.Get()), m_pControlBranchBackground));
+	m_pControlButtonExit		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_exit").Append(s_strGUIGameStateTitleMenu.Get()), m_pControlBranchBackground));
 	SH_ASSERT(shNULL != m_pControlButtonPlay)
 	SH_ASSERT(shNULL != m_pControlButtonSettings)
 	SH_ASSERT(shNULL != m_pControlButtonExit)
@@ -53,15 +63,15 @@ void TitleMenu::Initialize(void)
 	//
 	// Set-up
 	ShGUIControl::Hide(m_pControlBranchBackground);
-	ShGUIControl::AddSignalFctPtrClick(m_pControlButtonPlay,		TitleMenu::OnButtonClickedPlay);
-	ShGUIControl::AddSignalFctPtrClick(m_pControlButtonSettings,	TitleMenu::OnButtonClickedSettings);
-	ShGUIControl::AddSignalFctPtrClick(m_pControlButtonExit,		TitleMenu::OnButtonClickedExit);
+	ShGUIControl::AddSignalFctPtrClick(m_pControlButtonPlay,		GameStateTitleMenu::OnButtonClickedPlay);
+	ShGUIControl::AddSignalFctPtrClick(m_pControlButtonSettings,	GameStateTitleMenu::OnButtonClickedSettings);
+	ShGUIControl::AddSignalFctPtrClick(m_pControlButtonExit,		GameStateTitleMenu::OnButtonClickedExit);
 }
 
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-void TitleMenu::Release(void)
+/*virtual*/ void GameStateTitleMenu::InternalRelease(void)
 {
 	//
 	// Remove top container
@@ -75,7 +85,7 @@ void TitleMenu::Release(void)
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-void TitleMenu::Activate(void)
+/*virtual*/ void GameStateTitleMenu::InternalActivate(void)
 {
 	ShGUIControl::Show(m_pControlBranchBackground);
 }
@@ -83,7 +93,7 @@ void TitleMenu::Activate(void)
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-void TitleMenu::Deactivate(void)
+/*virtual*/ void GameStateTitleMenu::InternalDeactivate(void)
 {
 	ShGUIControl::Hide(m_pControlBranchBackground);
 }
@@ -91,7 +101,7 @@ void TitleMenu::Deactivate(void)
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-void TitleMenu::Update(float dt)
+/*virtual*/ void GameStateTitleMenu::InternalUpdate(float dt)
 {
 	// ...
 }
@@ -99,15 +109,11 @@ void TitleMenu::Update(float dt)
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-/*static*/ bool TitleMenu::OnButtonClickedPlay(ShGUIControl * pControl, const CShVector2 & vPosition)
+/*static*/ bool GameStateTitleMenu::OnButtonClickedPlay(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
 	//
-	// Deactivate TitleMenu
-	TitleMenu::GetInstance()->Deactivate();
-
-	//
-	// Initialize Game
-	Game::GetInstance()->Initialize();
+	// Push GameStateGame
+	//GameStateManager::GetInstance()->Push(GameStateManager::e_game_state_game);
 
 	return true;
 }
@@ -115,37 +121,21 @@ void TitleMenu::Update(float dt)
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-/*static*/ bool TitleMenu::OnButtonClickedSettings(ShGUIControl * pControl, const CShVector2 & vPosition)
+/*static*/ bool GameStateTitleMenu::OnButtonClickedSettings(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
-	// TODO
-	return false;
+	//
+	// Push GameStateTitleMenuSettings
+	//GameStateManager::GetInstance()->Push(GameStateManager::e_game_state_title_menu_settings);
+
+	return true ;
 }
 
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
-/*static*/ bool TitleMenu::OnButtonClickedExit(ShGUIControl * pControl, const CShVector2 & vPosition)
+/*static*/ bool GameStateTitleMenu::OnButtonClickedExit(ShGUIControl * pControl, const CShVector2 & vPosition)
 {
 	ShApplication::RequestQuit();
+
 	return true;
-}
-
-//--------------------------------------------------------------------------------------------------
-/// @todo comment
-//--------------------------------------------------------------------------------------------------
-/*explicit*/ TitleMenu::TitleMenu(void)
-: m_pControlBranchBackground(shNULL)
-, m_pControlButtonPlay(shNULL)
-, m_pControlButtonSettings(shNULL)
-, m_pControlButtonExit(shNULL)
-{
-	// ...
-}
-
-//--------------------------------------------------------------------------------------------------
-/// @todo comment
-//--------------------------------------------------------------------------------------------------
-/*virtual*/ TitleMenu::~TitleMenu(void)
-{
-	// ...
 }

@@ -2,26 +2,30 @@
 
 #include <ShSDK/ShSDK.h>
 
-class TitleMenu
+#include "GameState.h"
+
+class GameStateTitleMenu : public GameState
 {
+	friend class GameStateManager;
 public:
 	//
-	// Singleton-related
-	static TitleMenu *		GetInstance					(void);
+	// Constructor/Destructor
+	explicit				GameStateTitleMenu			(void);
+	virtual					~GameStateTitleMenu			(void);
 
 	//
 	// Initialize/Release
-	void					Initialize					(void);
-	void					Release						(void);
+	virtual void			InternalInitialize			(void) SH_ATTRIBUTE_OVERRIDE;
+	virtual void			InternalRelease				(void) SH_ATTRIBUTE_OVERRIDE;
 
 	//
 	// Activate/Deactivate
-	void					Activate					(void);
-	void					Deactivate					(void);
+	virtual void			InternalActivate			(void) SH_ATTRIBUTE_OVERRIDE;
+	virtual void			InternalDeactivate			(void) SH_ATTRIBUTE_OVERRIDE;
 
 	//
 	// Update
-	void					Update						(float dt);
+	virtual void			InternalUpdate				(float dt) SH_ATTRIBUTE_OVERRIDE;
 
 	//
 	// Buttons signals
@@ -31,14 +35,10 @@ public:
 
 protected:
 private:
-	//
-	// Constructor/Destructor
-	explicit				TitleMenu					(void);
-	virtual					~TitleMenu					(void);
 
 public:
-	static CShString		s_strGUITitleMenu;		///< @todo comment
-	static CShIdentifier	s_idGUITitleMenu;		///< @todo comment
+	static CShString		s_strGUIGameStateTitleMenu;		///< @todo comment
+	static CShIdentifier	s_idGUIGameStateTitleMenu;		///< @todo comment
 protected:
 private:
 	//

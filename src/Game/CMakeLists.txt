@@ -7,9 +7,13 @@ option(ENABLE_SKIP_TITLE_MENU "Enable TitleMenu skipping" ON)
 set(SOURCES_Application Application.cpp Application.h)
 source_group("" FILES ${SOURCES_Application})
 
-# TitleMenu files
-set(SOURCES_TitleMenu TitleMenu.cpp TitleMenu.h) 
-source_group("TitleMenu" FILES ${SOURCES_TitleMenu})
+# GameState files
+set(SOURCES_GameState GameStateManager.cpp GameStateManager.h GameState.cpp GameState.h) 
+source_group("GameState" FILES ${SOURCES_GameState})
+
+# GameState\\TitleMenu files
+set(SOURCES_GameStateTitleMenu GameStateTitleMenu.cpp GameStateTitleMenu.h) 
+source_group("GameState\\TitleMenu" FILES ${SOURCES_GameStateTitleMenu})
 
 # Game files
 set(SOURCES_Game Game.cpp Game.h) 
@@ -18,7 +22,8 @@ source_group("Game" FILES ${SOURCES_Game})
 # Put everything together before adding platform-specific files
 set(SOURCES
 ${SOURCES_Application}
-${SOURCES_TitleMenu}
+${SOURCES_GameState}
+${SOURCES_GameStateTitleMenu}
 ${SOURCES_Game}
 )
 
