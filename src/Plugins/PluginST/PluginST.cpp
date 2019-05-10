@@ -7,6 +7,7 @@ const CShIdentifier plugin_identifier("PluginSteelTraining");
 */
 PluginST::PluginST(void)
 : CShPlugin(plugin_identifier)
+, m_bRequestToStop(false)
 {
 	// ...
 }

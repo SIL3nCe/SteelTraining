@@ -6,6 +6,7 @@
 
 #include "GameStateManager.h"
 #include "Game.h"
+#include "PluginFactory.h"
 
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
@@ -64,12 +65,14 @@
 //--------------------------------------------------------------------------------------------------
 /*virtual*/ void GameStateGame::InternalUpdate(float dt)
 {
+	//
+	// Update Game
 	Game * pGame = Game::GetInstance();
 	pGame->Update(dt);
 
-	// TODO
-	//if (pGame->IsRequestedToExit())
-	if (false)
+	//
+	// Check for Pop condition
+	if (GetPluginST()->m_bRequestToStop)
 	{
 		GameStateManager::GetInstance()->Pop();
 	}

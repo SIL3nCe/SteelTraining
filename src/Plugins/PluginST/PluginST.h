@@ -30,4 +30,8 @@ public:
 private:
 
 	World		m_world;
+
+public:
+
+	bool		m_bRequestToStop;
 };

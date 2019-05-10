@@ -24,20 +24,22 @@ public:
 
 	//
 	// Getters/Setters
-	bool			IsInitialized		(void) const;
+	bool			IsRequestedExit		(void) const;
 
 private:
 	//
 	// Constructor/Destructor
 	explicit		Game				(void);
 	virtual			~Game				(void);
-
+public:
+	//
+	// Misc
+	bool					m_bRequestedExit;
+protected:
 private:
 	//
 	// Singleton-related
-	static Game *	m_pInstance;
+	static Game *			s_pInstance;
+	static CShIdentifier	s_idLevelTest;
 
-	//
-	// Misc
-	bool			m_bInitialized;
 };

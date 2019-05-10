@@ -1,30 +1,40 @@
 #include "Game.h"
 
-/*static*/ Game * Game::m_pInstance = shNULL;
+#include "PluginFactory.h"
+
+/*static*/ Game * Game::s_pInstance = shNULL;
+/*static*/ CShIdentifier Game::s_idLevelTest("level_test");
 
 /*static*/ Game * Game::GetInstance(void)
 {
-	if (shNULL == m_pInstance)
+	if (shNULL == s_pInstance)
 	{
-		m_pInstance = new Game();
+		s_pInstance = new Game();
 	}
 
-	return(m_pInstance);
+	return s_pInstance;
 }
 
 void Game::Initialize(void)
 {
-	const CShIdentifier idLevel("level_test");
-	m_bInitialized = ShLevel::Load(idLevel);
-	if (!m_bInitialized)
+	//
+	// Load level
+	if (!ShLevel::Load(s_idLevelTest))
 	{
 		SH_ASSERT_ALWAYS();
+		return;
 	}
+
+	//
+	// Start Plugin
+	GetPluginST()->OnPlayStart(s_idLevelTest);
 }
 
 void Game::Release(void)
 {
-	m_bInitialized = false;
+	//
+	// Stop Plugin
+	GetPluginST()->OnPlayStop(s_idLevelTest);
 
 	//
 	// Release level
@@ -36,13 +46,13 @@ void Game::Update(float dt)
 	// ...
 }
 
-bool Game::IsInitialized(void) const
+bool Game::IsRequestedExit(void) const
 {
-	return m_bInitialized;
+	return m_bRequestedExit;
 }
 
 /*explicit*/ Game::Game(void)
-: m_bInitialized(false)
+: m_bRequestedExit(false)
 {
 	// ...
 }
