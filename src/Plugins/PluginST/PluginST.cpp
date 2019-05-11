@@ -1,12 +1,12 @@
 #include "PluginST.h"
 
-const CShIdentifier plugin_identifier("PluginSteelTraining");
+const CShIdentifier g_idPlugin	("PluginSteelTraining");
 
 /**
 * @brief Constructor
 */
 PluginST::PluginST(void)
-: CShPlugin(plugin_identifier)
+: CShPlugin(g_idPlugin)
 , m_bRequestToStop(false)
 {
 	// ...
@@ -27,6 +27,8 @@ PluginST::PluginST(void)
 {
 	m_bRequestToStop = false;
 
+	//
+	// World
 	m_world.Initialize(levelIdentifier);
 }
 
@@ -35,6 +37,8 @@ PluginST::PluginST(void)
 */
 /*virtual*/ void PluginST::OnPlayStop(const CShIdentifier & levelIdentifier)
 {
+	//
+	// World
 	m_world.Release();
 }
 
