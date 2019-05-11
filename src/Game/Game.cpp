@@ -32,10 +32,10 @@ void Game::Initialize(void)
 
 void Game::Release(void)
 {
-
 	//
 	// Release level
 	ShLevel::Release();
+
 	//
 	// Unregister/Stop Plugin
 	UnRegisterPluginST();
