@@ -57,10 +57,13 @@
 	m_pControlBranchRoot = static_cast<ShGUIControlBranch*>(ShGUIControl::GetElementById(CShIdentifier("container_settings").Append(s_strGUIGameStateTitleMenuSettings.Get()), ShGUI::GetRootControl()));
 	SH_ASSERT(shNULL != m_pControlBranchRoot)
 	
-	m_pControlButtonDifficultyEasy		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_easy").Append("import_difficulty").Append(s_strGUIGameStateTitleMenuSettings.Get()), m_pControlBranchRoot));
-	m_pControlButtonDifficultyMedium	= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_medium").Append("import_difficulty").Append(s_strGUIGameStateTitleMenuSettings.Get()), m_pControlBranchRoot));
-	m_pControlButtonDifficultyHard		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_hard").Append("import_difficulty").Append(s_strGUIGameStateTitleMenuSettings.Get()), m_pControlBranchRoot));
-	m_pControlButtonDifficultyHardcore	= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_hardcore").Append("import_difficulty").Append(s_strGUIGameStateTitleMenuSettings.Get()), m_pControlBranchRoot));
+	ShGUIControlBranch * pControlImportDifficulty = static_cast<ShGUIControlBranch*>(ShGUIControl::GetElementById(CShIdentifier("import_difficulty").Append(s_strGUIGameStateTitleMenuSettings.Get()), m_pControlBranchRoot));
+	SH_ASSERT(shNULL != pControlImportDifficulty)
+
+	m_pControlButtonDifficultyEasy		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_easy"), pControlImportDifficulty));
+	m_pControlButtonDifficultyMedium	= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_medium"), pControlImportDifficulty));
+	m_pControlButtonDifficultyHard		= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_hard"), pControlImportDifficulty));
+	m_pControlButtonDifficultyHardcore	= static_cast<ShGUIControlButton*>(ShGUIControl::GetElementById(CShIdentifier("button_difficulty_hardcore"), pControlImportDifficulty));
 	SH_ASSERT(shNULL != m_pControlButtonDifficultyEasy)
 	SH_ASSERT(shNULL != m_pControlButtonDifficultyMedium)
 	SH_ASSERT(shNULL != m_pControlButtonDifficultyHard)
