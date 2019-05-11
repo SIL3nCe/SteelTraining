@@ -104,6 +104,21 @@ void GameStateManager::Pop(void)
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
+GameState * GameStateManager::GetTop(void)
+{
+	if (m_aStackGameState.IsEmpty())
+	{
+		return shNULL;
+	}
+	else
+	{
+		return m_aStackGameState.GetTop();
+	}
+}
+
+//--------------------------------------------------------------------------------------------------
+/// @todo comment
+//--------------------------------------------------------------------------------------------------
 /*explicit*/ GameStateManager::GameStateManager(void)
 : m_aStackGameState()
 // m_aGameState

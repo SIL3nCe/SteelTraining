@@ -38,6 +38,7 @@ public:
 	// Stack-related
 	void						Push						(EGameState eGameState);
 	void						Pop							(void);
+	GameState *					GetTop						(void);
 
 protected:
 private:
