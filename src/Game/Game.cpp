@@ -18,27 +18,27 @@
 void Game::Initialize(void)
 {
 	//
+	// Register/Start Plugin
+	RegisterPluginST();
+
+	//
 	// Load level
 	if (!ShLevel::Load(s_idLevelTest))
 	{
 		SH_ASSERT_ALWAYS();
 		return;
 	}
-
-	//
-	// Start Plugin
-	GetPluginST()->OnPlayStart(s_idLevelTest);
 }
 
 void Game::Release(void)
 {
-	//
-	// Stop Plugin
-	GetPluginST()->OnPlayStop(s_idLevelTest);
 
 	//
 	// Release level
 	ShLevel::Release();
+	//
+	// Unregister/Stop Plugin
+	UnRegisterPluginST();
 }
 
 void Game::Update(float dt)

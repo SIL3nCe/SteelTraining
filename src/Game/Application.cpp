@@ -41,8 +41,6 @@ void ShEntryPoint::OnPreInitialize(void)
  */
 void ShEntryPoint::OnPostInitialize(void)
 {
-	RegisterPluginST();
-
 	GameStateManager * pGameStateManager = GameStateManager::GetInstance();
 	pGameStateManager->Initialize();
 	pGameStateManager->Push(GameStateManager::e_game_state_title_menu);
@@ -75,8 +73,6 @@ void ShEntryPoint::OnPostUpdate(float dt)
 void ShEntryPoint::OnPreRelease(void)
 {
 	GameStateManager::GetInstance()->Release();
-
-	UnRegisterPluginST();
 }
 
 /**
