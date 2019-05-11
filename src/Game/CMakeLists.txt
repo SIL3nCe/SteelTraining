@@ -3,6 +3,10 @@
 # Options
 option(ENABLE_SKIP_TITLE_MENU "Enable TitleMenu skipping" ON)
 
+# Settings files
+set(SOURCES_Settings Settings.cpp Settings.h) 
+source_group("Settings" FILES ${SOURCES_Settings})
+
 # Application files
 set(SOURCES_Application Application.cpp Application.h)
 source_group("" FILES ${SOURCES_Application})
@@ -29,6 +33,7 @@ source_group("Game" FILES ${SOURCES_Game})
 
 # Put everything together before adding platform-specific files
 set(SOURCES
+${SOURCES_Settings}
 ${SOURCES_Application}
 ${SOURCES_GameState}
 ${SOURCES_GameStateTitleMenu}
