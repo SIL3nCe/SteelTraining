@@ -1,0 +1,8 @@
+<gui version="1.3">
+    <sss>
+        <style pseudo_state="default" id="image_heart" offset_x="-246.000000" offset_x_unit="auto" offset_y="-66.000000" offset_y_unit="auto"/>
+    </sss>
+    <root>
+        <image id="image_heart" pseudo_state="default" ignore_events="0" color_filter="#FFFFFFFF"/>
+    </root>
+</gui>
