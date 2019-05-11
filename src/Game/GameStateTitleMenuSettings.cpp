@@ -128,7 +128,7 @@
 
 	//
 	// Set difficulty
-	Settings::s_eDifficulty = Settings::e_difficulty_easy;
+	Settings::GetInstance()->m_eDifficulty = Settings::e_difficulty_easy;
 
 	//
 	// Update GUI
@@ -162,7 +162,7 @@
 
 	//
 	// Set difficulty
-	Settings::s_eDifficulty = Settings::e_difficulty_medium;
+	Settings::GetInstance()->m_eDifficulty = Settings::e_difficulty_medium;
 
 	//
 	// Update GUI
@@ -196,7 +196,7 @@
 
 	//
 	// Set difficulty
-	Settings::s_eDifficulty = Settings::e_difficulty_hard;
+	Settings::GetInstance()->m_eDifficulty = Settings::e_difficulty_hard;
 
 	//
 	// Update GUI
@@ -230,7 +230,7 @@
 
 	//
 	// Set difficulty
-	Settings::s_eDifficulty = Settings::e_difficulty_hardcore;
+	Settings::GetInstance()->m_eDifficulty = Settings::e_difficulty_hardcore;
 
 	//
 	// Update GUI

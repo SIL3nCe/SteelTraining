@@ -15,6 +15,8 @@ public:
 		e_difficulty_max		= e_difficulty_hardcore + 1,
 	};
 
+	static Settings *			GetInstance			(void);
+
 protected:
 private:
 	//
@@ -23,7 +25,7 @@ private:
 	virtual						~Settings			(void);
 
 public:
-	static EDifficulty			s_eDifficulty;
+	EDifficulty					m_eDifficulty;
 
 protected:
 private:
