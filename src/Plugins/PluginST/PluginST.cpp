@@ -7,6 +7,8 @@ const CShIdentifier g_idPlugin	("PluginSteelTraining");
 */
 PluginST::PluginST(void)
 : CShPlugin(g_idPlugin)
+, m_world()
+, m_hud()
 , m_bRequestToStop(false)
 {
 	// ...
@@ -30,6 +32,12 @@ PluginST::PluginST(void)
 	//
 	// World
 	m_world.Initialize(levelIdentifier);
+
+#if 0
+	//
+	// HUD
+	m_hud.Initialize();
+#endif // 0
 }
 
 /**
@@ -40,6 +48,12 @@ PluginST::PluginST(void)
 	//
 	// World
 	m_world.Release();
+
+#if 0
+	//
+	// HUD
+	m_hud.Release();
+#endif // 0
 }
 
 /**

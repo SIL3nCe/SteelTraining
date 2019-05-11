@@ -20,6 +20,10 @@ source_group("Factory" FILES ${SOURCES_Factory})
 set(SOURCES_World World/World.cpp World/World.h)
 source_group("World" FILES ${SOURCES_World})
 
+# HUD files
+set(SOURCES_HUD HUD/HUD.cpp HUD/HUD.h)
+source_group("HUD" FILES ${SOURCES_HUD})
+
 # Inputs files
 set(SOURCES_Inputs World/InputManager.cpp World/InputManager.h)
 source_group("World\\Inputs" FILES ${SOURCES_Inputs})
@@ -50,6 +54,7 @@ set(SOURCES
 ${SOURCES_PluginST}
 ${SOURCES_Factory}
 ${SOURCES_World}
+${SOURCES_HUD}
 ${SOURCES_Inputs}
 ${SOURCES_BaseCharacter}
 ${SOURCES_PlayerCharacter}

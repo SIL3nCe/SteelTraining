@@ -4,6 +4,7 @@
 #include "ShEngineExt/ShEngineExt.h"
 
 #include "World/World.h"
+#include "HUD/HUD.h"
 
 class PluginST : public CShPlugin
 {
@@ -28,10 +29,14 @@ public:
 	World *					GetWorld			(void);
 
 private:
+	//
+	// World
+	World					m_world;
 
-	World		m_world;
-
+	//
+	// HUD
+	HUD						m_hud;
 public:
 
-	bool		m_bRequestToStop;
+	bool					m_bRequestToStop;
 };
