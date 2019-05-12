@@ -58,6 +58,12 @@ void GameStateManager::Release(void)
 //--------------------------------------------------------------------------------------------------
 void GameStateManager::Update(float dt)
 {
+	if (m_bRequestPop)
+	{
+		Pop();
+		m_bRequestPop = false;
+	}
+
 	m_aStackGameState.GetTop()->Update(dt);
 }
 
@@ -104,6 +110,14 @@ void GameStateManager::Pop(void)
 //--------------------------------------------------------------------------------------------------
 /// @todo comment
 //--------------------------------------------------------------------------------------------------
+void GameStateManager::RequestPop(void)
+{
+	m_bRequestPop = true;
+}
+
+//--------------------------------------------------------------------------------------------------
+/// @todo comment
+//--------------------------------------------------------------------------------------------------
 GameState * GameStateManager::GetTop(void)
 {
 	if (m_aStackGameState.IsEmpty())
@@ -121,6 +135,7 @@ GameState * GameStateManager::GetTop(void)
 //--------------------------------------------------------------------------------------------------
 /*explicit*/ GameStateManager::GameStateManager(void)
 : m_aStackGameState()
+, m_bRequestPop(false)
 // m_aGameState
 , m_gameStateTitleMenu()
 , m_gameStateTitleMenuSettings()

@@ -38,6 +38,7 @@ public:
 	// Stack-related
 	void						Push						(EGameState eGameState);
 	void						Pop							(void);
+	void						RequestPop					(void);
 	GameState *					GetTop						(void);
 
 protected:
@@ -51,8 +52,9 @@ public:
 protected:
 private:
 	//
-	// Stack
+	// Stack-related
 	CShStack<GameState*>			m_aStackGameState;
+	bool							m_bRequestPop;
 
 	//
 	// GameStates
