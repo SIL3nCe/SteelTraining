@@ -35,7 +35,6 @@ World::~World(void)
  */
 void World::Initialize(const CShIdentifier & levelIdentifier)
 {
-
 	srand(static_cast<unsigned int>(time(shNULL)));
 
 	m_levelIdentifier = levelIdentifier;
@@ -75,6 +74,13 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
  */
 void World::Release(void)
 {
+	//
+	// Plugin MapGenerator
+	ShApplication::UnRegisterPlugin(m_pMapGeneratorPlugin);
+	SH_SAFE_DELETE(m_pMapGeneratorPlugin);
+
+	//
+	// World-related
 	m_playerCharacter.Release();
 	m_inputManager.Release();
 
@@ -83,6 +89,7 @@ void World::Release(void)
 	{
 		SH_SAFE_RELEASE_DELETE(m_apEnemyList[iEnemyIndex])
 	}
+	m_apEnemyList.Empty();
 
 	SH_SAFE_DELETE(m_pbWorld)
 }
