@@ -9,6 +9,7 @@ PluginST::PluginST(void)
 : CShPlugin(g_idPlugin)
 , m_world()
 , m_hud()
+, m_bPaused(false)
 , m_bRequestToStop(false)
 {
 	// ...
@@ -27,7 +28,10 @@ PluginST::PluginST(void)
 */
 /*virtual*/ void PluginST::OnPlayStart(const CShIdentifier & levelIdentifier)
 {
-	m_bRequestToStop = false;
+	//
+	// Plugin states
+	m_bPaused			= false;
+	m_bRequestToStop	= false;
 
 	//
 	// World
@@ -45,6 +49,8 @@ PluginST::PluginST(void)
 */
 /*virtual*/ void PluginST::OnPlayStop(const CShIdentifier & levelIdentifier)
 {
+	SH_UNUSED(levelIdentifier);
+
 	//
 	// World
 	m_world.Release();
@@ -61,7 +67,9 @@ PluginST::PluginST(void)
 */
 /*virtual*/ void PluginST::OnPlayPause(const CShIdentifier & levelIdentifier)
 {
-	// ...
+	SH_UNUSED(levelIdentifier);
+
+	m_bPaused = true;
 }
 
 /**
@@ -69,7 +77,9 @@ PluginST::PluginST(void)
 */
 /*virtual*/ void PluginST::OnPlayResume(const CShIdentifier & levelIdentifier)
 {
-	// ...
+	SH_UNUSED(levelIdentifier);
+
+	m_bPaused = false;
 }
 
 /**
@@ -77,7 +87,7 @@ PluginST::PluginST(void)
 */
 /*virtual*/ void PluginST::OnPreUpdate(float dt)
 {
-	// ...
+	SH_UNUSED(dt);
 }
 
 /**
@@ -85,7 +95,10 @@ PluginST::PluginST(void)
 */
 /*virtual*/ void PluginST::OnPostUpdate(float dt)
 {
-	m_world.Update(dt);
+	if (!m_bPaused)
+	{
+		m_world.Update(dt);
+	}
 }
 
 /**
@@ -93,7 +106,9 @@ PluginST::PluginST(void)
 */
 void PluginST::OnTouchDown(int iTouch, float positionX, float positionY)
 {
-	// ...
+	SH_UNUSED(iTouch);
+	SH_UNUSED(positionX);
+	SH_UNUSED(positionY);
 }
 
 /**
@@ -101,7 +116,9 @@ void PluginST::OnTouchDown(int iTouch, float positionX, float positionY)
 */
 void PluginST::OnTouchUp(int iTouch, float positionX, float positionY)
 {
-	// ...
+	SH_UNUSED(iTouch);
+	SH_UNUSED(positionX);
+	SH_UNUSED(positionY);
 }
 
 /**
@@ -109,7 +126,9 @@ void PluginST::OnTouchUp(int iTouch, float positionX, float positionY)
 */
 void PluginST::OnTouchMove(int iTouch, float positionX, float positionY)
 {
-	// ...
+	SH_UNUSED(iTouch);
+	SH_UNUSED(positionX);
+	SH_UNUSED(positionY);
 }
 
 /**

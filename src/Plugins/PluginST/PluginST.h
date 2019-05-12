@@ -36,7 +36,10 @@ private:
 	//
 	// HUD
 	HUD						m_hud;
-public:
 
+	//
+	// Misc
+	bool					m_bPaused;
+public:
 	bool					m_bRequestToStop;
 };
