@@ -3,15 +3,7 @@
         <style pseudo_state="default" target="container" background_color="#FFFFFF00"/>
         <style pseudo_state="default" id="container_hud" offset_x="-268.000000" offset_x_unit="auto" offset_y="-30.000000" offset_y_unit="auto"/>
         <style pseudo_state="default" id="container_hud_top" offset_x="-1353.024170" offset_x_unit="auto" offset_y="-897.706543" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="container_heart" offset_x="-2006.208252" offset_x_unit="auto" offset_y="-527.444458" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_001" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_002" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_003" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_004" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_005" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_006" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_007" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
-        <style pseudo_state="default" id="import_heart_008" offset_x="164.166656" offset_x_unit="auto" offset_y="70.138901" offset_y_unit="auto"/>
+        <style pseudo_state="default" id="container_hearts" offset_x="-2006.208252" offset_x_unit="auto" offset_y="-527.444458" offset_y_unit="auto"/>
         <style pseudo_state="default" id="list_notification_area" offset_x="-1214.784180" offset_x_unit="auto" offset_y="-342.313416" offset_y_unit="auto" background_color="#BCBCBC50"/>
         <style pseudo_state="default" id="container_mini_map" offset_x="-1311.552124" offset_x_unit="auto" offset_y="-312.453552" offset_y_unit="auto" background_color="#5AFF89FF"/>
         <style pseudo_state="default" id="container_hud_middle" offset_x="-1346.112183" offset_x_unit="auto" offset_y="-237.803955" offset_y_unit="auto"/>
@@ -22,16 +14,7 @@
     <root>
         <container id="container_hud" pseudo_state="default" ignore_events="0" layout_type="layout_vertical_box" layout_is_filled="1" layout_weights="1:3.000000|0:2.000000" layout_default_weight="1.000000" fill_width="1" fill_height="1" keep_background_ratio="1">
             <container id="container_hud_top" pseudo_state="default" ignore_events="0" layout_type="layout_horizontal_box" layout_is_filled="1" layout_default_weight="1.000000" fill_width="0" fill_height="0" keep_background_ratio="1">
-                <container id="container_heart" pseudo_state="default" ignore_events="0" layout_type="layout_horizontal_flow" fill_width="0" fill_height="0" keep_background_ratio="1">
-                    <import id="import_heart_001" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                    <import id="import_heart_002" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                    <import id="import_heart_003" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                    <import id="import_heart_004" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                    <import id="import_heart_005" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                    <import id="import_heart_006" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                    <import id="import_heart_007" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                    <import id="import_heart_008" pseudo_state="default" ignore_events="0" imported_gui_id="image_heart"/>
-                </container>
+                <container id="container_hearts" pseudo_state="default" ignore_events="0" layout_type="layout_horizontal_flow" fill_width="0" fill_height="0" keep_background_ratio="1"/>
                 <list id="list_notification_area" pseudo_state="default" ignore_events="0" layout_type="layout_vertical_box" layout_is_filled="0" layout_default_weight="100.000000" scrollbar_h_thickness="0.000000" scrollbar_h_thickness_unit="dip" scrollbar_v_thickness="0.000000" scrollbar_v_thickness_unit="dip" scrollbar_h_background_color="#00000000" scrollbar_v_background_color="#00000000" scrollbar_h_cursor_color="#000000FF" scrollbar_v_cursor_color="#000000FF" scrollbar_h_embedding="padding" scrollbar_v_embedding="padding" scrollbar_h_position="bottom" scrollbar_v_position="right" is_snap="0" inter_child_margin="0.000000" inter_child_margin_unit="auto"/>
                 <container id="container_mini_map" pseudo_state="default" ignore_events="0" layout_type="default_layout" fill_width="1" fill_height="1" keep_background_ratio="1"/>
             </container>

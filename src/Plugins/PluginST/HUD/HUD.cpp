@@ -1,14 +1,19 @@
 #include "HUD.h"
 
-const CShString		g_strGUIHUD			("hud");
-const CShIdentifier	g_idGUIHUD			(g_strGUIHUD);
-const CShIdentifier	g_idGUIContainerHUD	("container_hud");
+const CShString		g_strGUIHUD				("hud");
+const CShIdentifier	g_idGUIHUD				(g_strGUIHUD);
+const CShIdentifier	g_idGUIContainerHUD		("container_hud");
+const CShIdentifier	g_idGUIContainerHearts	("container_hearts");
+
+const CShString		g_strGUIImageHeart		("image_heart");
+const CShIdentifier	g_idGUIImageHeart		(g_strGUIImageHeart);
 
 /**
 * @brief Constructor
 */
 /*explicit*/ HUD::HUD(void)
 : m_pControlBranchHUD(shNULL)
+, m_pControlBranchHearts(shNULL)
 {
 	// ...
 }
@@ -33,10 +38,20 @@ void HUD::Initialize(void)
 
 	//
 	// Retrieve Controls
-	m_pControlBranchHUD = static_cast<ShGUIControlBranch*>(ShGUIControl::GetElementById(g_idGUIContainerHUD, ShGUI::GetRootControl()));
+	m_pControlBranchHUD = static_cast<ShGUIControlBranch*>(ShGUIControl::GetElementById(g_idGUIContainerHUD.Append(g_strGUIHUD.Get()), ShGUI::GetRootControl()));
+	SH_ASSERT(shNULL != m_pControlBranchHUD)
+
+	m_pControlBranchHearts = static_cast<ShGUIControlBranch*>(ShGUIControl::GetElementById(g_idGUIContainerHearts.Append(g_strGUIHUD.Get()), ShGUI::GetRootControl()));
+	SH_ASSERT(shNULL != m_pControlBranchHearts)
 
 	//
 	// Set-up
+	const int iHeartCount = 5; // TODO : set relative to difficulty - depends on Plugin args
+	for (int iHeartIndex = 0; iHeartIndex < iHeartCount; ++iHeartIndex)
+	{
+		bool bLoaded = ShGUI::LoadGUIAndSSS(g_idGUIImageHeart, m_pControlBranchHearts, CShString(g_strGUIImageHeart + CShString::FromInt(iHeartIndex)));
+		SH_ASSERT(bLoaded)
+	}
 }
 
 /**

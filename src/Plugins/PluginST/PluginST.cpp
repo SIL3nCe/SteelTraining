@@ -2,6 +2,8 @@
 
 const CShIdentifier g_idPlugin	("PluginSteelTraining");
 
+#define USE_HUD 0
+
 /**
 * @brief Constructor
 */
@@ -37,11 +39,11 @@ PluginST::PluginST(void)
 	// World
 	m_world.Initialize(levelIdentifier);
 
-#if 0
+#if USE_HUD
 	//
 	// HUD
 	m_hud.Initialize();
-#endif // 0
+#endif // USE_HUD
 }
 
 /**
@@ -55,11 +57,11 @@ PluginST::PluginST(void)
 	// World
 	m_world.Release();
 
-#if 0
+#if USE_HUD
 	//
 	// HUD
 	m_hud.Release();
-#endif // 0
+#endif // USE_HUD
 }
 
 /**

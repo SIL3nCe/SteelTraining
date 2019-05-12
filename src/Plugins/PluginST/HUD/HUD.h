@@ -25,4 +25,5 @@ private:
 	//
 	// Root container
 	ShGUIControlBranch *	m_pControlBranchHUD;
+	ShGUIControlBranch *	m_pControlBranchHearts;
 };
