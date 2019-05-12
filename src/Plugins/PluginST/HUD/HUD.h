@@ -12,13 +12,17 @@ public:
 
 	//
 	// Initialize/Release
-	virtual	void			Initialize			(void);
-	virtual	void			Release				(void);
+	void					Initialize			(void);
+	void					Release				(void);
+
+	//
+	// Show/Hide
+	void					Toggle				(void);
+	void					Show				(void);
+	void					Hide				(void);
 
 private:
 	//
 	// Root container
 	ShGUIControlBranch *	m_pControlBranchHUD;
-public:
-	bool					m_bRequestToStop;
 };

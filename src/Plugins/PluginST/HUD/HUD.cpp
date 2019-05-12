@@ -47,3 +47,28 @@ void HUD::Release(void)
 	ShGUIControl::Destroy(m_pControlBranchHUD);
 	m_pControlBranchHUD = shNULL;
 }
+
+/**
+* @brief Toggle
+*/
+void HUD::Toggle(void)
+{
+	if (ShGUIControl::IsShown(m_pControlBranchHUD))	{	ShGUIControl::Hide(m_pControlBranchHUD);	}
+	else											{	ShGUIControl::Show(m_pControlBranchHUD);	}
+}
+
+/**
+* @brief Show
+*/
+void HUD::Show(void)
+{
+	ShGUIControl::Show(m_pControlBranchHUD);
+}
+
+/**
+* @brief Hide
+*/
+void HUD::Hide(void)
+{
+	ShGUIControl::Hide(m_pControlBranchHUD);
+}
