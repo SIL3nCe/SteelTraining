@@ -5,7 +5,7 @@
 
 const CShString		g_strGUIPauseMenu			("ingame_pause");
 const CShIdentifier	g_idGUIPauseMenu			(g_strGUIPauseMenu);
-const CShIdentifier	g_idGUIContainerPauseMenu	("container_ingame_pause_background");
+const CShIdentifier	g_idGUIContainerPauseMenu	("container_ingame_pause_root");
 
 /**
 * @brief Constructor
