@@ -31,6 +31,10 @@ source_group("GameState\\Game" FILES ${SOURCES_GameStateGame})
 set(SOURCES_Game Game.cpp Game.h) 
 source_group("Game" FILES ${SOURCES_Game})
 
+# PauseMenu files
+set(SOURCES_PauseMenu PauseMenu.cpp PauseMenu.h) 
+source_group("PauseMenu" FILES ${SOURCES_PauseMenu})
+
 # Put everything together before adding platform-specific files
 set(SOURCES
 ${SOURCES_Settings}
@@ -40,6 +44,7 @@ ${SOURCES_GameStateTitleMenu}
 ${SOURCES_GameStateTitleMenuSettings}
 ${SOURCES_GameStateGame}
 ${SOURCES_Game}
+${SOURCES_PauseMenu}
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")

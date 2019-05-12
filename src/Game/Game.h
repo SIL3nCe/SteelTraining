@@ -6,6 +6,8 @@
 #include <PluginST.h>
 #include <PluginMapGeneratorFactory.h>
 
+#include "PauseMenu.h"
+
 class Game
 {
 public:
@@ -25,6 +27,13 @@ public:
 	//
 	// Getters/Setters
 	bool			IsRequestedExit		(void) const;
+	bool			IsPaused			(void) const;
+
+	//
+	// Misc
+	void			TogglePause			(void);
+	void			Pause				(void);
+	void			UnPause				(void);
 
 private:
 	//
@@ -42,4 +51,11 @@ private:
 	static Game *			s_pInstance;
 	static CShIdentifier	s_idLevelTest;
 
+	//
+	// User
+	ShUser *				m_pUser;
+
+	//
+	// PauseMenu
+	PauseMenu				m_pauseMenu;
 };
