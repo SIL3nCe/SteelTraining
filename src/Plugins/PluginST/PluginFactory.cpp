@@ -1,7 +1,5 @@
 #include "PluginFactory.h"
 
-#include "PluginST.h"
-
 static PluginST * g_pInstanceST = shNULL;
 
 extern "C"

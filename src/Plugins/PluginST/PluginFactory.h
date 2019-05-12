@@ -10,7 +10,7 @@
 #	define PLUGIN_FACTORY_EXPORT
 #endif
 
-class PluginST;
+#include "PluginST.h"
 
 extern "C"
 {
