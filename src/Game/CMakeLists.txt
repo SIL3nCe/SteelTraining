@@ -72,4 +72,4 @@ endif(ENABLE_SKIP_TITLE_MENU)
 
 target_link_libraries(Game PRIVATE ${SHSDK_LIBRARIES})
 target_link_libraries(Game PRIVATE PluginST)
-target_include_directories(Game PRIVATE "${SHSDK_INCLUDE_DIRS}" "$<TARGET_PROPERTY:PluginST,INCLUDE_DIRECTORIES>")
+target_include_directories(Game PRIVATE "${SHSDK_INCLUDE_DIRS}" "$<TARGET_PROPERTY:PluginST,INTERFACE_INCLUDE_DIRECTORIES>")

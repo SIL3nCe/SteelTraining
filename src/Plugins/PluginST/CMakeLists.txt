@@ -73,12 +73,12 @@ endif (NOT MSVC)
 set_property(TARGET PluginST APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
 
 target_link_libraries(PluginST PRIVATE ${SHSDK_LIBRARIES})
-target_link_libraries(PluginST PRIVATE PluginMapGenerator)
+target_link_libraries(PluginST PUBLIC PluginMapGenerator)
 target_link_libraries(PluginST INTERFACE Box2D)
 
 target_include_directories(PluginST PUBLIC "${SHSDK_INCLUDE_DIRS}")
 target_include_directories(PluginST INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
-target_include_directories(PluginST PRIVATE "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>") 
+target_include_directories(PluginST PUBLIC "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>" "$<TARGET_PROPERTY:PluginMapGenerator,INCLUDE_DIRECTORIES>") 
 
 # Compile to use it in the Shine Editor
 add_library(PluginST_Editor SHARED ${SOURCES_main} ${SOURCES})
@@ -94,6 +94,6 @@ target_link_libraries(PluginST_Editor PRIVATE ${SHSDK_EDITOR_LIBRARIES})
 target_link_libraries(PluginST_Editor PRIVATE PluginMapGenerator_Editor)
 target_link_libraries(PluginST_Editor PRIVATE Box2D_shared)
 
-target_include_directories(PluginST_Editor PUBLIC "${SHSDK_INCLUDE_DIRS}")
+target_include_directories(PluginST_Editor PRIVATE "${SHSDK_INCLUDE_DIRS}")
 target_include_directories(PluginST_Editor INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
-target_include_directories(PluginST_Editor PUBLIC "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>") # Public for Extension
+target_include_directories(PluginST_Editor PUBLIC "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>" "$<TARGET_PROPERTY:PluginMapGenerator_Editor,INCLUDE_DIRECTORIES>") # Public for Extension
