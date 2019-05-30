@@ -3,9 +3,9 @@
 
 <include name="lib/platform.glfxh" />
 
-<texture name="InputTextureColor" />
-<sampler name="InputTextureColorSampler" type="sampler2D">
-	<texture>InputTextureColor</texture>
+<texture name="SourceTexture" />
+<sampler name="SourceTextureSampler" type="sampler2D">
+	<texture>SourceTexture</texture>
 	<min>LINEAR</min><mag>LINEAR</mag><mip>NONE</mip>
 	<wrapu>CLAMP</wrapu><wrapv>CLAMP</wrapv>
 </sampler>
@@ -22,6 +22,8 @@
 
 <code><![CDATA[
 
+uniform highp float fMultiplier;
+
 VS_OUTPUT BlitVS(VS_INPUT vIn)
 {
 	VS_OUTPUT vOut;
@@ -31,19 +33,48 @@ VS_OUTPUT BlitVS(VS_INPUT vIn)
 	return(vOut);
 }
 
-//-----------------------------------------------------------------------------
-// 
-//-----------------------------------------------------------------------------
-float4 BlitPS( in VS_OUTPUT pIn)
+float4 ps_4_channel( in VS_OUTPUT pIn)
 {
-	return tex2D(InputTextureColorSampler, pIn.vTexcoord);
+	float4 texel_color = tex2D(SourceTextureSampler, pIn.vTexcoord);
+	return float4(texel_color.r * fMultiplier, texel_color.g * fMultiplier, texel_color.b * fMultiplier, texel_color.a);
 }
+
+float4 ps_3_channel( in VS_OUTPUT pIn)
+{
+	float3 texel_color = tex2D(SourceTextureSampler, pIn.vTexcoord).rgb;
+	return float4(texel_color.r * fMultiplier, texel_color.g * fMultiplier, texel_color.b * fMultiplier, 1.0);
+}
+
+float4 ps_2_channel( in VS_OUTPUT pIn)
+{
+	float2 texel_color = tex2D(SourceTextureSampler, pIn.vTexcoord).rg;
+	return float4(texel_color.r * fMultiplier, texel_color.g * fMultiplier, 0.0, 1.0);
+}
+
+float4 ps_1_channel( in VS_OUTPUT pIn)
+{
+	float texel_color = tex2D(SourceTextureSampler, pIn.vTexcoord).r * fMultiplier;
+	return float4(texel_color, texel_color, texel_color, 1.0);
+}
+
 
 ]]></code>
 
-<tech name="Blit">
+<tech name="Blit4Channel">
 	<vs name="BlitVS" input="VS_INPUT" output="VS_OUTPUT" />
-	<ps name="BlitPS" />
+	<ps name="ps_4_channel" />
+</tech>
+<tech name="Blit3Channel">
+	<vs name="BlitVS" input="VS_INPUT" output="VS_OUTPUT" />
+	<ps name="ps_3_channel" />
+</tech>
+<tech name="Blit2Channel">
+	<vs name="BlitVS" input="VS_INPUT" output="VS_OUTPUT" />
+	<ps name="ps_2_channel" />
+</tech>
+<tech name="Blit1Channel">
+	<vs name="BlitVS" input="VS_INPUT" output="VS_OUTPUT" />
+	<ps name="ps_1_channel" />
 </tech>
 
 </glfx>
