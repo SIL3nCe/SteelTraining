@@ -55,7 +55,7 @@ void BaseCharacter::Release(void)
 	m_pBody->GetWorld()->DestroyBody(m_pBody);
 	m_pBody = shNULL;
 
-	m_aSpriteList.Empty();
+	m_aSpriteList.Deallocate();
 
 	ShEntity2::Destroy(m_pEntity);
 }
