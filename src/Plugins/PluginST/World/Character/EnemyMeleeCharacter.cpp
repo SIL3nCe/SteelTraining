@@ -25,7 +25,15 @@ void EnemyMeleeCharacter::Initialize(const CShIdentifier & idCharacter, const CS
 {
 	EnemyCharacter::Initialize(pB2World, pSTWorld, vPosition);
 
-	m_pEntity = ShEntity2::Create(levelIdentifier, idCharacter, GID(layer_default), CShIdentifier("character"), CShIdentifier("chicken_idle_left_0"), CShVector3(vPosition, 0.f), CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
+	//
+	// Sprites
+	//TODO : update to create every walk sprites like PlayerCharacter (waiting for sprites)
+	m_aSpriteList.SetCount(animation_state_max);
+
+	ShSprite * pSprite = ShSprite::Find(CShIdentifier("character"), CShIdentifier("chicken_idle_left_0"));
+	m_aSpriteList[0].Add(pSprite);
+	
+	m_pEntity = ShEntity2::Create(levelIdentifier, idCharacter, GID(layer_default), pSprite, CShVector3(vPosition, 0.0f), CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
 }
 
 /**

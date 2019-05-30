@@ -1,6 +1,6 @@
 #pragma once
 
-class ShUser;
+struct ShUser;
 
 extern "C"
 {

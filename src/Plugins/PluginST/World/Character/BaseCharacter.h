@@ -11,6 +11,18 @@ struct ShEntity2;
 class BaseCharacter : public Object
 {
 public:
+	enum EAnimationState
+	{
+		animation_idle,
+		animation_walk_top,
+		animation_walk_bottom,
+		animation_walk_right,
+		animation_walk_left,
+		//attack_xxx, etc
+
+		animation_state_max
+	};
+
 	explicit			 BaseCharacter		(void);
 	virtual				~BaseCharacter		(void);
 
@@ -25,20 +37,28 @@ public:
 	const CShVector3 &	GetEntityLocation	(void) const;
 
 	bool				TakeDamage			(int iDamages);
+
+	void				SetState			(EAnimationState eState);
+
 protected:
 	virtual void		Die					(void) = 0;
-private:
 
-public:
 protected:
 	b2Body *			m_pBody;
-
+	
 	ShEntity2 *			m_pEntity;
+	CShArray<CShArray<ShSprite *>> m_aSpriteList;
 
 	World *				m_pWorld;
 
 	int					m_iLifePoints;
 	int					m_iMaxLifePoints;
 	int					m_iInvulnerabilityTime;
-private:
+
+	int					m_animCpt;
+	EAnimationState		m_eCurrentState;
+
+	float				m_fAnimationDt;
+	float				m_fAnimationSpeed;
+
 };

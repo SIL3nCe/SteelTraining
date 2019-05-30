@@ -12,6 +12,10 @@ BaseCharacter::BaseCharacter(void)
 , m_iLifePoints(100)
 , m_iMaxLifePoints(100)
 , m_iInvulnerabilityTime(0)
+, m_animCpt(0)
+, m_eCurrentState(animation_idle)
+, m_fAnimationDt(0.0f)
+, m_fAnimationSpeed(0.5f)
 {
 	// ...
 }
@@ -50,6 +54,10 @@ void BaseCharacter::Release(void)
 {
 	m_pBody->GetWorld()->DestroyBody(m_pBody);
 	m_pBody = shNULL;
+
+	m_aSpriteList.Empty();
+
+	ShEntity2::Destroy(m_pEntity);
 }
 
 /**
@@ -68,11 +76,19 @@ void BaseCharacter::Update(float dt)
  */
 void BaseCharacter::UpdateAnimations(float dt)
 {
-	SH_UNUSED(dt);
+	m_fAnimationDt += dt;
+
 	b2Vec2 bodyPos = m_pBody->GetPosition();
 	ShEntity2::SetRelativePosition2(m_pEntity, B2ToShine(bodyPos));
-	ShEntity2::SetColor(m_pEntity, m_iInvulnerabilityTime <=0 ? CShRGBAf_WHITE : CShRGBAf(1.f, 1.f,1.f, 1.f - shMax(m_iInvulnerabilityTime/1000.f, .2f)));
 
+	if (m_fAnimationSpeed < m_fAnimationDt)
+	{
+		m_animCpt = (m_animCpt + 1) % m_aSpriteList[m_eCurrentState].GetCount();
+		ShEntity2::SetSprite(m_pEntity, m_aSpriteList[m_eCurrentState][m_animCpt]);
+		m_fAnimationDt = 0.0f;
+	}
+
+	ShEntity2::SetColor(m_pEntity, m_iInvulnerabilityTime <= 0 ? CShRGBAf_WHITE : CShRGBAf(1.0f, 1.0f, 1.0f, 1.0f - shMax(m_iInvulnerabilityTime / 1000.0f, 0.2f)));
 }
 
 /**
@@ -102,6 +118,27 @@ bool BaseCharacter::TakeDamage(int iDamages)
 		return true;
 	}
 	return false;
+}
+
+void BaseCharacter::SetState(EAnimationState eState)
+{
+	if (eState == m_eCurrentState)
+		return;
+
+	switch (m_eCurrentState)
+	{ // Leaving state
+
+	}
+
+	m_eCurrentState = eState;
+	m_animCpt = 0;
+	m_fAnimationDt = 0.0f;
+	ShEntity2::SetSprite(m_pEntity, m_aSpriteList[m_eCurrentState][m_animCpt]);
+
+	switch (m_eCurrentState)
+	{ // Entering state
+
+	}
 }
 
 /**
