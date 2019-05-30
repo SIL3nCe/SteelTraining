@@ -8,7 +8,7 @@ ObjectWall::ObjectWall(void)
 : Object()
 , m_pWorld(shNULL)
 , m_pBody(shNULL)
-, m_aEntityList()
+, m_pEntity(shNULL)
 {
 	// ...
 }
@@ -25,9 +25,27 @@ ObjectWall::~ObjectWall(void)
  * @brief Initialize
  * @param pUser
  */
-void ObjectWall::Initialize(ShEntity2 * pEntity)
+void ObjectWall::Initialize(ShEntity2 * pEntity, b2World * pB2World)
 {
-	m_aEntityList.Add(pEntity);
+	m_pEntity = pEntity;
+
+	const b2Vec2 & vBodyLoc = ShineToB2(ShEntity2::GetPosition2(pEntity));
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(vBodyLoc.x, vBodyLoc.y);
+	bodyDef.angle = 0; // Handle ?
+
+	m_pBody = pB2World->CreateBody(&bodyDef);
+	SH_ASSERT(shNULL != m_pBody)
+	
+	b2PolygonShape boxShape;
+	boxShape.SetAsBox(WALL_WIDTH * 0.5f * SH_TO_B2, WALL_HEIGHT * 0.5f * SH_TO_B2);
+
+	b2FixtureDef boxFixtureDef;
+	boxFixtureDef.shape = &boxShape;
+	boxFixtureDef.density = 1;
+	m_pBody->CreateFixture(&boxFixtureDef);
 }
 
 /**
@@ -36,55 +54,6 @@ void ObjectWall::Initialize(ShEntity2 * pEntity)
 void ObjectWall::Release(void)
 {
 	m_pBody = shNULL;
-}
-
-/**
- * @brief AddWall
- * Check if pEntity is a neighbor of its entities, keep it when it is.
- */
-bool ObjectWall::AddWall(ShEntity2 * pEntity)
-{
-	int nEntityCount = m_aEntityList.GetCount();
-	for (int i = 0; i < nEntityCount; ++i)
-	{
-		const CShVector2 & vWallLocation = ShEntity2::GetPosition2(m_aEntityList[i]);
-		const CShVector2 & vNewWallLocation = ShEntity2::GetPosition2(pEntity);
-
-		if (WALL_WIDTH >= shAbsf(vWallLocation.m_x - vNewWallLocation.m_x)
-			|| WALL_HEIGHT >= shAbsf(vWallLocation.m_y - vNewWallLocation.m_y))
-		{
-			m_aEntityList.Add(pEntity);
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/**
- * @brief GeneratePhysic
- */
-void ObjectWall::GeneratePhysic(b2World * pB2World)
-{
-	return; //Wip
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_staticBody;
-	bodyDef.position.Set(0.0f, 0.0f);
-	bodyDef.angle = 0;
-
-	m_pBody = pB2World->CreateBody(&bodyDef);
-	SH_ASSERT(shNULL != m_pBody)
-
-	b2Vec2 aPointList[64];
-
-	int nEntityCount = m_aEntityList.GetCount();
-	for (int i = 0; i < nEntityCount; ++i)
-	{
-		// aPointList[id] = ShineToB2(vPoint);
-	}
-
-	b2PolygonShape b2PolyShape;
-	b2PolyShape.Set(aPointList, 4);
 }
 
 /**

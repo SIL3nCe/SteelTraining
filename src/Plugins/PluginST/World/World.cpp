@@ -245,36 +245,14 @@ void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 							ShEntity2 * pWallEntity = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
 							SH_ASSERT(shNULL != pWallEntity)
 
-							// Generate wall object
-							bool bUsed = false;
-							int nWallCount = m_aWallList.GetCount();
-							for (int i = 0; i < nWallCount; ++i)
-							{
-								if (m_aWallList[i].AddWall(pWallEntity))
-								{
-									bUsed = true;
-									break;
-								}
-							}
-
-							if (!bUsed)
-							{ // Create a new wall object
-								ObjectWall wall;
-								wall.Initialize(pWallEntity);
-								m_aWallList.Add(wall);
-							}
+							ObjectWall wall;
+							wall.Initialize(pWallEntity, m_pbWorld);
+							m_aWallList.Add(wall);
 						}
 						break;
 					}
 				}
 			}
-		}
-
-		//Generate object physic
-		int nWallCount = m_aWallList.GetCount();
-		for (int i = 0; i < nWallCount; ++i)
-		{
-			m_aWallList[i].GeneratePhysic(m_pbWorld);
 		}
 	}
 }

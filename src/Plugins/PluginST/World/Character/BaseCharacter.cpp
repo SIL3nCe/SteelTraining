@@ -34,7 +34,7 @@ void BaseCharacter::Initialize(b2World * pB2World, World * pSTWorld)
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(200 * SH_TO_B2, 200 * SH_TO_B2);
+	bodyDef.position.Set(200 * SH_TO_B2, -200 * SH_TO_B2);
 	bodyDef.angle = 0;
 
 	m_pBody = pB2World->CreateBody(&bodyDef);

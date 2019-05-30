@@ -35,11 +35,11 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 	m_pEntity = ShEntity2::Find(levelIdentifier, CShIdentifier("sprite_player_test"));
 	SH_ASSERT(shNULL != m_pEntity)
 
-	b2PolygonShape boxShape;
-	boxShape.SetAsBox(20.0f * SH_TO_B2, 20.0f * SH_TO_B2);
+	b2CircleShape circleShape;
+	circleShape.m_radius = 20.0f * SH_TO_B2;
 
 	b2FixtureDef boxFixtureDef;
-	boxFixtureDef.shape = &boxShape;
+	boxFixtureDef.shape = &circleShape;
 	boxFixtureDef.density = 1;
 	m_pBody->CreateFixture(&boxFixtureDef);
 }
