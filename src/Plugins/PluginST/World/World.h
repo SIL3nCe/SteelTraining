@@ -65,6 +65,7 @@ private:
 	CShIdentifier				m_levelIdentifier;
 
 	b2World *					m_pbWorld;
+	float						m_fFixedTimestepAccumulator;
 
 	CShArray<EnemyCharacter*>	m_apEnemyList;
 	CShArray<ObjectWall>		m_aWallList;

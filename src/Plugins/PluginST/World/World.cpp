@@ -11,6 +11,7 @@
 World::World(void)
 : m_levelIdentifier()
 , m_pbWorld(shNULL)
+, m_fFixedTimestepAccumulator(0.0f)
 , m_apEnemyList()
 , m_inputManager()
 , m_playerCharacter()
@@ -109,12 +110,28 @@ void World::Update(float dt)
 		m_apEnemyList[iEnemyIndex]->Update(dt);
 	}
 
-	float32 timeStep = 1 / 60.0f;   // TODO timeStep should match the number of times per second it will be called
+	// Physic
+	const int MAX_STEPS = 5;
+	const float FIXED_TIMESTEP = 1 / 60.0f;
+ 
+	m_fFixedTimestepAccumulator += dt;
 
-	//velocityIterations: how strongly to correct velocity
-	//positionIterations: how strongly to correct position
-	// ^ Making these values higher will give you a more correct simulation, at the cost of some performance
-	m_pbWorld->Step(timeStep, 8, 3);
+	const int nSteps = static_cast<int>(floorf(m_fFixedTimestepAccumulator / FIXED_TIMESTEP));
+	if (nSteps > 0)
+	{
+		m_fFixedTimestepAccumulator -= nSteps * FIXED_TIMESTEP;
+	}
+ 
+	const int nStepsClamped = shMin(nSteps, MAX_STEPS);
+
+	for (int i = 0; i < nStepsClamped; ++i)
+	{
+		//velocityIterations: how strongly to correct velocity
+		//positionIterations: how strongly to correct position
+		// ^ Making these values higher will give you a more correct simulation, at the cost of some performance
+		m_pbWorld->Step(FIXED_TIMESTEP, 8, 3);
+	}
+	// Physic -
 
 	m_playerCharacter.UpdateAnimations(dt);
 
