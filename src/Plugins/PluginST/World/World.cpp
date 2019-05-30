@@ -1,5 +1,5 @@
 #include "World.h"
-#include "Character/EnemyMeleeCharacter.h"
+#include "Character/TeleportingEnemyMeleeCharacter.h"
 
 #if SH_PC
 #	include <time.h>
@@ -50,16 +50,16 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 
 	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, this, &m_inputManager);
 
-	EnemyMeleeCharacter * pEnemy = new EnemyMeleeCharacter();
+	TeleportingEnemyMeleeCharacter * pEnemy = new TeleportingEnemyMeleeCharacter();
 	pEnemy->Initialize(CShIdentifier("enemy1"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, -300.f));
 	m_apEnemyList.Add(pEnemy);
-	pEnemy = new EnemyMeleeCharacter();
+	pEnemy = new TeleportingEnemyMeleeCharacter();
 	pEnemy->Initialize(CShIdentifier("enemy2"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, -1300.f));
 	m_apEnemyList.Add(pEnemy);
-	pEnemy = new EnemyMeleeCharacter();
+	pEnemy = new TeleportingEnemyMeleeCharacter();
 	pEnemy->Initialize(CShIdentifier("enemy3"), m_levelIdentifier, m_pbWorld, this, CShVector2(1300.f, -300.f));
 	m_apEnemyList.Add(pEnemy);
-	pEnemy = new EnemyMeleeCharacter();
+	pEnemy = new TeleportingEnemyMeleeCharacter();
 	pEnemy->Initialize(CShIdentifier("enemy4"), m_levelIdentifier, m_pbWorld, this, CShVector2(1300.f, -1300.f));
 	m_apEnemyList.Add(pEnemy);
 		

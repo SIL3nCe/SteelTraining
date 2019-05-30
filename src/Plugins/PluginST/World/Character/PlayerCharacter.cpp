@@ -151,6 +151,6 @@ Object::EType PlayerCharacter::GetObjectType(void) const
  */
 void PlayerCharacter::Die(void)
 {
-	m_pBody->SetTransform(b2Vec2(0.f, 0.f), 0.f);
+	m_pBody->SetTransform(ShineToB2(CShVector2(100.f, -100.f)), 0.f);
 	m_iLifePoints = m_iMaxLifePoints;
 }

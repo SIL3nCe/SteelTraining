@@ -46,7 +46,8 @@ source_group("World\\Character" FILES ${SOURCES_PlayerCharacter})
 
 # Character files
 set(SOURCES_EnemyCharacter	World/Character/EnemyCharacter.cpp World/Character/EnemyCharacter.h
-							World/Character/EnemyMeleeCharacter.cpp World/Character/EnemyMeleeCharacter.h)
+							World/Character/EnemyMeleeCharacter.cpp World/Character/EnemyMeleeCharacter.h
+							World/Character/TeleportingEnemyMeleeCharacter.cpp World/Character/TeleportingEnemyMeleeCharacter.h)
 source_group("World\\Character" FILES ${SOURCES_EnemyCharacter})
 
 # Put everything together before adding platform-specific files
