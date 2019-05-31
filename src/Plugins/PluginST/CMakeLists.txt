@@ -72,7 +72,7 @@ set_property(TARGET PluginST APPEND PROPERTY COMPILE_FLAGS "${ShSDK_COMPILE_FLAG
 set_property(TARGET PluginST APPEND PROPERTY LINK_FLAGS "${ShSDK_COMPILE_FLAGS}")
 set_property(TARGET PluginST APPEND PROPERTY SHARED_LINKER_FLAGS "${ShSDK_SHARED_LINKER_FLAGS}")
 
-target_link_libraries(PluginST PRIVATE ${SHSDK_LIBRARIES})
+target_link_libraries(PluginST PRIVATE ${ShSDK_LIBRARIES})
 target_link_libraries(PluginST PUBLIC PluginMapGenerator)
 target_link_libraries(PluginST INTERFACE Box2D)
 
@@ -85,6 +85,7 @@ add_library(PluginST_Editor SHARED ${SOURCES_main} ${SOURCES})
 set_property(TARGET PluginST_Editor PROPERTY FOLDER "Editor")
 set_property(TARGET PluginST_Editor APPEND PROPERTY COMPILE_DEFINITIONS "${ShSDKEditor_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginST_Editor APPEND PROPERTY COMPILE_FLAGS "${ShSDKEditor_COMPILE_FLAGS}")
+set_property(TARGET PluginST_Editor APPEND PROPERTY LINK_FLAGS "${ShSDKEditor_LINK_FLAGS}")
 if (NOT MSVC)
 	set_target_properties(PluginMapGenerator_Editor PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif (NOT MSVC)

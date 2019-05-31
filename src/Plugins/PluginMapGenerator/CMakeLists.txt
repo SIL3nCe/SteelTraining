@@ -42,8 +42,6 @@ ${SOURCES_MapGenerator}
 # Compile to use it on Runtime
 add_library(PluginMapGenerator STATIC ${SOURCES})
 set_property(TARGET PluginMapGenerator PROPERTY FOLDER "Runtime")
-get_target_property(prop Runtime::ShSDK INTERFACE_COMPILE_DEFINITIONS)
-message("prop = ${prop}")
 set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS "${ShSDK_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_FLAGS "${ShSDK_COMPILE_FLAGS}")
 
@@ -58,6 +56,7 @@ add_library(PluginMapGenerator_Editor STATIC ${SOURCES})
 set_property(TARGET PluginMapGenerator_Editor PROPERTY FOLDER "Editor")
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "${ShSDKEditor_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "${ShSDKEditor_COMPILE_FLAGS}")
+set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY LINK_FLAGS "${ShSDKEditor_LINK_FLAGS}")
 if (NOT MSVC)
 	set_target_properties(PluginMapGenerator_Editor PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif (NOT MSVC)
