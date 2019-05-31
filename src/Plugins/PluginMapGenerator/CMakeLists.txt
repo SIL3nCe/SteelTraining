@@ -42,29 +42,27 @@ ${SOURCES_MapGenerator}
 # Compile to use it on Runtime
 add_library(PluginMapGenerator STATIC ${SOURCES})
 set_property(TARGET PluginMapGenerator PROPERTY FOLDER "Runtime")
-set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
-set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
-if (NOT MSVC)
-	set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_OPTIONS -fno-exceptions -fno-rtti)
-endif (NOT MSVC)
+get_target_property(prop Runtime::ShSDK INTERFACE_COMPILE_DEFINITIONS)
+message("prop = ${prop}")
+set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS "${ShSDK_COMPILE_DEFINITIONS}")
+set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_FLAGS "${ShSDK_COMPILE_FLAGS}")
 
-target_link_libraries(PluginMapGenerator PRIVATE ${SHSDK_LIBRARIES})
+target_link_libraries(PluginMapGenerator PRIVATE ${ShSDKEditor_LIBRARIES})
 
-target_include_directories(PluginMapGenerator PUBLIC "${SHSDK_INCLUDE_DIRS}")
+target_include_directories(PluginMapGenerator PUBLIC "${ShSDK_INCLUDE_DIRS}")
 target_include_directories(PluginMapGenerator INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(PluginMapGenerator PRIVATE "$<TARGET_PROPERTY:Box2D,INCLUDE_DIRECTORIES>")
 
 # Compile to use it in the Shine Editor
 add_library(PluginMapGenerator_Editor STATIC ${SOURCES})
 set_property(TARGET PluginMapGenerator_Editor PROPERTY FOLDER "Editor")
-set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "${SHSDK_COMPILE_DEFINITIONS}")
-set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "${SHSDK_COMPILE_FLAGS}")
+set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "${ShSDKEditor_COMPILE_DEFINITIONS}")
+set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_FLAGS "${ShSDKEditor_COMPILE_FLAGS}")
 if (NOT MSVC)
 	set_target_properties(PluginMapGenerator_Editor PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif (NOT MSVC)
-set_property(TARGET PluginMapGenerator_Editor APPEND PROPERTY COMPILE_DEFINITIONS "SH_EDITOR=1" "_INTERNAL_DLL") # FIXME
 
-target_link_libraries(PluginMapGenerator_Editor PRIVATE ${SHSDK_EDITOR_LIBRARIES})
+target_link_libraries(PluginMapGenerator_Editor PRIVATE ${ShSDKEditor_LIBRARIES})
 
-target_include_directories(PluginMapGenerator_Editor PUBLIC "${SHSDK_INCLUDE_DIRS}")
+target_include_directories(PluginMapGenerator_Editor PUBLIC "${ShSDKEditor_INCLUDE_DIRS}")
 target_include_directories(PluginMapGenerator_Editor INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
