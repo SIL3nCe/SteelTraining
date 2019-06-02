@@ -45,7 +45,7 @@ set_property(TARGET PluginMapGenerator PROPERTY FOLDER "Runtime")
 set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_DEFINITIONS "${ShSDK_COMPILE_DEFINITIONS}")
 set_property(TARGET PluginMapGenerator APPEND PROPERTY COMPILE_FLAGS "${ShSDK_COMPILE_FLAGS}")
 
-target_link_libraries(PluginMapGenerator PRIVATE ${ShSDKEditor_LIBRARIES})
+target_link_libraries(PluginMapGenerator PRIVATE ${ShSDK_LIBRARIES})
 
 target_include_directories(PluginMapGenerator PUBLIC "${ShSDK_INCLUDE_DIRS}")
 target_include_directories(PluginMapGenerator INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
