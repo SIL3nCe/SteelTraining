@@ -5,3 +5,4 @@ Assets/tmp_sprites
 build*
 *.user
 cmake/TargetAutoBuild.cmake
+packages
