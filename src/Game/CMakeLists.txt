@@ -69,7 +69,7 @@ else(ENABLE_SKIP_TITLE_MENU)
 	set_property(TARGET Game APPEND PROPERTY COMPILE_DEFINITIONS "ENABLE_SKIP_TITLE_MENU=0")
 endif(ENABLE_SKIP_TITLE_MENU)
 
-target_link_libraries(Game PRIVATE ${SHSDK_LIBRARIES})
+target_link_libraries(Game PRIVATE ${ShSDK_LIBRARIES})
 target_link_libraries(Game PRIVATE PluginST)
 target_include_directories(Game PRIVATE "${ShSDK_INCLUDE_DIRS}" "$<TARGET_PROPERTY:PluginST,INTERFACE_INCLUDE_DIRECTORIES>")
 
