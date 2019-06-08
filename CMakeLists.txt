@@ -11,17 +11,15 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Enable C++11
 set(CMAKE_CXX_STANDARD 11)
 
-set(CMAKE_EXE_LINKER_FLAGS "${ShSDK_SHARED_LINKER_FLAGS}")
+set(CMAKE_SHARED_LINKER_FLAGS "${ShSDK_SHARED_LINKER_FLAGS}")
 
 # Find Shine Engine/Editor libraries
 set(USE_MODULE)
 if(SHINE_INTERNAL)
 	set(USE_MODULE NO_MODULE)
-	set(SHINE_EDITOR_EXT_DIR "" CACHE PATH "Extension directory")
-	file(MAKE_DIRECTORY ${SHINE_EDITOR_EXT_DIR})
 endif(SHINE_INTERNAL)
 
-find_package(ShSDK REQUIRED ShCore StubUserSystem ShEntryPoint ${USE_MODULE})
+find_package(ShSDK REQUIRED StubUserSystem ShEntryPoint ${USE_MODULE})
 find_package(ShSDKEditor REQUIRED ${USE_MODULE})
 
 # Include some cmake helpers
