@@ -17,7 +17,7 @@ public:
 	virtual void		Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
 	virtual void		UpdateAnimations	(float dt) SH_ATTRIBUTE_OVERRIDE;
 
-	virtual EType		GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
+	virtual EObjectType	GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
 protected:
 	virtual void		Die					(void) SH_ATTRIBUTE_OVERRIDE;
 private:

@@ -3,16 +3,9 @@
 #include "ShSDK/ShSDK.h"
 
 #include "InputManager.h"
-#include "Object.h"
 #include "Character/PlayerCharacter.h"
-#include "Character/EnemyCharacter.h"
 #include "Objects/ObjectWall.h"
-#include "../../PluginMapGenerator/PluginMapGenerator.h"
-#include "../../PluginMapGenerator/MapGenerator/MapGenerator.h"
-#include "../../PluginMapGenerator/MapGenerator/MapGeneratorTest.h"
-#include "../../PluginMapGenerator/Map/Map.h"
 #include "../../PluginMapGenerator/Map/Map2D.h"
-#include "../../PluginMapGenerator/MapEntity/MapEntity.h"
 
 #define SH_TO_B2 0.01f
 
@@ -28,6 +21,10 @@ static inline b2Vec2 ShineToB2(CShVector2 vec)
 	vec *= SH_TO_B2;
 	return b2Vec2(vec.m_x, vec.m_y);
 }
+
+class EnemyCharacter;
+class PluginMapGenerator;
+class MapGenerator;
 
 class World
 {

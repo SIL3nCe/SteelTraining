@@ -28,6 +28,14 @@ source_group("HUD" FILES ${SOURCES_HUD})
 set(SOURCES_Inputs World/InputManager.cpp World/InputManager.h)
 source_group("World\\Inputs" FILES ${SOURCES_Inputs})
 
+#Shoot
+set(SOURCES_Shoot World/ShootFactory.cpp World/ShootFactory.h)
+source_group("World" FILES ${SOURCES_Shoot})
+
+#Projectile
+set(SOURCES_Projectile World/Projectile/ProjectileManager.cpp World/Projectile/ProjectileManager.h World/Projectile/Projectile.cpp World/Projectile/Projectile.h)
+source_group("World\\Projectile" FILES ${SOURCES_Projectile})
+
 # Object
 set(SOURCES_Object World/Object.cpp World/Object.h)
 source_group("World" FILES ${SOURCES_Object})
@@ -62,6 +70,8 @@ ${SOURCES_PlayerCharacter}
 ${SOURCES_EnemyCharacter}
 ${SOURCES_Object}
 ${SOURCES_ObjectWall}
+${SOURCES_Projectile}
+${SOURCES_Shoot}
 )
 
 # Compile to use it on Runtime

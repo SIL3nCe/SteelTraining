@@ -141,9 +141,9 @@ void PlayerCharacter::UpdateAnimations(float dt)
 /**
  * @brief GetObjectType
  */
-Object::EType PlayerCharacter::GetObjectType(void) const
+Object::EObjectType PlayerCharacter::GetObjectType(void) const
 {
-	return EType::player;
+	return EObjectType::player;
 }
 
 /**

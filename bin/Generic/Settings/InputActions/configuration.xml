@@ -144,4 +144,20 @@
 			</input>
 		</pad>		
 	</event>	
+	
+	<event name="shoot">
+		<keyboard>
+			<input name="just_pressed">
+				<parameter name="control" value="space"/>
+				<parameter name="threshold" value="0.5"/>
+			</input>
+		</keyboard>
+	
+		<pad>
+			<input name="just_pressed">
+				<parameter name="control" value="x"/>
+				<parameter name="threshold" value="0.5"/>			
+			</input>
+		</pad>		
+	</event>
 </configuration>

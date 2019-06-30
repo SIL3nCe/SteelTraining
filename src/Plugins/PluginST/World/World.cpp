@@ -1,5 +1,14 @@
 #include "World.h"
+
+#include "Object.h"
+#include "Character/EnemyCharacter.h"
 #include "Character/TeleportingEnemyMeleeCharacter.h"
+
+#include "../../PluginMapGenerator/PluginMapGenerator.h"
+#include "../../PluginMapGenerator/MapGenerator/MapGenerator.h"
+#include "../../PluginMapGenerator/MapGenerator/MapGeneratorTest.h"
+#include "../../PluginMapGenerator/Map/Map.h"
+#include "../../PluginMapGenerator/MapEntity/MapEntity.h"
 
 #if SH_PC
 #	include <time.h>
@@ -100,8 +109,12 @@ void World::Release(void)
  */
 void World::Update(float dt)
 {
+	//
+	// Inputs
 	m_inputManager.Update();
 
+	//
+	// Charac update
 	m_playerCharacter.Update(dt);
 
 	int iEnemyCount = m_apEnemyList.GetCount();
@@ -131,8 +144,9 @@ void World::Update(float dt)
 		// ^ Making these values higher will give you a more correct simulation, at the cost of some performance
 		m_pbWorld->Step(FIXED_TIMESTEP, 8, 3);
 	}
-	// Physic -
 
+	//
+	// Charac animation
 	m_playerCharacter.UpdateAnimations(dt);
 
 	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
@@ -140,6 +154,8 @@ void World::Update(float dt)
 		m_apEnemyList[iEnemyIndex]->UpdateAnimations(dt);
 	}
 
+	//
+	// Camera
 	UpdateCamera(dt);
 }
 

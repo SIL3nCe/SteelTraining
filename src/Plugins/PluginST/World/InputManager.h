@@ -18,6 +18,8 @@ public:
 	bool		IsGoingLeft			(void);
 	bool		IsGoingRight		(void);
 
+	bool		IsShooting			(void);
+
 private:
 	ShUser *	m_pUser;
 
@@ -25,5 +27,7 @@ private:
 	bool		m_bDown;
 	bool		m_bLeft;
 	bool		m_bRight;
+
+	bool		m_bShooting;
 };
 

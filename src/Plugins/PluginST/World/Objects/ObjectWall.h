@@ -10,15 +10,15 @@
 class ObjectWall : public Object
 {
 public:
-	explicit		 ObjectWall			(void);
-	virtual			~ObjectWall			(void);
+	explicit			 ObjectWall			(void);
+	virtual				~ObjectWall			(void);
 
-	virtual	void	Initialize			(ShEntity2 * pEntity, b2World * pB2World);
-	virtual	void	Release				(void);
+	virtual	void		Initialize			(ShEntity2 * pEntity, b2World * pB2World);
+	virtual	void		Release				(void);
 
-	virtual void	Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
+	virtual void		Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
 
-	virtual EType	GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
+	virtual EObjectType	GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
 
 protected:
 	b2World * m_pWorld;

@@ -39,7 +39,7 @@ void BaseCharacter::Initialize(b2World * pB2World, World * pSTWorld)
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(200 * SH_TO_B2, -200 * SH_TO_B2);
-	bodyDef.angle = 0;
+	bodyDef.angle = 0.0f;
 
 	m_pBody = pB2World->CreateBody(&bodyDef);
 	SH_ASSERT(shNULL != m_pBody)
@@ -67,7 +67,7 @@ void BaseCharacter::Update(float dt)
 {
 	if (m_iInvulnerabilityTime > 0)
 	{
-		m_iInvulnerabilityTime -= static_cast<int>(dt*1000.f);
+		m_iInvulnerabilityTime -= static_cast<int>(dt * 1000.0f);
 	}
 }
 
@@ -142,9 +142,19 @@ void BaseCharacter::SetState(EAnimationState eState)
 }
 
 /**
+ * @brief Shoot - TODO Add ShootPreset enum as parameter
+ */
+void BaseCharacter::Shoot(void)
+{
+	//TODO add a shoot factory which will generate right shoot setup based on ShootPreset parameter
+
+
+}
+
+/**
  * @brief GetObjectType
  */
-Object::EType BaseCharacter::GetObjectType(void) const
+Object::EObjectType BaseCharacter::GetObjectType(void) const
 {
-	return EType::character;
+	return EObjectType::character;
 }

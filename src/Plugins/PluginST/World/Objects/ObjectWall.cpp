@@ -66,7 +66,7 @@ void ObjectWall::Update(float dt)
 /**
  * @brief GetObjectType
  */
-Object::EType ObjectWall::GetObjectType(void) const
+Object::EObjectType ObjectWall::GetObjectType(void) const
 {
-	return EType::wall;
+	return EObjectType::wall;
 }

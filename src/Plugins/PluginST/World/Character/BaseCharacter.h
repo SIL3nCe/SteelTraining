@@ -32,13 +32,15 @@ public:
 	virtual void		Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
 	virtual void		UpdateAnimations	(float dt);
 
-	virtual EType		GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
+	virtual EObjectType	GetObjectType		(void) const SH_ATTRIBUTE_OVERRIDE;
 
 	const CShVector3 &	GetEntityLocation	(void) const;
 
 	bool				TakeDamage			(int iDamages);
 
 	void				SetState			(EAnimationState eState);
+
+	virtual void		Shoot				(void);
 
 protected:
 	virtual void		Die					(void) = 0;

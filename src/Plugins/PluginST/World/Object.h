@@ -4,7 +4,7 @@ class Object
 {
 public:
 
-	enum class EType
+	enum class EObjectType
 	{
 		wall,
 		character,
@@ -22,5 +22,5 @@ public:
 
 	//
 	// Getters
-	virtual EType		GetObjectType		(void) const = 0;
+	virtual EObjectType		GetObjectType	(void) const = 0;
 };
