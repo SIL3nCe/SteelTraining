@@ -1,4 +1,4 @@
-<gui version="1.3">
+<gui version="1.4">
     <sss>
         <style pseudo_state="default" target="container" background_color="#FFFFFF00"/>
         <style pseudo_state="default" id="container_hud" offset_x="-268.000000" offset_x_unit="auto" offset_y="-30.000000" offset_y_unit="auto"/>
