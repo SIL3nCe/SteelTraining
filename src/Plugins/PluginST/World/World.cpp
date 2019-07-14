@@ -3,7 +3,8 @@
 #include "Object.h"
 #include "Character/EnemyCharacter.h"
 #include "Character/TeleportingEnemyMeleeCharacter.h"
-#include "Projectile\ProjectileManager.h"
+#include "Projectile/ProjectileManager.h"
+#include "Objects/ObjectWall.h"
 
 #include "../../PluginMapGenerator/PluginMapGenerator.h"
 #include "../../PluginMapGenerator/MapGenerator/MapGenerator.h"
@@ -22,6 +23,7 @@ World::World(void)
 : m_levelIdentifier()
 , m_pbWorld(shNULL)
 , m_fFixedTimestepAccumulator(0.0f)
+, m_contactListener()
 , m_apEnemyList()
 , m_inputManager()
 , m_playerCharacter()
@@ -52,6 +54,8 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	m_pbWorld = new b2World(gravity);
+
+	m_pbWorld->SetContactListener(&m_contactListener);
 
 	ShUser * pUser = ShUser::GetUser(0);
 	SH_ASSERT(shNULL != pUser)
@@ -103,6 +107,12 @@ void World::Release(void)
 		SH_SAFE_RELEASE_DELETE(m_apEnemyList[iEnemyIndex])
 	}
 	m_apEnemyList.Empty();
+
+	int nWallCount = m_aWallList.GetCount();
+	for (int i = 0; i < nWallCount; ++i)
+	{
+		SH_SAFE_RELEASE_DELETE(m_aWallList[i])
+	}
 
 	SH_SAFE_DELETE(m_pbWorld)
 }
@@ -283,8 +293,8 @@ void World::GenerateMap(Map2D & map2D, int rowCount, int ColumnCount)
 							ShEntity2 * pWallEntity = ShEntity2::Create(m_levelIdentifier, CShIdentifier(strWallIdentifier), GID(layer_default), pSprite, position, CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
 							SH_ASSERT(shNULL != pWallEntity)
 
-							ObjectWall wall;
-							wall.Initialize(pWallEntity, m_pbWorld);
+							ObjectWall *wall = new ObjectWall;
+							wall->Initialize(pWallEntity, m_pbWorld);
 							m_aWallList.Add(wall);
 						}
 						break;

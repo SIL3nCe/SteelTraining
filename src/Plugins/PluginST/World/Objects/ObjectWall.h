@@ -13,8 +13,8 @@ public:
 	explicit			 ObjectWall			(void);
 	virtual				~ObjectWall			(void);
 
-	virtual	void		Initialize			(ShEntity2 * pEntity, b2World * pB2World);
-	virtual	void		Release				(void);
+	void		Initialize			(ShEntity2 * pEntity, b2World * pB2World);
+	void		Release				(void);
 
 	virtual void		Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
 

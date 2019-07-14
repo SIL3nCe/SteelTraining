@@ -1,17 +1,20 @@
 #include "Projectile.h"
 #include "../World.h"
 #include "Box2D/Box2D.h"
+#include "ProjectileManager.h"
 
 /**
  * @brief Constructor
  */
 Projectile::Projectile(void)
-: m_pNextProjectile(shNULL)
+: Object()
+, m_pNextProjectile(shNULL)
 , m_pWorld(shNULL)
 , m_pBody(shNULL)
 , m_pEntity(shNULL)
 , m_eType(EProjectileType::max)
 , m_eTrajectory(EProjectileTrajectory::max)
+, m_bDiscard(false)
 {
 	// ...
 }
@@ -32,6 +35,17 @@ void Projectile::Initialize(b2World * pWorld, Projectile * pNext, const CShIdent
 	m_pWorld = pWorld;
 	m_pNextProjectile = pNext;
 	m_levelIdentifier = levelIdentifier;
+}
+
+void Projectile::Release(void)
+{
+	m_pWorld->DestroyBody(m_pBody);
+	m_pBody = shNULL;
+
+	ShEntity2::Destroy(m_pEntity); // Delete as it could be used for another projectile type
+	m_pEntity = shNULL;
+
+	m_bDiscard = false;
 }
 
 /**
@@ -59,6 +73,8 @@ void Projectile::LaunchProjectile(EProjectileType eType, EProjectileTrajectory e
 	boxFixtureDef.density = 1.0f;
 	m_pBody->CreateFixture(&boxFixtureDef);
 
+	m_pBody->SetUserData(this);
+
 	float fSpeed = 10.0f; // TODO move this as arg ?
 	b2Vec2 vLinearVelocity = ShineToB2(vDirection);
 	vLinearVelocity.Normalize();
@@ -69,26 +85,50 @@ void Projectile::LaunchProjectile(EProjectileType eType, EProjectileTrajectory e
 }
 
 /**
+ * @brief OnHit
+ */
+void Projectile::OnHit(Object * pHitObject)
+{
+	return;
+	SH_ASSERT(shNULL != pHitObject);
+
+	if (EObjectType::character == pHitObject->GetObjectType())
+	{
+		if (BaseCharacter * pCharac = static_cast<BaseCharacter *>(pHitObject))
+		{
+			pCharac->TakeDamage(30.0f); // TODO use projectile attribut for damage value
+		}
+	}
+
+	// Do not release b2Body here as it's called during world steps
+	m_bDiscard = true;
+}
+
+/**
  * @brief Update
  */
 void Projectile::Update(float dt)
 {
 	if (shNULL == m_pNextProjectile)
 	{
+		if (m_bDiscard)
+		{
+			ProjectileManager::GetInstance()->FreeProjectile(this);
+			return;
+		}
+
 		// Update sprite
 		b2Vec2 bodyPos = m_pBody->GetPosition();
 		ShEntity2::SetRelativePosition2(m_pEntity, B2ToShine(bodyPos));
 
 		// Update physic for non linear (with mouse joint) (à faire dans un update à part en pré update ?)
-
-		// Tell projectilemanager when projectile is no more used (for free list handle) (add collision listener)
 	}
 }
 
 /**
  * @brief GetObjectType
  */
-Object::EObjectType Projectile::GetObjectType(void) const
+EObjectType Projectile::GetObjectType(void) const
 {
 	return EObjectType::projectile;
 }

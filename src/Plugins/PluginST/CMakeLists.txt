@@ -28,6 +28,10 @@ source_group("HUD" FILES ${SOURCES_HUD})
 set(SOURCES_Inputs World/InputManager.cpp World/InputManager.h)
 source_group("World\\Inputs" FILES ${SOURCES_Inputs})
 
+#Contact Listener
+set(SOURCES_ContactListener World/ContactListener/ContactListener.cpp World/ContactListener/ContactListener.h)
+source_group("World\\ContactListener" FILES ${SOURCES_ContactListener})
+
 #Shoot
 set(SOURCES_Shoot World/ShootFactory.cpp World/ShootFactory.h)
 source_group("World" FILES ${SOURCES_Shoot})
@@ -65,13 +69,14 @@ ${SOURCES_Factory}
 ${SOURCES_World}
 ${SOURCES_HUD}
 ${SOURCES_Inputs}
+${SOURCES_ContactListener}
+${SOURCES_Shoot}
+${SOURCES_Projectile}
+${SOURCES_Object}
+${SOURCES_ObjectWall}
 ${SOURCES_BaseCharacter}
 ${SOURCES_PlayerCharacter}
 ${SOURCES_EnemyCharacter}
-${SOURCES_Object}
-${SOURCES_ObjectWall}
-${SOURCES_Projectile}
-${SOURCES_Shoot}
 )
 
 # Compile to use it on Runtime

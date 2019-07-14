@@ -34,6 +34,8 @@ void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld, const CShV
 	boxFixtureDef.shape = &boxShape;
 	boxFixtureDef.density = 0.5;
 	m_pBody->CreateFixture(&boxFixtureDef);
+
+	m_pBody->SetUserData(this);
 }
 
 /**

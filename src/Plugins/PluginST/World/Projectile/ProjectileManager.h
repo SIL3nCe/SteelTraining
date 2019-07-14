@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ShSDK\ShSDK.h"
+#include "ShSDK/ShSDK.h"
 #include "Projectile.h"
 
 #include "Projectile.h"
@@ -20,6 +20,7 @@ public:
 	void							Update				(float dt);
 
 	void							CreateProjectile	(EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection);
+	void							FreeProjectile		(Projectile * pProjectile);
 
 private:
 

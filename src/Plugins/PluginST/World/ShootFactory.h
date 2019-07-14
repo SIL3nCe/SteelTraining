@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ShSDK\ShSDK.h"
+#include "ShSDK/ShSDK.h"
 
 namespace ShootFactory
 {

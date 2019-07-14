@@ -1,5 +1,5 @@
 #include "ShootFactory.h"
-#include "Projectile\ProjectileManager.h"
+#include "Projectile/ProjectileManager.h"
 
 /**
  * @brief GenerateLinearShoot
@@ -20,10 +20,22 @@ void ShootFactory::GenerateLinearShoot(const CShVector2 & vLocation, const CShVe
 void ShootFactory::GenerateCircleShoot(const CShVector2 & vLocation, int nbProjectile, float fRadius)
 {
 	ProjectileManager * pManager = ProjectileManager::GetInstance();
+
+	float fCurrAngle = 0.0f;
+	float fDeltaAngle = 360.0f / nbProjectile;
+	CShVector2 vLocationOnCircle;
+	CShVector2 vDirection;
 	for (int i = 0; i < nbProjectile; ++i)
 	{
-		//TODO 
+		// x = cx + r * cos(a)
+		// y = cy + r * sin(a)
+		vLocationOnCircle.m_x = vLocation.m_x + fRadius * shCosf(shDeg2Rad(fCurrAngle));
+		vLocationOnCircle.m_y = vLocation.m_y + fRadius * shSinf(shDeg2Rad(fCurrAngle));
 
-		//pManager->CreateProjectile();
+		vDirection = vLocationOnCircle - vLocation;
+
+		pManager->CreateProjectile(EProjectileType::classic, EProjectileTrajectory::linear, vLocationOnCircle, vDirection);
+
+		fCurrAngle += fDeltaAngle;
 	}
 }

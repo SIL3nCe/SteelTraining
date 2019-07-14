@@ -70,9 +70,20 @@ void ProjectileManager::CreateProjectile(EProjectileType eType, EProjectileTraje
 	}
 
 	// Vitesse, valeur dégâts, type de dégâts (anti armure, élémentaire, etc), type d'impact (explose, rebondit, etc), couleur?, taille?, enum pour sprite à créer?
+	// TODO Weapon class where every thing is stored ^
+
 	Projectile * pProj = m_pNextUsableProjectile;
 	m_pNextUsableProjectile = pProj->GetNextProjectile();
 	pProj->SetNextProjectile(shNULL);
 
 	pProj->LaunchProjectile(eType, eTrajectory, vStart, vDirection);
+}
+
+void ProjectileManager::FreeProjectile(Projectile * pProjectile)
+{
+	SH_ASSERT(shNULL != pProjectile);
+
+	pProjectile->Release();
+	pProjectile->SetNextProjectile(m_pNextUsableProjectile);
+	m_pNextUsableProjectile = pProjectile;
 }

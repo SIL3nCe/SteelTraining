@@ -46,6 +46,8 @@ void ObjectWall::Initialize(ShEntity2 * pEntity, b2World * pB2World)
 	boxFixtureDef.shape = &boxShape;
 	boxFixtureDef.density = 1;
 	m_pBody->CreateFixture(&boxFixtureDef);
+
+	m_pBody->SetUserData(this);
 }
 
 /**
@@ -66,7 +68,7 @@ void ObjectWall::Update(float dt)
 /**
  * @brief GetObjectType
  */
-Object::EObjectType ObjectWall::GetObjectType(void) const
+EObjectType ObjectWall::GetObjectType(void) const
 {
 	return EObjectType::wall;
 }

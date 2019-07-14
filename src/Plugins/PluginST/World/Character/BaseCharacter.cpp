@@ -15,7 +15,7 @@ BaseCharacter::BaseCharacter(void)
 , m_iMaxLifePoints(100)
 , m_iInvulnerabilityTime(0)
 , m_animCpt(0)
-, m_eCurrentState(animation_idle)
+, m_eCurrentAnimState(animation_idle)
 , m_fAnimationDt(0.0f)
 , m_fAnimationSpeed(0.5f)
 {
@@ -85,8 +85,8 @@ void BaseCharacter::UpdateAnimations(float dt)
 
 	if (m_fAnimationSpeed < m_fAnimationDt)
 	{
-		m_animCpt = (m_animCpt + 1) % m_aSpriteList[m_eCurrentState].GetCount();
-		ShEntity2::SetSprite(m_pEntity, m_aSpriteList[m_eCurrentState][m_animCpt]);
+		m_animCpt = (m_animCpt + 1) % m_aSpriteList[m_eCurrentAnimState].GetCount();
+		ShEntity2::SetSprite(m_pEntity, m_aSpriteList[m_eCurrentAnimState][m_animCpt]);
 		m_fAnimationDt = 0.0f;
 	}
 
@@ -124,7 +124,7 @@ bool BaseCharacter::TakeDamage(int iDamages)
 
 void BaseCharacter::SetState(EAnimationState eState)
 {
-	if (eState == m_eCurrentState)
+	if (eState == m_eCurrentAnimState)
 		return;
 
 	//switch (m_eCurrentState)
@@ -132,12 +132,12 @@ void BaseCharacter::SetState(EAnimationState eState)
 	//
 	//}
 
-	m_eCurrentState = eState;
+	m_eCurrentAnimState = eState;
 	m_animCpt = 0;
 	m_fAnimationDt = 0.0f;
-	ShEntity2::SetSprite(m_pEntity, m_aSpriteList[m_eCurrentState][m_animCpt]);
+	ShEntity2::SetSprite(m_pEntity, m_aSpriteList[m_eCurrentAnimState][m_animCpt]);
 
-	//switch (m_eCurrentState)
+	//switch (m_eCurrentAnimState)
 	//{ // Entering state
 	//
 	//}
@@ -148,13 +148,32 @@ void BaseCharacter::SetState(EAnimationState eState)
  */
 void BaseCharacter::Shoot(void)
 {
-	ShootFactory::GenerateLinearShoot(ShEntity2::GetPosition2(m_pEntity), CShVector2::ZERO, 1);
+	CShVector2 vStartLocation = ShEntity2::GetPosition2(m_pEntity);
+
+	//
+	// Shoot ahead
+	//TODO use an anchor on sprite with a point (make a prefab?) as starting location
+	CShVector2 vDirection(0.0f, 0.0f);
+	switch (m_eCurrentAnimState)
+	{
+		case animation_walk_top:	vDirection.m_y = 20.0f; break;
+		case animation_walk_bottom:	vDirection.m_y = -20.0f; break;
+		case animation_walk_right:	vDirection.m_x = 20.0f; break;
+		case animation_walk_left:	vDirection.m_x = -20.0f; break;
+		default: vDirection.m_x = 20.0f;
+	}
+
+	ShootFactory::GenerateLinearShoot(vStartLocation + vDirection, vDirection, 1);
+
+	//
+	// Circular shoot from pos
+	//ShootFactory::GenerateCircleShoot(vStartLocation, 12, 30.0f);
 }
 
 /**
  * @brief GetObjectType
  */
-Object::EObjectType BaseCharacter::GetObjectType(void) const
+EObjectType BaseCharacter::GetObjectType(void) const
 {
 	return EObjectType::character;
 }

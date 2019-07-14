@@ -1,18 +1,18 @@
 #pragma once
 
+enum class EObjectType
+{
+	wall,
+	character,
+	player,
+	projectile,
+
+	max
+};
+
 class Object
 {
 public:
-
-	enum class EObjectType
-	{
-		wall,
-		character,
-		player,
-		projectile,
-
-		max
-	};
 
 	//
 	// Constructor / Destructor

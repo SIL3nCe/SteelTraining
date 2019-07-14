@@ -60,7 +60,7 @@ protected:
 	int					m_iInvulnerabilityTime;
 
 	int					m_animCpt;
-	EAnimationState		m_eCurrentState;
+	EAnimationState		m_eCurrentAnimState;
 
 	float				m_fAnimationDt;
 	float				m_fAnimationSpeed;

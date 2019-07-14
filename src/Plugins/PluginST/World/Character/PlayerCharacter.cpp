@@ -40,6 +40,8 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 	boxFixtureDef.density = 1.0f;
 	m_pBody->CreateFixture(&boxFixtureDef);
 
+	m_pBody->SetUserData(this);
+
 	//
 	// Sprites
 	m_aSpriteList.SetCount(animation_state_max);
@@ -71,9 +73,9 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 		}
 	}
 
-	SH_ASSERT(shNULL != m_aSpriteList[m_eCurrentState][0])
+	SH_ASSERT(shNULL != m_aSpriteList[m_eCurrentAnimState][0])
 
-	m_pEntity = ShEntity2::Create(levelIdentifier, GID(NULL), CShIdentifier("layer_default"), m_aSpriteList[m_eCurrentState][0], CShVector3(200.0f, -200.0f, 10.0f), CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
+	m_pEntity = ShEntity2::Create(levelIdentifier, GID(NULL), CShIdentifier("layer_default"), m_aSpriteList[m_eCurrentAnimState][0], CShVector3(200.0f, -200.0f, 10.0f), CShEulerAngles::ZERO, CShVector3::AXIS_ALL);
 }
 
 /**
@@ -142,7 +144,7 @@ void PlayerCharacter::UpdateAnimations(float dt)
 /**
  * @brief GetObjectType
  */
-Object::EObjectType PlayerCharacter::GetObjectType(void) const
+EObjectType PlayerCharacter::GetObjectType(void) const
 {
 	return EObjectType::player;
 }

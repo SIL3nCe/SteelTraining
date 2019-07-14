@@ -2,9 +2,9 @@
 
 #include "ShSDK/ShSDK.h"
 
+#include "ContactListener/ContactListener.h"
 #include "InputManager.h"
 #include "Character/PlayerCharacter.h"
-#include "Objects/ObjectWall.h"
 #include "../../PluginMapGenerator/Map/Map2D.h"
 
 #define SH_TO_B2 0.01f
@@ -25,6 +25,7 @@ static inline b2Vec2 ShineToB2(CShVector2 vec)
 class EnemyCharacter;
 class PluginMapGenerator;
 class MapGenerator;
+class ObjectWall;
 
 class World
 {
@@ -64,8 +65,10 @@ private:
 	b2World *					m_pbWorld;
 	float						m_fFixedTimestepAccumulator;
 
+	ContactListener				m_contactListener;
+
 	CShArray<EnemyCharacter*>	m_apEnemyList;
-	CShArray<ObjectWall>		m_aWallList;
+	CShArray<ObjectWall *>		m_aWallList;
 
 	PluginInputManager			m_inputManager;
 

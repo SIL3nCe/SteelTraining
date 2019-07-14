@@ -5,8 +5,8 @@
  * @brief EnemyMeleeCharacter::EnemyMeleeCharacter
  */
 EnemyMeleeCharacter::EnemyMeleeCharacter(void)
-	: EnemyCharacter ()
-	, m_vLastPlayerPosition()
+: EnemyCharacter ()
+, m_vLastPlayerPosition()
 {
 	m_iTransitionTime = 1000;
 }
