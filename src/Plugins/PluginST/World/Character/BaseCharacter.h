@@ -1,10 +1,12 @@
 #pragma once
 
-#include "Box2D/Box2D.h"
 #include "ShSDK/ShSDK.h"
 #include "../Object.h"
 
 class World;
+
+class b2World;
+class b2Body;
 
 struct ShEntity2;
 

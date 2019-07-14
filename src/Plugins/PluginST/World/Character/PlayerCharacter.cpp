@@ -36,8 +36,8 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 	circleShape.m_radius = 20.0f * SH_TO_B2;
 
 	b2FixtureDef boxFixtureDef;
-	boxFixtureDef.shape = &circleShape;
-	boxFixtureDef.density = 1;
+	boxFixtureDef.shape = &circleShape; // Circle shape to avoid ghost collisions
+	boxFixtureDef.density = 1.0f;
 	m_pBody->CreateFixture(&boxFixtureDef);
 
 	//
@@ -92,32 +92,28 @@ void PlayerCharacter::Release(void)
 void PlayerCharacter::Update(float dt)
 {
 	BaseCharacter::Update(dt);
-	bool bLeft = m_pInputManager->IsGoingLeft();
-	bool bRight = m_pInputManager->IsGoingRight();
-	bool bDown = m_pInputManager->IsGoingDown();
-	bool bUp = m_pInputManager->IsGoingUp();
 
 	b2Vec2 vImpulse(0.0f, 0.0f);
 	
 	EAnimationState eNewState = animation_idle;
 
-	if (bLeft)
+	if (m_pInputManager->IsGoingLeft())
 	{
 		vImpulse.x = -1.0f;
 		eNewState = animation_walk_left;
 	}
-	else if (bRight)
+	else if (m_pInputManager->IsGoingRight())
 	{
 		vImpulse.x = 1.0f;
 		eNewState = animation_walk_right;
 	}
 	
-	if (bUp)
+	if (m_pInputManager->IsGoingUp())
 	{
 		vImpulse.y = 1.0f;
 		eNewState = animation_walk_top;
 	}
-	else if (bDown)
+	else if (m_pInputManager->IsGoingDown())
 	{
 		vImpulse.y = -1.0f;
 		eNewState = animation_walk_bottom;
@@ -128,6 +124,11 @@ void PlayerCharacter::Update(float dt)
 	m_pBody->SetLinearVelocity(vImpulse);
 
 	SetState(eNewState);
+
+	if (m_pInputManager->IsShooting())
+	{
+		Shoot();
+	}
 }
 
 /**

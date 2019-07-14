@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Character/EnemyCharacter.h"
 #include "Character/TeleportingEnemyMeleeCharacter.h"
+#include "Projectile\ProjectileManager.h"
 
 #include "../../PluginMapGenerator/PluginMapGenerator.h"
 #include "../../PluginMapGenerator/MapGenerator/MapGenerator.h"
@@ -58,6 +59,8 @@ void World::Initialize(const CShIdentifier & levelIdentifier)
 	m_inputManager.Initialize(pUser);
 
 	m_playerCharacter.Initialize(m_levelIdentifier, m_pbWorld, this, &m_inputManager);
+
+	ProjectileManager::GetInstance()->Initialize(m_levelIdentifier, m_pbWorld);
 
 	TeleportingEnemyMeleeCharacter * pEnemy = new TeleportingEnemyMeleeCharacter();
 	pEnemy->Initialize(CShIdentifier("enemy1"), m_levelIdentifier, m_pbWorld, this, CShVector2(300.f, -300.f));
@@ -144,6 +147,8 @@ void World::Update(float dt)
 		// ^ Making these values higher will give you a more correct simulation, at the cost of some performance
 		m_pbWorld->Step(FIXED_TIMESTEP, 8, 3);
 	}
+
+	ProjectileManager::GetInstance()->Update(dt); // update physic before stepping the world and another UpdateSprite after ?
 
 	//
 	// Charac animation

@@ -9,6 +9,9 @@ public:
 		wall,
 		character,
 		player,
+		projectile,
+
+		max
 	};
 
 	//

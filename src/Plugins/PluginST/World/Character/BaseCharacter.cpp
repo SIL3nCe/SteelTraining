@@ -1,5 +1,7 @@
 #include "BaseCharacter.h"
+#include "Box2D/Box2D.h"
 #include "../World.h"
+#include "../ShootFactory.h"
 
 /**
  * @brief Constructor
@@ -125,20 +127,20 @@ void BaseCharacter::SetState(EAnimationState eState)
 	if (eState == m_eCurrentState)
 		return;
 
-	switch (m_eCurrentState)
-	{ // Leaving state
-
-	}
+	//switch (m_eCurrentState)
+	//{ // Leaving state
+	//
+	//}
 
 	m_eCurrentState = eState;
 	m_animCpt = 0;
 	m_fAnimationDt = 0.0f;
 	ShEntity2::SetSprite(m_pEntity, m_aSpriteList[m_eCurrentState][m_animCpt]);
 
-	switch (m_eCurrentState)
-	{ // Entering state
-
-	}
+	//switch (m_eCurrentState)
+	//{ // Entering state
+	//
+	//}
 }
 
 /**
@@ -146,9 +148,7 @@ void BaseCharacter::SetState(EAnimationState eState)
  */
 void BaseCharacter::Shoot(void)
 {
-	//TODO add a shoot factory which will generate right shoot setup based on ShootPreset parameter
-
-
+	ShootFactory::GenerateLinearShoot(ShEntity2::GetPosition2(m_pEntity), CShVector2::ZERO, 1);
 }
 
 /**

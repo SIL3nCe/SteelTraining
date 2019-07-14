@@ -147,14 +147,14 @@
 	
 	<event name="shoot">
 		<keyboard>
-			<input name="just_pressed">
+			<input name="pressed">
 				<parameter name="control" value="space"/>
 				<parameter name="threshold" value="0.5"/>
 			</input>
 		</keyboard>
 	
 		<pad>
-			<input name="just_pressed">
+			<input name="pressed">
 				<parameter name="control" value="x"/>
 				<parameter name="threshold" value="0.5"/>			
 			</input>

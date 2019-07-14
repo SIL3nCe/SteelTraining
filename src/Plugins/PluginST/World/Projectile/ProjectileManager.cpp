@@ -1,11 +1,14 @@
 #include "ProjectileManager.h"
 
+#include "Box2D/Box2D.h"
+
 /**
  * @brief Constructor
  */
 ProjectileManager::ProjectileManager(void)
+: m_aProjectilePool()
+, m_pNextUsableProjectile(shNULL)
 {
-	// ...
 }
 
 /**
@@ -31,18 +34,45 @@ ProjectileManager * ProjectileManager::GetInstance(void)
 }
 
 /**
+ * @brief Initialize
+ */
+void ProjectileManager::Initialize(const CShIdentifier & levelIdentifier, b2World * pWorld)
+{
+	for (int i = 0; i < PROJECTILE_POOL_SIZE - 1; ++i)
+	{
+		m_aProjectilePool[i].Initialize(pWorld, &m_aProjectilePool[i + 1], levelIdentifier);
+	}
+	m_aProjectilePool[PROJECTILE_POOL_SIZE - 1].Initialize(pWorld, shNULL, levelIdentifier);
+
+	m_pNextUsableProjectile = &m_aProjectilePool[0];
+}
+
+/**
  * @brief Update
  */
 void ProjectileManager::Update(float dt)
 {
-	//TODO update every projectile
+	for (int i = 0; i < PROJECTILE_POOL_SIZE - 1; ++i)
+	{
+		m_aProjectilePool[i].Update(dt);
+	}
 }
 
 /**
  * @brief CreateProjectile
  */
-void ProjectileManager::CreateProjectile(Projectile::EProjectileType eType, Projectile::EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection)
+void ProjectileManager::CreateProjectile(EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection)
 {
-	// Vitesse, valeur dégâts, type de dégâts (anti armure, élémentaire, etc), type d'impact (explose, rebondit, etc), couleur?, sprite?, taille?
-	// TODO
+	if (!m_pNextUsableProjectile)
+	{
+		SH_TRACE("No more projectile to fire in the pool, stop spamming like an idiot.\n");
+		return;
+	}
+
+	// Vitesse, valeur dégâts, type de dégâts (anti armure, élémentaire, etc), type d'impact (explose, rebondit, etc), couleur?, taille?, enum pour sprite à créer?
+	Projectile * pProj = m_pNextUsableProjectile;
+	m_pNextUsableProjectile = pProj->GetNextProjectile();
+	pProj->SetNextProjectile(shNULL);
+
+	pProj->LaunchProjectile(eType, eTrajectory, vStart, vDirection);
 }
