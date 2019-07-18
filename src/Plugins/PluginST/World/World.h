@@ -46,6 +46,8 @@ public:
 
 	void						KillEnemy			(EnemyCharacter * pEnemy);
 
+	void						MarkB2BodyToDestroy	(b2Body * pBody);
+
 protected:
 private:
 
@@ -64,6 +66,7 @@ private:
 
 	b2World *					m_pbWorld;
 	float						m_fFixedTimestepAccumulator;
+	CShArray<b2Body *>			m_aBodiesToDestroy; // Delay box2d body release as it cannot be done during world step
 
 	ContactListener				m_contactListener;
 

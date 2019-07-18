@@ -54,7 +54,7 @@ void BaseCharacter::Initialize(b2World * pB2World, World * pSTWorld)
  */
 void BaseCharacter::Release(void)
 {
-	m_pBody->GetWorld()->DestroyBody(m_pBody);
+	m_pWorld->MarkB2BodyToDestroy(m_pBody);
 	m_pBody = shNULL;
 
 	m_aSpriteList.Deallocate();
@@ -163,11 +163,11 @@ void BaseCharacter::Shoot(void)
 		default: vDirection.m_x = 20.0f;
 	}
 
-	ShootFactory::GenerateLinearShoot(vStartLocation + vDirection, vDirection, 1);
+	//ShootFactory::GenerateLinearShoot(GetObjectType(), vStartLocation + vDirection, vDirection, 1);
 
 	//
 	// Circular shoot from pos
-	//ShootFactory::GenerateCircleShoot(vStartLocation, 12, 30.0f);
+	ShootFactory::GenerateCircleShoot(GetObjectType(), vStartLocation, 12, 30.0f);
 }
 
 /**

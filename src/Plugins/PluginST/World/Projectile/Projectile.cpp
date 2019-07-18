@@ -51,7 +51,7 @@ void Projectile::Release(void)
 /**
  * @brief LaunchProjectile
  */
-void Projectile::LaunchProjectile(EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection)
+void Projectile::LaunchProjectile(EObjectType eObjectType, EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection)
 {
 	m_eType = eType;
 	m_eTrajectory = eTrajectory;
@@ -68,10 +68,12 @@ void Projectile::LaunchProjectile(EProjectileType eType, EProjectileTrajectory e
 	b2CircleShape circleShape;
 	circleShape.m_radius = 5.0f * SH_TO_B2;
 
-	b2FixtureDef boxFixtureDef;
-	boxFixtureDef.shape = &circleShape;
-	boxFixtureDef.density = 1.0f;
-	m_pBody->CreateFixture(&boxFixtureDef);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &circleShape;
+	fixtureDef.density = 1.0f;
+	fixtureDef.filter.categoryBits = (uint16)GetObjectType();
+	fixtureDef.filter.maskBits = (uint16)EObjectType::wall | (uint16)((EObjectType::player == eObjectType) ? EObjectType::character : EObjectType::player);
+	m_pBody->CreateFixture(&fixtureDef);
 
 	m_pBody->SetUserData(this);
 
@@ -89,14 +91,13 @@ void Projectile::LaunchProjectile(EProjectileType eType, EProjectileTrajectory e
  */
 void Projectile::OnHit(Object * pHitObject)
 {
-	return;
 	SH_ASSERT(shNULL != pHitObject);
 
 	if (EObjectType::character == pHitObject->GetObjectType())
 	{
 		if (BaseCharacter * pCharac = static_cast<BaseCharacter *>(pHitObject))
 		{
-			pCharac->TakeDamage(30.0f); // TODO use projectile attribut for damage value
+			pCharac->TakeDamage(30); // TODO use projectile attribut for damage value
 		}
 	}
 
@@ -109,7 +110,7 @@ void Projectile::OnHit(Object * pHitObject)
  */
 void Projectile::Update(float dt)
 {
-	if (shNULL == m_pNextProjectile)
+	if (m_pBody)
 	{
 		if (m_bDiscard)
 		{

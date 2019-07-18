@@ -19,7 +19,7 @@ public:
 	void							Initialize			(const CShIdentifier & levelIdentifier, b2World * pWorld);
 	void							Update				(float dt);
 
-	void							CreateProjectile	(EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection);
+	void							CreateProjectile	(EObjectType eObjectType, EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection);
 	void							FreeProjectile		(Projectile * pProjectile);
 
 private:

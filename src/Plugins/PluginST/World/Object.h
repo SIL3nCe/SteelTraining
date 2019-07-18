@@ -1,11 +1,12 @@
 #pragma once
 
-enum class EObjectType
+// If too much types for ushort, create another enum for b2 categories
+enum class EObjectType : unsigned short
 {
-	wall,
-	character,
-	player,
-	projectile,
+	wall = 1,
+	character = 2,
+	player = 4,
+	projectile = 8,
 
 	max
 };

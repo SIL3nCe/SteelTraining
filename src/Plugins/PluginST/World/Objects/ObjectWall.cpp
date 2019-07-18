@@ -42,10 +42,11 @@ void ObjectWall::Initialize(ShEntity2 * pEntity, b2World * pB2World)
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(WALL_WIDTH * 0.5f * SH_TO_B2, WALL_HEIGHT * 0.5f * SH_TO_B2);
 
-	b2FixtureDef boxFixtureDef;
-	boxFixtureDef.shape = &boxShape;
-	boxFixtureDef.density = 1;
-	m_pBody->CreateFixture(&boxFixtureDef);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &boxShape;
+	fixtureDef.density = 1;
+	fixtureDef.filter.categoryBits = (uint16)GetObjectType();
+	m_pBody->CreateFixture(&fixtureDef);
 
 	m_pBody->SetUserData(this);
 }

@@ -30,10 +30,11 @@ void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld, const CShV
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(15.0f * SH_TO_B2, 15.0f * SH_TO_B2);
 
-	b2FixtureDef boxFixtureDef;
-	boxFixtureDef.shape = &boxShape;
-	boxFixtureDef.density = 0.5;
-	m_pBody->CreateFixture(&boxFixtureDef);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &boxShape;
+	fixtureDef.density = 0.5;
+	fixtureDef.filter.categoryBits = (uint16)GetObjectType();
+	m_pBody->CreateFixture(&fixtureDef);
 
 	m_pBody->SetUserData(this);
 }

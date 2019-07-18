@@ -158,12 +158,22 @@ void World::Update(float dt)
 		m_pbWorld->Step(FIXED_TIMESTEP, 8, 3);
 	}
 
+	//
+	// Release body of object released during collisions
+	int nBodies = m_aBodiesToDestroy.GetCount();
+	for (int i = 0; i < nBodies; ++i)
+	{
+		m_pbWorld->DestroyBody(m_aBodiesToDestroy[i]);
+	}
+	m_aBodiesToDestroy.Empty();
+
 	ProjectileManager::GetInstance()->Update(dt); // update physic before stepping the world and another UpdateSprite after ?
 
 	//
 	// Charac animation
 	m_playerCharacter.UpdateAnimations(dt);
 
+	iEnemyCount = m_apEnemyList.GetCount(); // In case where an enemy has been released during collisions
 	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
 	{
 		m_apEnemyList[iEnemyIndex]->UpdateAnimations(dt);
@@ -349,4 +359,13 @@ void World::KillEnemy(EnemyCharacter *pEnemy)
 {
 	m_apEnemyList.RemoveFirstSwapLast(pEnemy);
 	SH_SAFE_RELEASE_DELETE(pEnemy)
+}
+
+/**
+ * @brief World::MarkB2BodyToDestroy
+ * @param pBody
+ */
+void World::MarkB2BodyToDestroy(b2Body * pBody)
+{
+	m_aBodiesToDestroy.Add(pBody);
 }

@@ -32,7 +32,7 @@ public:
 	void						Initialize			(b2World * pWorld, Projectile * pNext, const CShIdentifier & levelIdentifier);
 	void						Release				(void);
 
-	void						LaunchProjectile	(EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection);
+	void						LaunchProjectile	(EObjectType eObjectType, EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection);
 
 	//
 	// Update

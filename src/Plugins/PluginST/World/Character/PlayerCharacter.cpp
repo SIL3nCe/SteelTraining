@@ -35,10 +35,11 @@ void PlayerCharacter::Initialize(const CShIdentifier & levelIdentifier, b2World 
 	b2CircleShape circleShape;
 	circleShape.m_radius = 20.0f * SH_TO_B2;
 
-	b2FixtureDef boxFixtureDef;
-	boxFixtureDef.shape = &circleShape; // Circle shape to avoid ghost collisions
-	boxFixtureDef.density = 1.0f;
-	m_pBody->CreateFixture(&boxFixtureDef);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &circleShape; // Circle shape to avoid ghost collisions
+	fixtureDef.density = 1.0f;
+	fixtureDef.filter.categoryBits = (uint16)GetObjectType();
+	m_pBody->CreateFixture(&fixtureDef);
 
 	m_pBody->SetUserData(this);
 

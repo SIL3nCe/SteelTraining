@@ -4,20 +4,20 @@
 /**
  * @brief GenerateLinearShoot
  */
-void ShootFactory::GenerateLinearShoot(const CShVector2 & vLocation, const CShVector2 & vDirection, int nbProjectile)
+void ShootFactory::GenerateLinearShoot(EObjectType eObjectType, const CShVector2 & vLocation, const CShVector2 & vDirection, int nbProjectile)
 {
 	//TODO move the loop in manager (CreateProjectile) ?
 	ProjectileManager * pManager = ProjectileManager::GetInstance();
 	for (int i = 0; i < nbProjectile; ++i)
 	{
-		pManager->CreateProjectile(EProjectileType::classic, EProjectileTrajectory::linear, vLocation, vDirection);
+		pManager->CreateProjectile(eObjectType, EProjectileType::classic, EProjectileTrajectory::linear, vLocation, vDirection);
 	}
 }
 
 /**
  * @brief GenerateCircularShoot
  */
-void ShootFactory::GenerateCircleShoot(const CShVector2 & vLocation, int nbProjectile, float fRadius)
+void ShootFactory::GenerateCircleShoot(EObjectType eObjectType, const CShVector2 & vLocation, int nbProjectile, float fRadius)
 {
 	ProjectileManager * pManager = ProjectileManager::GetInstance();
 
@@ -34,7 +34,7 @@ void ShootFactory::GenerateCircleShoot(const CShVector2 & vLocation, int nbProje
 
 		vDirection = vLocationOnCircle - vLocation;
 
-		pManager->CreateProjectile(EProjectileType::classic, EProjectileTrajectory::linear, vLocationOnCircle, vDirection);
+		pManager->CreateProjectile(eObjectType, EProjectileType::classic, EProjectileTrajectory::linear, vLocationOnCircle, vDirection);
 
 		fCurrAngle += fDeltaAngle;
 	}
