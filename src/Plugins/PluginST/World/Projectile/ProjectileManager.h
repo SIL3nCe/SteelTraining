@@ -17,6 +17,8 @@ public:
 	static ProjectileManager *		GetInstance			(void);
 
 	void							Initialize			(const CShIdentifier & levelIdentifier, b2World * pWorld);
+	void							Release				(void);
+
 	void							Update				(float dt);
 
 	void							CreateProjectile	(EObjectType eObjectType, EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection);

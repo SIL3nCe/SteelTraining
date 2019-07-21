@@ -20,6 +20,8 @@ public:
 						Object				(void);
 	virtual				~Object				(void);
 
+	virtual	void		Release				(void);
+
 	//
 	// Update
 	virtual	void		Update				(float dt) = 0;

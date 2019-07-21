@@ -101,6 +101,8 @@ void World::Release(void)
 	m_playerCharacter.Release();
 	m_inputManager.Release();
 
+	ProjectileManager::GetInstance()->Release();
+
 	int iEnemyCount = m_apEnemyList.GetCount();
 	for (int iEnemyIndex = 0; iEnemyIndex < iEnemyCount; ++iEnemyIndex)
 	{
@@ -159,13 +161,13 @@ void World::Update(float dt)
 	}
 
 	//
-	// Release body of object released during collisions
-	int nBodies = m_aBodiesToDestroy.GetCount();
+	// Release objects released during collisions
+	int nBodies = m_aObjectToDestroy.GetCount();
 	for (int i = 0; i < nBodies; ++i)
 	{
-		m_pbWorld->DestroyBody(m_aBodiesToDestroy[i]);
+		SH_SAFE_RELEASE_DELETE(m_aObjectToDestroy[i])
 	}
-	m_aBodiesToDestroy.Empty();
+	m_aObjectToDestroy.Empty();
 
 	ProjectileManager::GetInstance()->Update(dt); // update physic before stepping the world and another UpdateSprite after ?
 
@@ -358,14 +360,5 @@ PlayerCharacter & World::GetPlayerCharacter(void)
 void World::KillEnemy(EnemyCharacter *pEnemy)
 {
 	m_apEnemyList.RemoveFirstSwapLast(pEnemy);
-	SH_SAFE_RELEASE_DELETE(pEnemy)
-}
-
-/**
- * @brief World::MarkB2BodyToDestroy
- * @param pBody
- */
-void World::MarkB2BodyToDestroy(b2Body * pBody)
-{
-	m_aBodiesToDestroy.Add(pBody);
+	m_aObjectToDestroy.Add(pEnemy); // This is usefull only during physic world step, release could be delayed to the next frame if used out of this context.
 }

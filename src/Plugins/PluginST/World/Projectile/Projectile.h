@@ -30,7 +30,7 @@ public:
 	virtual						~Projectile			(void);
 
 	void						Initialize			(b2World * pWorld, Projectile * pNext, const CShIdentifier & levelIdentifier);
-	void						Release				(void);
+	void						Release				(void) SH_ATTRIBUTE_OVERRIDE;
 
 	void						LaunchProjectile	(EObjectType eObjectType, EProjectileType eType, EProjectileTrajectory eTrajectory, const CShVector2 & vStart, const CShVector2 & vDirection);
 

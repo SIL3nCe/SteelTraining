@@ -15,3 +15,10 @@ Object::~Object(void)
 {
 	// ...
 }
+
+/**
+ * @brief Release
+ */
+void Object::Release(void)
+{
+}

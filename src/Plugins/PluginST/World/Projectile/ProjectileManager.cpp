@@ -48,6 +48,18 @@ void ProjectileManager::Initialize(const CShIdentifier & levelIdentifier, b2Worl
 }
 
 /**
+ * @brief Release
+ */
+void ProjectileManager::Release(void)
+{
+	m_pNextUsableProjectile = nullptr;
+	for (int i = 0; i < PROJECTILE_POOL_SIZE - 1; ++i)
+	{
+		m_aProjectilePool[i].Release();
+	}
+}
+
+/**
  * @brief Update
  */
 void ProjectileManager::Update(float dt)

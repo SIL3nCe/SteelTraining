@@ -29,7 +29,7 @@ public:
 	virtual				~BaseCharacter		(void);
 
 	virtual	void		Initialize			(b2World * pB2World, World * pSTWorld);
-	virtual	void		Release				(void);
+	virtual	void		Release				(void) SH_ATTRIBUTE_OVERRIDE;
 
 	virtual void		Update				(float dt) SH_ATTRIBUTE_OVERRIDE;
 	virtual void		UpdateAnimations	(float dt);

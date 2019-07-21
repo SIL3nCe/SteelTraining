@@ -42,6 +42,7 @@ void BaseCharacter::Initialize(b2World * pB2World, World * pSTWorld)
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(200 * SH_TO_B2, -200 * SH_TO_B2);
 	bodyDef.angle = 0.0f;
+	bodyDef.fixedRotation = true;
 
 	m_pBody = pB2World->CreateBody(&bodyDef);
 	SH_ASSERT(shNULL != m_pBody)
@@ -54,7 +55,7 @@ void BaseCharacter::Initialize(b2World * pB2World, World * pSTWorld)
  */
 void BaseCharacter::Release(void)
 {
-	m_pWorld->MarkB2BodyToDestroy(m_pBody);
+	m_pBody->GetWorld()->DestroyBody(m_pBody);
 	m_pBody = shNULL;
 
 	m_aSpriteList.Deallocate();

@@ -39,11 +39,18 @@ void Projectile::Initialize(b2World * pWorld, Projectile * pNext, const CShIdent
 
 void Projectile::Release(void)
 {
-	m_pWorld->DestroyBody(m_pBody);
-	m_pBody = shNULL;
+	if (m_pBody)
+	{
+		m_pWorld->DestroyBody(m_pBody);
+		m_pBody = shNULL;
+	}
 
-	ShEntity2::Destroy(m_pEntity); // Delete as it could be used for another projectile type
-	m_pEntity = shNULL;
+	if (m_pEntity)
+	{
+		ShEntity2::SetShow(m_pEntity, false);
+		ShEntity2::Destroy(m_pEntity); // Delete as it could be used for another projectile type
+		m_pEntity = shNULL;
+	}
 
 	m_bDiscard = false;
 }

@@ -27,12 +27,12 @@ void EnemyCharacter::Initialize(b2World * pB2World, World * pSTWorld, const CShV
 
 	m_pBody->SetTransform(ShineToB2(vPosition), 0.f);
 
-	b2PolygonShape boxShape;
-	boxShape.SetAsBox(15.0f * SH_TO_B2, 15.0f * SH_TO_B2);
+	b2CircleShape circleShape;
+	circleShape.m_radius = 20.0f * SH_TO_B2;
 
 	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &boxShape;
-	fixtureDef.density = 0.5;
+	fixtureDef.shape = &circleShape;
+	fixtureDef.density = 0.5f;
 	fixtureDef.filter.categoryBits = (uint16)GetObjectType();
 	m_pBody->CreateFixture(&fixtureDef);
 
