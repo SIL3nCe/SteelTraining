@@ -1,4 +1,4 @@
-<project project_version="1.12">
+<project project_version="1.17">
     <extensions/>
     <project_settings>
         <general>
@@ -6,6 +6,7 @@
             <setting name="generalgeneric" value="bin/Generic\"/>
             <setting name="generalsource" value="./src\"/>
             <setting name="generaltmp" value="bin/Cooking\"/>
+            <setting name="librariesdirectorypath" value=""/>
             <setting name="generalicon" value="Assets/project_image.png"/>
             <setting name="generalsplashscreen" value=""/>
             <setting name="savedata_icon" value=""/>
@@ -25,11 +26,6 @@
             <setting name="germanname" value=""/>
             <setting name="italian" value="0"/>
             <setting name="italianname" value=""/>
-            <setting name="featurenetworking" value="0"/>
-            <setting name="featurerecording" value="0"/>
-            <setting name="featureinapppurchase" value="0"/>
-            <setting name="featurenotifications" value="0"/>
-            <setting name="featurevr" value="0"/>
             <setting name="generallocalmultiplayer" value="0"/>
             <setting name="generaluuid" value="{43484af9-8ecb-437c-a796-19e5fa104867}"/>
             <desktop>
@@ -60,7 +56,6 @@
             <mobile>
                 <setting name="mobilelandscape" value="1"/>
                 <setting name="mobileportrait" value="0"/>
-                <setting name="mobilefeaturefullscreen" value="0"/>
                 <android>
                     <setting name="androidtargetsdkversion" value="9"/>
                     <setting name="androidminsdkversion" value="9"/>
@@ -70,4 +65,21 @@
             </mobile>
         </general>
     </project_settings>
+    <general_settings>
+        <supported_platforms>
+            <platform name="Windows"/>
+            <platform name="Linux"/>
+            <platform name="Mac"/>
+            <platform name="XboxOne"/>
+            <platform name="PS4"/>
+            <platform name="PSVita"/>
+            <platform name="iOS"/>
+            <platform name="Android"/>
+            <platform name="WiiU"/>
+            <platform name="3DS"/>
+        </supported_platforms>
+        <required_permissions/>
+        <required_features/>
+        <required_libraries/>
+    </general_settings>
 </project>

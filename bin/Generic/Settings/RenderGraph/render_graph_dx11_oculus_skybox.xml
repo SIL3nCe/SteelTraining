@@ -1,7 +1,6 @@
-<render_graph graph_name="render_graph_dx11_oculus_skybox" version="1.0">
+<render_graph graph_name="render_graph_dx11_oculus_skybox" version="1.1">
     <render_target_list>
-        <render_target type="color" width="2048" height="2048" msaa="none" pixel_format="ARGB8" texture_flags="" id="target_color_shadow"/>
-        <render_target type="depth" width="2048" height="2048" msaa="none" pixel_format="Z24S8" texture_flags="" id="target_depth_shadow"/>
+        <render_target type="depth" width="4096" height="4096" msaa="none" pixel_format="Z24S8" texture_flags="" id="target_depth_shadow"/>
         <render_target type="color" width="r1" height="r1" msaa="none" pixel_format="ARGB8" texture_flags="" id="target_color_normal"/>
         <render_target type="depth" width="r1" height="r1" msaa="none" pixel_format="Z24S8" texture_flags="" id="target_depth"/>
         <render_target type="color" width="r2" height="r2" msaa="none" pixel_format="R32F" texture_flags="" id="target_color_downscaled_depth"/>
@@ -12,9 +11,13 @@
         <render_target type="color" width="r1" height="r1" msaa="none" pixel_format="ARGB8" texture_flags="" id="target_color_fxaa"/>
         <render_target type="color" width="r1" height="r1" msaa="none" pixel_format="ARGB8" texture_flags="" id="target_color_refractive_pass"/>
         <render_target type="color" width="r1" height="r1" msaa="none" pixel_format="ARGB16F" texture_flags="" id="target_color_hdr"/>
+        <render_target type="color" width="4096" height="4096" msaa="none" pixel_format="R32F" id="target_color_shadow0"/>
+        <render_target type="color" width="4096" height="4096" msaa="none" pixel_format="R32F" id="target_color_shadow1"/>
+        <render_target type="color" width="4096" height="4096" msaa="none" pixel_format="R32F" id="target_color_shadow2"/>
+        <render_target type="color" width="4096" height="4096" msaa="none" pixel_format="R32F" id="target_color_shadow3"/>
     </render_target_list>
     <framebuffer_list>
-        <framebuffer name="framebuffer_shadow_renderer" target_depth="target_depth_shadow" target_color_0="target_color_shadow"/>
+        <framebuffer name="framebuffer_shadow_renderer" target_depth="target_depth_shadow" target_color_0="target_color_shadow0" target_color_1="target_color_shadow1" target_color_2="target_color_shadow2" target_color_3="target_color_shadow3"/>
         <framebuffer name="framebuffer_g_buffer" target_depth="target_depth" target_color_0="target_color_normal"/>
         <framebuffer name="framebuffer_ssao_downscale_depth" target_color_0="target_color_downscaled_depth"/>
         <framebuffer name="framebuffer_ssao" target_color_0="target_color_ssao"/>
@@ -67,7 +70,10 @@
         </renderer>
         <renderer type="LightPrePass" id="LightPrePass_target_color_Light_pass_target_color_shadow">
             <input id="light_texture" value="target_color_Light_pass"/>
-            <input id="shadow_texture" value="target_color_shadow"/>
+            <input id="shadow_texture_csm0" value="target_color_shadow0"/>
+            <input id="shadow_texture_csm1" value="target_color_shadow1"/>
+            <input id="shadow_texture_csm2" value="target_color_shadow2"/>
+            <input id="shadow_texture_csm3" value="target_color_shadow3"/>
         </renderer>
         <renderer type="SkyBox" id="SkyBox_sky2_multiple">
             <input id="sky_box_texture_name" value="sky2"/>

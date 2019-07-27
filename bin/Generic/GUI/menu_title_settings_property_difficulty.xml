@@ -1,4 +1,4 @@
-<gui version="1.4">
+<gui version="1.6">
     <sss>
         <style pseudo_state="default" target="button" margin_right="5.000000" margin_right_unit="pixel" margin_left="5.000000" margin_left_unit="pixel" padding_top="0.000000" padding_top_unit="auto" padding_left="10.000000" padding_left_unit="pixel" padding_right="10.000000" padding_right_unit="pixel" font="petangue_demo_128.fnt" font_size="50.000000" font_size_unit="pixel"/>
         <style pseudo_state="hovered" target="button" background_color="#4B4B4BFF"/>

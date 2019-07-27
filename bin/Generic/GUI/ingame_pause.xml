@@ -1,4 +1,4 @@
-<gui version="1.4">
+<gui version="1.6">
     <sss>
         <style pseudo_state="default" id="container_ingame_pause_root" background_color="#FFFFFF00"/>
         <style pseudo_state="default" id="container_ingame_pause_background" opacity="0.450000" offset_x="-192.000000" offset_x_unit="auto" offset_y="48.000000" offset_y_unit="auto" background_color="#7474743C"/>

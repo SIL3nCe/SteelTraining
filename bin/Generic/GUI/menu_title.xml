@@ -1,4 +1,4 @@
-<gui version="1.4">
+<gui version="1.6">
     <sss>
         <style pseudo_state="default" target="button" border_top_width="5.000000" border_top_width_unit="pixel" border_bottom_width="5.000000" border_bottom_width_unit="pixel" border_left_width="5.000000" border_left_width_unit="pixel" border_right_width="5.000000" border_right_width_unit="pixel"/>
         <style pseudo_state="default" id="container_background" offset_x="-308.000000" offset_x_unit="auto" offset_y="-130.000000" offset_y_unit="auto" background_color="#FFFFFFFF"/>

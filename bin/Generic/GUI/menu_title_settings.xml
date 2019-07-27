@@ -1,4 +1,4 @@
-<gui version="1.4">
+<gui version="1.6">
     <sss>
         <style pseudo_state="default" target="button" padding_left="10.000000" padding_left_unit="pixel" padding_right="10.000000" padding_right_unit="pixel" font="petangue_demo_128.fnt" font_size="50.000000" font_size_unit="pixel"/>
         <style pseudo_state="default" id="container_settings" offset_x="-1036.800049" offset_x_unit="auto" offset_y="-446.155853" offset_y_unit="auto" background_color="#FFFFFFFF"/>

@@ -1,8 +1,6 @@
-<render_graph graph_name="render_graph_dx11" version="1.0">
-    <render_target_list>
-    </render_target_list>
-    <framebuffer_list>
-    </framebuffer_list>
+<render_graph graph_name="render_graph_dx11" version="1.1">
+    <render_target_list/>
+    <framebuffer_list/>
     <render_pass_list>
         <render_pass framebuffer="default_framebuffer" renderer="2D" attachment_operation="clear_color_depth"/>
         <render_pass framebuffer="default_framebuffer" renderer="Primitive_2D"/>
